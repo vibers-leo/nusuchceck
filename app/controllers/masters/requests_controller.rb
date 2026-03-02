@@ -13,6 +13,13 @@ class Masters::RequestsController < ApplicationController
   end
 
   def open_orders
+    # 미승인 전문가 접근 차단
+    unless current_user.master_profile&.verified?
+      redirect_to masters_requests_path,
+                  alert: "관리자 승인 후 공개 오더를 선택할 수 있습니다."
+      return
+    end
+
     base_scope = Request.open_orders
 
     # 내 지역 필터 (my_area=1 파라미터 또는 기본값)
@@ -31,6 +38,13 @@ class Masters::RequestsController < ApplicationController
   end
 
   def claim
+    # 미승인 전문가 접근 차단
+    unless current_user.master_profile&.verified?
+      redirect_to open_orders_masters_requests_path,
+                  alert: "승인된 전문가만 오더를 선택할 수 있습니다."
+      return
+    end
+
     authorize @request
     ActiveRecord::Base.transaction do
       @request.reload  # 선착순 경쟁 방지

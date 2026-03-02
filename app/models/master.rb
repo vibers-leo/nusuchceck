@@ -35,6 +35,7 @@ class Master < User
   private
 
   def create_default_profile
-    create_master_profile unless master_profile
+    # 신규 가입 시 verified: false로 시작 (관리자 승인 필요)
+    create_master_profile!(verified: false) unless master_profile.present?
   end
 end

@@ -24,7 +24,9 @@ class RequestPolicy < ApplicationPolicy
   end
 
   def claim?
-    user.master? && record.may_claim?
+    user.master? &&
+      user.master_profile&.verified? &&  # 승인된 전문가만 오더 선택 가능
+      record.may_claim?
   end
 
   def accept_estimate?
