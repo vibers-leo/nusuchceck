@@ -1,0 +1,73 @@
+<div class="max-w-2xl mx-auto py-8 px-4">
+  <!-- 페이지 헤더 -->
+  <div class="mb-6">
+    <%= link_to customers_dashboard_path, class: "inline-flex items-center text-sm text-gray-600 hover:text-gray-900 mb-4" do %>
+      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      대시보드로 돌아가기
+    <% end %>
+    <h1 class="text-3xl font-bold text-gray-900">내 프로필</h1>
+  </div>
+
+  <!-- 프로필 카드 -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-6">
+    <!-- 프로필 정보 표시 -->
+    <div class="flex items-center gap-4">
+      <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center flex-shrink-0">
+        <span class="text-white font-bold text-2xl"><%= @customer.name&.first || "고" %></span>
+      </div>
+      <div>
+        <h2 class="text-xl font-bold text-gray-900"><%= @customer.name || "이름 없음" %></h2>
+        <p class="text-sm text-gray-500">고객</p>
+      </div>
+    </div>
+
+    <hr class="border-gray-200">
+
+    <!-- 기본 정보 -->
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-500 mb-1">이메일</label>
+        <p class="text-base text-gray-900"><%= @customer.email %></p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-500 mb-1">이름</label>
+        <p class="text-base text-gray-900"><%= @customer.name || "-" %></p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-500 mb-1">전화번호</label>
+        <p class="text-base text-gray-900"><%= @customer.phone || "-" %></p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-500 mb-1">주소</label>
+        <p class="text-base text-gray-900"><%= @customer.address || "-" %></p>
+      </div>
+    </div>
+
+    <!-- 액션 버튼 -->
+    <div class="flex items-center justify-end gap-3 pt-4 border-t">
+      <%= link_to "프로필 수정", edit_customers_profile_path, class: btn_classes(:primary, :md) %>
+      <%= link_to "비밀번호 변경", edit_user_registration_path, class: btn_classes(:outline, :md) %>
+    </div>
+  </div>
+
+  <!-- 통계 카드 -->
+  <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+      <p class="text-sm text-gray-500 mb-1">누수 체크 접수</p>
+      <p class="text-2xl font-bold text-blue-600"><%= @customer.requests.count %>건</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+      <p class="text-sm text-gray-500 mb-1">완료된 작업</p>
+      <p class="text-2xl font-bold text-green-600"><%= @customer.requests.where(status: "closed").count %>건</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+      <p class="text-sm text-gray-500 mb-1">작성한 리뷰</p>
+      <p class="text-2xl font-bold text-purple-600"><%= Review.where(customer: @customer).count %>개</p>
+    </div>
+  </div>
+</div>

@@ -62,6 +62,9 @@ Rails.application.routes.draw do
   namespace :customers do
     get "dashboard", to: "dashboard#index", as: :dashboard
 
+    # 프로필 관리
+    resource :profile, only: [:show, :edit, :update], controller: "profiles"
+
     resources :requests, only: [:index, :show, :new, :create] do
       member do
         post :cancel
