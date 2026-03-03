@@ -181,6 +181,9 @@ Rails.application.routes.draw do
       get :estimate_pdf
       get :completion_report_pdf
     end
+
+    # 채팅
+    resources :messages, only: [:index, :create]
   end
 
   # API for standard estimate items

@@ -1,0 +1,50 @@
+<% content_for :title, "채팅" %>
+
+<div class="h-screen flex flex-col bg-gray-50" data-controller="chat" data-chat-request-id-value="<%= @request.id %>">
+  <!-- 헤더 -->
+  <div class="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between shadow-sm">
+    <div class="flex items-center gap-3">
+      <%= link_to :back, class: "text-gray-600 hover:text-gray-900" do %>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      <% end %>
+
+      <div class="flex items-center gap-2">
+        <% other_user = current_user.id == @request.customer_id ? @request.master : @request.customer %>
+        <% if other_user.present? %>
+          <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+            <%= other_user.name.first %>
+          </div>
+          <div>
+            <div class="font-semibold text-gray-900"><%= other_user.name %></div>
+            <div class="text-xs text-gray-500">
+              <%= current_user.customer? ? "전문가" : "고객" %>
+            </div>
+          </div>
+        <% else %>
+          <div class="text-gray-500">상대방 정보 없음</div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <% if current_user.customer? %>
+        <%= link_to "체크 상세", customers_request_path(@request), class: "text-sm text-blue-600 hover:text-blue-700 font-medium" %>
+      <% else %>
+        <%= link_to "체크 상세", masters_request_path(@request), class: "text-sm text-blue-600 hover:text-blue-700 font-medium" %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- 메시지 영역 -->
+  <div class="flex-1 overflow-y-auto px-4 py-4 space-y-3" data-chat-target="messagesContainer" id="messages">
+    <%= turbo_stream_from "chat_#{@request.id}" %>
+    <%= render @messages %>
+  </div>
+
+  <!-- 입력 영역 -->
+  <div class="bg-white border-t border-gray-200 px-4 py-3">
+    <%= render "messages/form", request: @request, message: @message %>
+  </div>
+</div>

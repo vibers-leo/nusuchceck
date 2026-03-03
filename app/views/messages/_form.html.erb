@@ -1,0 +1,25 @@
+<%= form_with(model: [request, message],
+             id: "message_form",
+             data: {
+               chat_target: "form",
+               action: "turbo:submit-end->chat#resetForm"
+             },
+             class: "flex items-end gap-2") do |f| %>
+
+  <div class="flex-1">
+    <%= f.text_area :content,
+          rows: 1,
+          placeholder: "메시지를 입력하세요...",
+          data: {
+            chat_target: "input",
+            action: "keydown->chat#handleKeydown"
+          },
+          class: "w-full px-4 py-2.5 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none",
+          autofocus: true,
+          required: true %>
+  </div>
+
+  <%= f.submit "전송",
+        data: { chat_target: "submitButton" },
+        class: "px-5 py-2.5 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors font-medium whitespace-nowrap" %>
+<% end %>
