@@ -235,72 +235,102 @@
         </div>
 
         <div class="space-y-6">
-          <!-- 영상 업로드 -->
+          <!-- 영상 업로드 (강조) -->
           <div>
             <div class="flex items-center gap-2 mb-3">
-              <%= f.label :videos, "영상 업로드", class: "block text-sm font-semibold text-gray-900" %>
-              <span class="px-2 py-0.5 bg-blue-600 text-white text-xs font-bold rounded-full">추천</span>
+              <%= f.label :videos, "영상 업로드", class: "block text-base font-bold text-gray-900" %>
+              <span class="px-3 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-bold rounded-full shadow-md animate-pulse">✨ 가장 중요!</span>
             </div>
 
-            <div class="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-2xl">
-              <p class="font-bold text-blue-900 text-sm flex items-center gap-2 mb-2">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
-                </svg>
-                영상이 사진보다 훨씬 효과적이에요!
-              </p>
-              <p class="text-blue-700 text-xs leading-relaxed">
-                10초 이상의 영상을 올려주시면 누수 위치·범위·심각도를 훨씬 정확하게 파악할 수 있어요.
-                물 흐르는 소리, 번지는 범위, 물방울 패턴 등 사진으로는 담기 어려운 정보가 담겨 진단 정확도가 크게 높아집니다.
-              </p>
+            <div class="mb-4 p-5 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 border-2 border-blue-300 rounded-2xl shadow-sm">
+              <div class="flex items-start gap-3">
+                <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center shadow-md">
+                  <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <p class="font-bold text-blue-900 text-base mb-1.5">
+                    📹 영상이 사진보다 10배 더 정확해요!
+                  </p>
+                  <p class="text-blue-800 text-sm leading-relaxed mb-2">
+                    10초 이상의 영상으로 누수 상황을 보여주시면 전문가가 <strong>현장 방문 전에도 정확한 진단</strong>이 가능합니다.
+                  </p>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="px-2 py-1 bg-white/70 text-blue-800 text-xs font-medium rounded-full">✓ 빠른 진단</span>
+                    <span class="px-2 py-1 bg-white/70 text-blue-800 text-xs font-medium rounded-full">✓ 정확한 견적</span>
+                    <span class="px-2 py-1 bg-white/70 text-blue-800 text-xs font-medium rounded-full">✓ 출장비 절약</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div class="border-2 border-dashed border-blue-300 rounded-2xl p-8 text-center hover:border-blue-500 bg-blue-50/30 transition-all cursor-pointer">
+            <div class="border-3 border-dashed border-blue-400 rounded-2xl p-10 text-center hover:border-blue-600 hover:bg-blue-50/50 bg-gradient-to-br from-blue-50/50 to-indigo-50/30 transition-all cursor-pointer shadow-sm hover:shadow-md">
               <%= f.file_field :videos,
                     multiple: true,
                     accept: "video/mp4,video/quicktime,video/avi,video/webm,video/3gpp",
                     class: "hidden",
                     id: "video-upload" %>
               <label for="video-upload" class="cursor-pointer">
-                <div class="inline-block p-4 bg-blue-100 rounded-2xl mb-4">
-                  <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                <div class="inline-block p-5 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl mb-4 shadow-md">
+                  <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
                   </svg>
                 </div>
-                <p class="text-lg font-semibold text-gray-900 mb-1">영상을 여기에 놓거나 클릭하세요</p>
-                <p class="text-sm text-gray-500">MP4, MOV · 최대 500MB · 10초 이상 권장</p>
+                <p class="text-xl font-bold text-gray-900 mb-2">📱 스마트폰으로 촬영해서 올려주세요</p>
+                <p class="text-base text-blue-700 font-semibold mb-1">MP4, MOV, WebM 등 모든 영상 형식 지원</p>
+                <p class="text-sm text-gray-600"><strong class="text-blue-600">최대 2GB까지</strong> 업로드 가능 · 10초 이상 권장</p>
               </label>
             </div>
 
-            <div class="mt-3 p-3 bg-yellow-50 rounded-lg text-xs text-gray-700">
-              <p class="font-semibold mb-1">🎬 이렇게 찍으면 좋아요</p>
-              <ul class="space-y-1">
-                <li>• 누수 부위를 10초 이상 촬영해주세요</li>
-                <li>• 물이 흐르거나 스며드는 모습을 연속으로 담아주세요</li>
-                <li>• 주변 환경까지 보이도록 천천히 이동하며 찍어주세요</li>
+            <div class="mt-4 p-4 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl border border-yellow-200 shadow-sm">
+              <p class="font-bold mb-2 text-gray-900 flex items-center gap-2">
+                <span class="text-lg">🎬</span>
+                이렇게 촬영하면 전문가가 더 정확히 진단해요
+              </p>
+              <ul class="space-y-1.5 text-sm text-gray-700">
+                <li class="flex items-start gap-2">
+                  <span class="text-blue-600 font-bold">1.</span>
+                  <span><strong>10초 이상</strong> 연속으로 촬영해주세요 (중간에 멈추지 마세요)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-blue-600 font-bold">2.</span>
+                  <span>누수 부위를 <strong>천천히 클로즈업</strong>하세요</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-blue-600 font-bold">3.</span>
+                  <span>주변 환경(천장, 벽, 바닥)도 함께 보여주세요</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-blue-600 font-bold">4.</span>
+                  <span><strong>물 떨어지는 소리</strong>도 함께 녹음되면 더욱 좋아요</span>
+                </li>
               </ul>
             </div>
           </div>
 
-          <!-- 사진 업로드 -->
-          <div>
-            <%= f.label :photos, "사진 업로드 (추가)", class: "block text-sm font-semibold text-gray-900 mb-2" %>
-            <p class="text-xs text-gray-600 mb-3">영상과 함께 사진도 올려주시면 더욱 좋아요</p>
+          <!-- 사진 업로드 (선택사항) -->
+          <div class="mt-8 pt-6 border-t border-gray-200">
+            <div class="flex items-center gap-2 mb-2">
+              <%= f.label :photos, "사진 업로드 (선택)", class: "block text-sm font-semibold text-gray-700" %>
+              <span class="px-2 py-0.5 bg-gray-200 text-gray-600 text-xs rounded-full">선택사항</span>
+            </div>
+            <p class="text-xs text-gray-500 mb-3">💡 영상만으로도 충분하지만, 특정 부위를 강조하고 싶으시면 사진도 함께 올려주세요</p>
 
-            <div class="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:border-gray-400 transition-all cursor-pointer">
+            <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-gray-400 bg-gray-50/30 transition-all cursor-pointer">
               <%= f.file_field :photos,
                     multiple: true,
                     accept: "image/*",
                     class: "hidden",
                     id: "photo-upload" %>
               <label for="photo-upload" class="cursor-pointer">
-                <div class="inline-block p-4 bg-gray-100 rounded-2xl mb-4">
-                  <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="inline-block p-3 bg-gray-200 rounded-xl mb-3">
+                  <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                   </svg>
                 </div>
-                <p class="text-lg font-semibold text-gray-900 mb-1">사진을 여기에 놓거나 클릭하세요</p>
-                <p class="text-sm text-gray-500">JPG, PNG · 최대 5장 · 각 50MB</p>
+                <p class="text-base font-semibold text-gray-700 mb-1">사진 추가하기</p>
+                <p class="text-xs text-gray-500">JPG, PNG · 최대 5장 · 각 50MB</p>
               </label>
             </div>
           </div>

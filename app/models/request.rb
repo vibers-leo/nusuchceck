@@ -231,8 +231,8 @@ class Request < ApplicationRecord
       unless allowed_types.include?(video.content_type)
         errors.add(:videos, "은 동영상 파일이어야 합니다 (MP4, MOV, AVI, WebM)")
       end
-      if video.byte_size > 500.megabytes
-        errors.add(:videos, "는 500MB 이하여야 합니다")
+      if video.byte_size > 2.gigabytes
+        errors.add(:videos, "는 2GB 이하여야 합니다")
       end
     end
   end
