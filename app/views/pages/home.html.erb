@@ -1,5 +1,5 @@
-<!-- Hero Section -->
-<section class="relative bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800 -mx-4 sm:-mx-6 lg:-mx-8 -mt-8 px-4 sm:px-6 lg:px-8 py-20 md:py-28 overflow-hidden">
+<!-- Hero Section - 당근마켓 스타일 -->
+<section class="relative bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800 -mx-4 sm:-mx-6 lg:-mx-8 -mt-8 px-4 sm:px-6 lg:px-8 py-16 md:py-24 overflow-hidden">
   <!-- 배경 이미지 -->
   <div class="absolute inset-0 opacity-35">
     <img src="https://images.pexels.com/photos/7836293/pexels-photo-7836293.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750"
@@ -8,144 +8,131 @@
          loading="eager">
   </div>
   <div class="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-blue-800/60"></div>
-  <div class="relative max-w-4xl mx-auto text-center text-white">
-    <span class="inline-block px-4 py-1.5 bg-white/20 rounded-full text-sm font-semibold mb-5 backdrop-blur-sm">
-      🔍 AI 누수 탐지 + 검증 전문가 매칭
-    </span>
-    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
-      누수하면 <span class="text-blue-200">누수체크</span>
-    </h1>
-    <p class="mt-6 text-lg md:text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed">
-      AI 빠른 점검 → 검증된 전문가 매칭 → 에스크로 안심 결제.<br>
-      출장부터 보험청구까지 한 번에 해결하세요.
-    </p>
-    <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-      <% if user_signed_in? %>
-        <% if current_user.customer? %>
-          <%= link_to new_customers_request_path, class: "inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-xl bg-white text-blue-700 hover:bg-gray-100 shadow-lg hover:shadow-xl transition-all duration-200" do %>
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            누수 체크하기
+
+  <div class="relative max-w-4xl mx-auto">
+    <!-- AI 진단 배너 (당근마켓 스타일) -->
+    <div class="bg-white/95 backdrop-blur-sm rounded-3xl p-8 md:p-10 shadow-2xl border-4 border-blue-200 mb-8">
+      <div class="flex flex-col md:flex-row items-center gap-6">
+        <!-- 큰 카메라 아이콘 -->
+        <div class="flex-shrink-0">
+          <div class="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-blue-600 to-blue-700 rounded-3xl flex items-center justify-center shadow-xl">
+            <svg class="w-12 h-12 md:w-14 md:h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 텍스트 콘텐츠 -->
+        <div class="flex-1 text-center md:text-left">
+          <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-2">
+            AI 누수 진단으로<br class="md:hidden"> 먼저 확인하세요
+          </h2>
+          <p class="text-base md:text-lg text-gray-700 mb-1">
+            사진 1장으로 예상 수리비와 원인을 분석해드려요
+          </p>
+          <p class="text-sm text-blue-600 font-semibold">
+            ⚡️ 평균 2시간 이내 전문가 배정 · 💯 검증된 전문가만
+          </p>
+        </div>
+      </div>
+
+      <!-- 액션 버튼 -->
+      <div class="mt-6 flex flex-col sm:flex-row gap-3">
+        <% if user_signed_in? %>
+          <% if current_user.customer? %>
+            <%= link_to new_customers_request_path, class: "flex-1 inline-flex items-center justify-center px-8 py-4 text-lg font-bold rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transition-all duration-200" do %>
+              <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              누수 체크하기
+            <% end %>
+          <% elsif current_user.master? %>
+            <%= link_to masters_requests_path, class: "flex-1 inline-flex items-center justify-center px-8 py-4 text-lg font-bold rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transition-all duration-200" do %>
+              오더 목록 보기
+            <% end %>
           <% end %>
-        <% elsif current_user.master? %>
-          <%= link_to masters_requests_path, class: "inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-xl bg-white text-blue-700 hover:bg-gray-100 shadow-lg hover:shadow-xl transition-all duration-200" do %>
-            오더 목록 보기
+        <% else %>
+          <%= link_to new_customers_request_path, class: "flex-1 inline-flex items-center justify-center px-8 py-4 text-lg font-bold rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transition-all duration-200" do %>
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            무료로 시작하기
+          <% end %>
+          <%= link_to new_leak_inspection_path, class: "flex-1 inline-flex items-center justify-center px-8 py-4 text-lg font-bold rounded-2xl border-2 border-blue-700 text-blue-700 hover:bg-blue-50 transition-all duration-200" do %>
+            AI 빠른 점검
           <% end %>
         <% end %>
-      <% else %>
-        <%= link_to new_customers_request_path, class: "inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-xl bg-white text-blue-700 hover:bg-gray-100 shadow-lg hover:shadow-xl transition-all duration-200" do %>
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-          무료로 시작하기
-        <% end %>
-        <%= link_to new_user_registration_path, class: "inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-xl border-2 border-white text-white hover:bg-white/10 transition-all duration-200" do %>
-          무료로 진단하기
-        <% end %>
-      <% end %>
+      </div>
     </div>
-    <!-- 앱 다운로드 배지 -->
-    <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-      <p class="text-sm text-blue-200">앱으로 더 편리하게</p>
-      <div class="flex gap-3">
-        <a href="#app-download" class="inline-flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-sm border border-white/30 rounded-lg text-white text-sm hover:bg-black/50 transition-all">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          App Store
-        </a>
-        <a href="#app-download" class="inline-flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-sm border border-white/30 rounded-lg text-white text-sm hover:bg-black/50 transition-all">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.99.19l.06-.03 11.62-6.71-2.53-2.54-10.14 9.09zm15.52-11.22L16.14 11 3.08.25c-.09-.06-.19-.1-.29-.13l12.43 12.42 3.48-2zm2.5 3.07l-2.96-1.71-2.8 2.8 2.8 2.8 2.98-1.72c.85-.49.85-1.68-.02-2.17zM3.08 23.75l-.01-.01c.01.01.01.01.01.01l.06.04c.01 0 .02-.01.03-.01L3.08 23.75zM3.18.24L3.13.21 3.07.18C2.22-.31 1.18.2 1.18 1.2V22.8c0 1 1.04 1.51 1.89 1.02l.01-.01L3.18.24z"/></svg>
-          Google Play
-        </a>
+
+    <!-- 신뢰 배지 (간소화) -->
+    <div class="grid grid-cols-3 gap-4 text-center text-white">
+      <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+        <p class="text-2xl font-extrabold">150+</p>
+        <p class="text-xs text-blue-100 mt-1">검증된 전문가</p>
+      </div>
+      <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+        <p class="text-2xl font-extrabold">95%</p>
+        <p class="text-xs text-blue-100 mt-1">매칭 성공률</p>
+      </div>
+      <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+        <p class="text-2xl font-extrabold">2시간</p>
+        <p class="text-xs text-blue-100 mt-1">평균 배정시간</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 신뢰 지표 섹션 -->
-<section class="py-10 bg-white -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 border-b border-gray-100">
-  <div class="max-w-5xl mx-auto">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-      <div class="p-4">
-        <p class="text-3xl font-extrabold text-blue-700">150+</p>
-        <p class="text-sm text-gray-500 mt-1">검증된 전문가</p>
-      </div>
-      <div class="p-4">
-        <p class="text-3xl font-extrabold text-blue-700">4.8<span class="text-xl">점</span></p>
-        <p class="text-sm text-gray-500 mt-1">평균 고객 만족도</p>
-      </div>
-      <div class="p-4">
-        <p class="text-3xl font-extrabold text-blue-700">95%</p>
-        <p class="text-sm text-gray-500 mt-1">매칭 성공률</p>
-      </div>
-      <div class="p-4">
-        <p class="text-3xl font-extrabold text-blue-700">3일</p>
-        <p class="text-sm text-gray-500 mt-1">평균 정산 소요일</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- 3단계 프로세스 -->
-<section class="py-16 md:py-20">
-  <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900">간단한 3단계로 해결</h2>
-      <p class="mt-3 text-lg text-gray-500">복잡한 누수 문제, 누수체크가 쉽게 연결합니다</p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-8">
-      <!-- Step 1: AI 점검 -->
-      <div class="relative bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all p-8 text-center card-hover fade-in overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 opacity-12">
-          <img src="https://images.pexels.com/photos/15206136/pexels-photo-15206136.jpeg?auto=compress&cs=tinysrgb&w=200"
-               alt="" class="w-full h-full object-cover">
+<!-- 4개 핵심 기능 카드 (당근마켓 스타일) -->
+<section class="py-12 md:py-16">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      <!-- 1. 누수 점검 요청 -->
+      <div class="bg-white rounded-2xl p-6 text-center hover:shadow-lg transition-all cursor-pointer border border-gray-100">
+        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <svg class="w-9 h-9 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+          </svg>
         </div>
-        <div class="relative z-10">
-          <div class="w-16 h-16 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center mx-auto mb-5">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-3">AI 빠른 점검</h3>
-          <p class="text-gray-600 leading-relaxed text-sm">
-            영상·사진으로 AI가 누수 여부를 즉시 분석합니다. 로그인 없이 무료로 이용하세요.
-          </p>
-        </div>
+        <h3 class="font-bold text-gray-900 text-base mb-1">누수 점검 요청</h3>
+        <p class="text-xs text-gray-500">온전 시 0원 보증</p>
       </div>
 
-      <!-- Step 2: 전문가 매칭 -->
-      <div class="relative bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all p-8 text-center card-hover fade-in overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 opacity-12">
-          <img src="https://images.pexels.com/photos/8486978/pexels-photo-8486978.jpeg?auto=compress&cs=tinysrgb&w=200"
-               alt="" class="w-full h-full object-cover">
+      <!-- 2. 안심 에스크로 -->
+      <div class="bg-white rounded-2xl p-6 text-center hover:shadow-lg transition-all cursor-pointer border border-gray-100">
+        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <svg class="w-9 h-9 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
         </div>
-        <div class="relative z-10">
-          <div class="w-16 h-16 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center mx-auto mb-5">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-3">검증 전문가 매칭</h3>
-          <p class="text-gray-600 leading-relaxed text-sm">
-            수도배관·방수 전문 기사님이 직접 선택합니다. 출장비→검사비→공사비 단계별 투명 견적.
-          </p>
-        </div>
+        <h3 class="font-bold text-gray-900 text-base mb-1">안심 에스크로</h3>
+        <p class="text-xs text-gray-500">수리 확인 후 결제</p>
       </div>
 
-      <!-- Step 3: 에스크로 정산 -->
-      <div class="relative bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all p-8 text-center card-hover fade-in overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 opacity-12">
-          <img src="https://images.pexels.com/photos/7937299/pexels-photo-7937299.jpeg?auto=compress&cs=tinysrgb&w=200"
-               alt="" class="w-full h-full object-cover">
+      <!-- 3. 2년 무상 AS -->
+      <div class="bg-white rounded-2xl p-6 text-center hover:shadow-lg transition-all cursor-pointer border border-gray-100">
+        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <svg class="w-9 h-9 text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
         </div>
-        <div class="relative z-10">
-          <div class="w-16 h-16 bg-green-100 text-green-700 rounded-full flex items-center justify-center mx-auto mb-5">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-3">에스크로 안심 정산</h3>
-          <p class="text-gray-600 leading-relaxed text-sm">
-            공사 완료 후 지급. 보험청구 서류(보고서·사진·견적서) 자동 생성으로 환불 절차도 간편합니다.
-          </p>
+        <h3 class="font-bold text-gray-900 text-base mb-1">2년 무상 AS</h3>
+        <p class="text-xs text-gray-500">하자보수 보증</p>
+      </div>
+
+      <!-- 4. 전문가 지원 -->
+      <div class="bg-white rounded-2xl p-6 text-center hover:shadow-lg transition-all cursor-pointer border border-gray-100">
+        <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <svg class="w-9 h-9 text-yellow-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
         </div>
+        <h3 class="font-bold text-gray-900 text-base mb-1">전문가 지원</h3>
+        <p class="text-xs text-gray-500">파트너스 전환하기</p>
       </div>
     </div>
   </div>
