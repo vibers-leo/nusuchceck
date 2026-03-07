@@ -8,7 +8,7 @@
         </svg>
         목록으로
       <% end %>
-      <h1 class="text-2xl font-bold text-gray-900 mt-2">신고 #<%= @request.id %> (관리자)</h1>
+      <h1 class="text-2xl font-bold text-gray-900 mt-2">체크 #<%= @request.id %> (관리자)</h1>
     </div>
     <div>
       <%= render "shared/status_badge", status: @request.status %>
@@ -16,7 +16,7 @@
   </div>
 
   <!-- 상태 타임라인 -->
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+  <div class="bg-white rounded-2xl border border-gray-100 p-6">
     <%= render "shared/status_timeline", request_record: @request %>
   </div>
 
@@ -24,7 +24,7 @@
     <!-- 좌측: 정보 -->
     <div class="lg:col-span-2 space-y-6">
       <!-- 기본 정보 -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <h2 class="text-lg font-semibold text-gray-900 mb-4">기본 정보</h2>
         <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div>
@@ -73,7 +73,7 @@
 
       <!-- 견적 정보 -->
       <% if @request.estimates.any? %>
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="bg-white rounded-2xl border border-gray-100 p-6">
           <h2 class="text-lg font-semibold text-gray-900 mb-4">견적 목록</h2>
           <% @request.estimates.recent.each do |estimate| %>
             <div class="border rounded-lg p-4 mb-3 last:mb-0">
@@ -100,7 +100,7 @@
 
       <!-- 단계별 에스크로 -->
       <% if @request.escrow_transactions.any? %>
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="bg-white rounded-2xl border border-gray-100 p-6">
           <h2 class="text-lg font-semibold text-gray-900 mb-4">에스크로 거래 내역</h2>
           <div class="space-y-3">
             <% @request.escrow_transactions.each do |escrow| %>
@@ -131,7 +131,7 @@
     <div class="space-y-6">
       <!-- 오더 배정 (공개 등록 / 직접 배정) -->
       <% if @request.reported? || @request.open? %>
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="bg-white rounded-2xl border border-gray-100 p-6">
           <h2 class="text-lg font-semibold text-gray-900 mb-4">오더 배정</h2>
 
           <% if @request.reported? %>
@@ -184,7 +184,7 @@
       <% end %>
 
       <!-- 관리 작업 -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <h2 class="text-lg font-semibold text-gray-900 mb-4">관리 작업</h2>
         <div class="space-y-3">
           <% if @request.no_leak_found? %>
@@ -200,18 +200,18 @@
                   finalize_admin_request_path(@request),
                   method: :post,
                   class: "#{btn_classes(:success, :md)} w-full",
-                  data: { turbo_confirm: "이 신고를 최종 종료하시겠습니까?" } %>
+                  data: { turbo_confirm: "이 체크를 최종 종료하시겠습니까?" } %>
           <% end %>
 
           <% if @request.status.in?(%w[closed cancelled]) %>
-            <p class="text-sm text-gray-500 text-center">이 신고는 이미 종료/취소 되었습니다.</p>
+            <p class="text-sm text-gray-500 text-center">이 체크는 이미 종료/취소 되었습니다.</p>
           <% end %>
         </div>
       </div>
 
       <!-- 하자보수 보증기간 설정 -->
       <% if @request.closed? %>
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="bg-white rounded-2xl border border-gray-100 p-6">
           <h2 class="text-lg font-semibold text-gray-900 mb-4">하자보수 보증</h2>
           <% if @request.warranty_expires_at.present? %>
             <div class="p-3 bg-orange-50 rounded-lg border border-orange-100 mb-3">
@@ -235,7 +235,7 @@
 
         <!-- 고객 불만 CS -->
         <% if @request.has_complaint? %>
-          <div class="bg-red-50 rounded-xl shadow-sm border border-red-200 p-6">
+          <div class="bg-red-50 rounded-2xl border border-red-200 p-6">
             <h2 class="text-lg font-semibold text-red-900 mb-3">🚨 고객 불만 접수</h2>
             <div class="bg-white rounded-lg p-3 mb-3 border border-red-100">
               <p class="text-sm text-gray-800 whitespace-pre-wrap"><%= @request.customer_complaint %></p>
@@ -251,7 +251,7 @@
       <% end %>
 
       <!-- 일시 정보 -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <h2 class="text-lg font-semibold text-gray-900 mb-4">일시 기록</h2>
         <dl class="space-y-3 text-sm">
           <div class="flex justify-between">

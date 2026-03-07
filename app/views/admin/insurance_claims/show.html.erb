@@ -24,7 +24,7 @@
   </div>
 
   <!-- 정보 카드 -->
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 divide-y">
+  <div class="bg-white rounded-2xl border border-gray-100 divide-y">
     <div class="p-6">
       <h3 class="text-lg font-semibold text-gray-900 mb-4">신청자 정보</h3>
       <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
@@ -112,7 +112,7 @@
 
     <% if @insurance_claim.request.present? %>
       <div class="p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">연관 누수 신고</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">연관 누수 체크</h3>
         <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
           <span class="text-sm">
             <span class="font-mono text-gray-500">NSC-<%= @insurance_claim.request.id.to_s.rjust(6, '0') %></span>
@@ -131,7 +131,7 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
           <% @insurance_claim.supporting_documents.each do |doc| %>
             <% if doc.content_type.start_with?("image/") %>
-              <%= image_tag doc, class: "rounded-lg shadow-sm object-cover h-32 w-full" %>
+              <%= image_tag doc, class: "rounded-lg object-cover h-32 w-full" %>
             <% else %>
               <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-600">
                 <%= doc.filename %>
@@ -144,7 +144,7 @@
   </div>
 
   <!-- 관리자 액션 -->
-  <div class="mt-6 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+  <div class="mt-6 bg-white rounded-2xl border border-gray-100 p-6">
     <h3 class="text-lg font-semibold text-gray-900 mb-4">심사 처리</h3>
     <div class="flex flex-wrap gap-3">
       <% if @insurance_claim.may_start_review? %>
