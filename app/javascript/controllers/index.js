@@ -8,6 +8,9 @@ import MobileMenuController from "./mobile_menu_controller"
 import FormValidationController from "./form_validation_controller"
 import ToastController from "./toast_controller"
 import ToggleController from "./toggle_controller"
+import BottomSheetController from "./bottom_sheet_controller"
+import TabController from "./tab_controller"
+import ScrollRevealController from "./scroll_reveal_controller"
 
 application.register("estimate-items", EstimateItemsController)
 application.register("dismissible", DismissibleController)
@@ -18,3 +21,6 @@ application.register("mobile-menu", MobileMenuController)
 application.register("form-validation", FormValidationController)
 application.register("toast", ToastController)
 application.register("toggle", ToggleController)
+application.register("bottom-sheet", BottomSheetController)
+application.register("tab", TabController)
+application.register("scroll-reveal", ScrollRevealController)
