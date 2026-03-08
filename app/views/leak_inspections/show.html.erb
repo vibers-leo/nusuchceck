@@ -1,12 +1,12 @@
 <div class="max-w-2xl mx-auto py-8">
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold text-gray-900">📋 분석 결과가 나왔어요</h1>
-    <%= link_to new_leak_inspection_path, class: "text-sm text-blue-600 hover:text-blue-800 font-medium" do %>
+    <%= link_to new_leak_inspection_path, class: "text-sm text-primary-600 hover:text-primary-800 font-medium" do %>
       다시 검사하기 →
     <% end %>
   </div>
 
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+  <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
     <!-- 업로드된 사진 -->
     <% if @inspection.photo.attached? %>
       <div class="aspect-video bg-gray-100 flex items-center justify-center overflow-hidden">
@@ -46,12 +46,12 @@
               </div>
             </div>
           <% when "low" %>
-            <div class="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-2xl p-6">
+            <div class="bg-gradient-to-r from-primary-50 to-cyan-50 border-2 border-primary-200 rounded-2xl p-6">
               <div class="flex items-start gap-4">
                 <span class="text-4xl">🔵</span>
                 <div class="flex-1">
-                  <h2 class="text-xl font-bold text-blue-900 mb-2">경미한 수준이에요</h2>
-                  <p class="text-blue-800 leading-relaxed">
+                  <h2 class="text-xl font-bold text-primary-900 mb-2">경미한 수준이에요</h2>
+                  <p class="text-primary-800 leading-relaxed">
                     지금 당장은 괜찮아 보여요. 하지만 정기적인 관찰이 필요해요.<br>
                     <strong>계속 확인하시다가 악화되면 전문가와 상담하세요.</strong>
                   </p>
@@ -119,7 +119,7 @@
               <ul class="space-y-2">
                 <% details[:observed_symptoms].each do |symptom| %>
                   <li class="flex items-start gap-2 text-gray-700">
-                    <span class="text-blue-500 mt-0.5">•</span>
+                    <span class="text-primary-500 mt-0.5">•</span>
                     <span><%= symptom %></span>
                   </li>
                 <% end %>
@@ -174,26 +174,26 @@
           <% end %>
         </div>
 
-        <!-- CTA: 정식 신고 유도 -->
+        <!-- CTA: 정식 체크 유도 -->
         <div class="border-t-2 border-gray-100 pt-8 mt-2">
           <% if @inspection.leak_detected? && ["critical", "high", "medium"].include?(@inspection.severity) %>
             <!-- 심각한 경우 -->
-            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 text-white text-center">
+            <div class="bg-gradient-to-r from-primary-600 to-indigo-600 rounded-2xl p-8 text-white text-center">
               <div class="text-3xl mb-3">👷</div>
               <h3 class="text-2xl font-bold mb-2">전문가를 만나보세요</h3>
-              <p class="text-blue-100 mb-6">검증된 누수 전문가가 정확한 진단과 해결책을 제공해드려요</p>
+              <p class="text-primary-100 mb-6">검증된 누수 전문가가 정확한 진단과 해결책을 제공해드려요</p>
               <% if user_signed_in? && current_user.is_a?(Customer) %>
-                <%= link_to new_customers_request_path, class: "inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg" do %>
-                  <span>정식 누수 신고하기</span>
+                <%= link_to new_customers_request_path, class: "inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg" do %>
+                  <span>정식 누수 체크하기</span>
                   <span>→</span>
                 <% end %>
               <% else %>
-                <%= link_to new_user_registration_path, class: "inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg" do %>
-                  <span>회원가입하고 신고하기</span>
+                <%= link_to new_user_registration_path, class: "inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg" do %>
+                  <span>회원가입하고 체크하기</span>
                   <span>→</span>
                 <% end %>
               <% end %>
-              <p class="text-xs text-blue-200 mt-4">무료 상담 • 투명한 견적 • 에스크로 결제</p>
+              <p class="text-xs text-primary-200 mt-4">무료 상담 • 투명한 견적 • 에스크로 결제</p>
             </div>
           <% else %>
             <!-- 경미하거나 누수 미감지 -->
@@ -201,13 +201,13 @@
               <p class="text-gray-600">그래도 걱정되시나요?</p>
               <p class="text-sm text-gray-500">전문가의 정확한 진단을 받아보세요</p>
               <% if user_signed_in? && current_user.is_a?(Customer) %>
-                <%= link_to new_customers_request_path, class: "inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition" do %>
-                  <span>정식 누수 신고하기</span>
+                <%= link_to new_customers_request_path, class: "inline-flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition" do %>
+                  <span>정식 누수 체크하기</span>
                   <span>→</span>
                 <% end %>
               <% else %>
-                <%= link_to new_user_registration_path, class: "inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition" do %>
-                  <span>회원가입하고 신고하기</span>
+                <%= link_to new_user_registration_path, class: "inline-flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition" do %>
+                  <span>회원가입하고 체크하기</span>
                   <span>→</span>
                 <% end %>
               <% end %>
@@ -224,7 +224,7 @@
 
       <% else %>
         <div class="text-center py-8" aria-live="polite">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" aria-hidden="true"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4" aria-hidden="true"></div>
           <p class="text-gray-600">분석 중입니다...</p>
         </div>
       <% end %>
@@ -235,19 +235,19 @@
   <% if @inspection.completed? %>
     <div class="mt-8 space-y-6">
       <!-- 예상 비용 정보 -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <div class="flex items-center gap-2 mb-4">
           <span class="text-2xl">💰</span>
           <h3 class="text-xl font-bold text-gray-900">예상 비용이 궁금하신가요?</h3>
         </div>
         <p class="text-sm text-gray-600 mb-4">일반적인 누수 처리 비용 범위예요 (실제 비용은 상황에 따라 달라질 수 있어요)</p>
         <div class="grid sm:grid-cols-2 gap-4">
-          <div class="bg-blue-50 rounded-xl p-4">
+          <div class="bg-primary-50 rounded-xl p-4">
             <div class="flex items-center gap-2 mb-2">
               <span class="text-lg">🔍</span>
               <h4 class="font-bold text-gray-900">정밀 탐지</h4>
             </div>
-            <p class="text-2xl font-bold text-blue-600">10~15만원</p>
+            <p class="text-2xl font-bold text-primary-600">10~15만원</p>
             <p class="text-xs text-gray-600 mt-1">적외선 카메라, 음파 탐지 등</p>
           </div>
           <div class="bg-green-50 rounded-xl p-4">
@@ -281,7 +281,7 @@
       </div>
 
       <!-- 누수 잘 생기는 곳 -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <div class="flex items-center gap-2 mb-4">
           <span class="text-2xl">📍</span>
           <h3 class="text-xl font-bold text-gray-900">이런 곳을 주의 깊게 봐주세요</h3>

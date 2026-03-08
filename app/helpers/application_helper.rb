@@ -24,7 +24,7 @@ module ApplicationHelper
 
   def status_color(status)
     case status.to_s
-    when "reported" then "blue"
+    when "reported" then "teal"
     when "assigned" then "yellow"
     when "visiting" then "indigo"
     when "detecting" then "orange"
@@ -47,7 +47,7 @@ module ApplicationHelper
   # ===== 버튼 클래스 통일 =====
 
   def btn_classes(variant = :primary, size = :md)
-    base = "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 cursor-pointer"
+    base = "inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 cursor-pointer"
 
     sizes = {
       sm: "px-3 py-1.5 text-xs",
@@ -56,7 +56,7 @@ module ApplicationHelper
     }
 
     variants = {
-      primary:   "bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow",
+      primary:   "bg-primary-600 text-white hover:bg-primary-700 shadow-sm hover:shadow",
       secondary: "bg-gray-200 text-gray-700 hover:bg-gray-300",
       danger:    "bg-red-600 text-white hover:bg-red-700 shadow-sm hover:shadow",
       outline:   "border border-gray-300 text-gray-700 bg-white hover:bg-gray-50",
@@ -71,7 +71,7 @@ module ApplicationHelper
   # ===== 입력 필드 클래스 통일 =====
 
   def input_classes(type = :text)
-    base = "w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 placeholder-gray-400 text-base"
+    base = "w-full border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors text-gray-900 placeholder-gray-400 text-base"
 
     case type
     when :select

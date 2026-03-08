@@ -1,6 +1,6 @@
-<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50" data-controller="insurance-step" data-insurance-step-total-steps-value="4">
+<div class="min-h-screen bg-gradient-to-br from-primary-50 via-white to-indigo-50" data-controller="insurance-step" data-insurance-step-total-steps-value="4">
   <!-- 상단 헤더 -->
-  <div class="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
+  <div class="bg-white border-b border-gray-200 sticky top-0 z-10">
     <div class="max-w-2xl mx-auto px-4 py-4">
       <div class="flex items-center justify-between">
         <%= link_to customers_insurance_claims_path, class: "text-gray-600 hover:text-gray-900 transition" do %>
@@ -26,7 +26,7 @@
           <span class="text-xs text-gray-500">5분이면 충분해요</span>
         </div>
         <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div data-insurance-step-target="progressBar" class="h-full bg-gradient-to-r from-blue-600 to-indigo-600 progress-bar-animate" style="width: 25%"></div>
+          <div data-insurance-step-target="progressBar" class="h-full bg-gradient-to-r from-primary-600 to-indigo-600 progress-bar-animate" style="width: 25%"></div>
         </div>
       </div>
     </div>
@@ -36,8 +36,8 @@
   <div class="max-w-2xl mx-auto px-4 py-8">
     <!-- 인사말 -->
     <div class="text-center mb-8 fade-in">
-      <div class="inline-block p-3 bg-blue-100 rounded-2xl mb-4">
-        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="inline-block p-3 bg-primary-100 rounded-2xl mb-4">
+        <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
         </svg>
       </div>
@@ -46,7 +46,7 @@
     </div>
 
     <!-- 신뢰 배지 -->
-    <div class="mb-8 bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
+    <div class="mb-8 bg-white rounded-2xl p-4 border border-gray-200">
       <div class="flex items-center justify-center gap-6 text-xs text-gray-600">
         <div class="flex items-center gap-1">
           <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
@@ -84,16 +84,16 @@
       <div class="flex justify-between mb-8">
         <% ["신청자", "사고 정보", "서류 첨부", "확인"].each_with_index do |label, index| %>
           <div class="flex flex-col items-center cursor-pointer" data-step-indicator data-step="<%= index + 1 %>" data-action="click->insurance-step#goToStep">
-            <div class="step-circle w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mb-1 <%= index == 0 ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-600' %>">
+            <div class="step-circle w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mb-1 <%= index == 0 ? 'bg-primary-600 text-white' : 'bg-gray-300 text-gray-600' %>">
               <%= index + 1 %>
             </div>
-            <span class="step-label text-xs text-center <%= index == 0 ? 'text-blue-600 font-semibold' : 'text-gray-600' %>"><%= label %></span>
+            <span class="step-label text-xs text-center <%= index == 0 ? 'text-primary-600 font-semibold' : 'text-gray-600' %>"><%= label %></span>
           </div>
         <% end %>
       </div>
 
       <!-- 단계 1: 신청자 정보 -->
-      <div data-insurance-step-target="step" class="bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
+      <div data-insurance-step-target="step" class="bg-white rounded-3xl border border-gray-200 p-8">
         <div class="mb-6">
           <h2 class="text-2xl font-bold text-gray-900 mb-2">누가 신청하시나요?</h2>
           <p class="text-gray-600">보험금을 받으실 분의 정보를 입력해주세요</p>
@@ -105,7 +105,7 @@
             <%= f.text_field :applicant_name, required: true,
                   placeholder: "예: 홍길동",
                   data: { action: "input->insurance-step#validateInput" },
-                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" %>
+                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition" %>
           </div>
 
           <div>
@@ -113,7 +113,7 @@
             <%= f.text_field :applicant_phone, required: true,
                   placeholder: "010-1234-5678",
                   data: { action: "input->insurance-step#validateInput" },
-                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" %>
+                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition" %>
             <p class="text-xs text-gray-500 mt-2 flex items-center gap-1">
               <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
@@ -126,20 +126,20 @@
             <%= f.label :applicant_email, "이메일 (선택)", class: "block text-sm font-semibold text-gray-900 mb-2" %>
             <%= f.email_field :applicant_email,
                   placeholder: "example@email.com",
-                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" %>
+                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition" %>
             <p class="text-xs text-gray-500 mt-2">진행 상황을 이메일로 받아보세요</p>
           </div>
 
           <div>
             <%= f.label :birth_date, "생년월일 (선택)", class: "block text-sm font-semibold text-gray-900 mb-2" %>
             <%= f.date_field :birth_date,
-                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" %>
+                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition" %>
           </div>
         </div>
       </div>
 
       <!-- 단계 2: 사고 정보 -->
-      <div data-insurance-step-target="step" class="hidden bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
+      <div data-insurance-step-target="step" class="hidden bg-white rounded-3xl border border-gray-200 p-8">
         <div class="mb-6">
           <h2 class="text-2xl font-bold text-gray-900 mb-2">사고는 언제, 어디서 발생했나요?</h2>
           <p class="text-gray-600">자세히 적어주실수록 심사가 빨라져요</p>
@@ -151,7 +151,7 @@
             <%= f.date_field :incident_date, required: true,
                   max: Date.today,
                   data: { action: "input->insurance-step#validateInput" },
-                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" %>
+                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition" %>
           </div>
 
           <div>
@@ -159,14 +159,14 @@
             <%= f.text_field :incident_address, required: true,
                   placeholder: "서울시 강남구 테헤란로 123",
                   data: { action: "input->insurance-step#validateInput" },
-                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" %>
+                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition" %>
           </div>
 
           <div>
             <%= f.label :incident_detail_address, "상세 주소 (동/호수)", class: "block text-sm font-semibold text-gray-900 mb-2" %>
             <%= f.text_field :incident_detail_address,
                   placeholder: "101동 1234호",
-                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" %>
+                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition" %>
           </div>
 
           <div>
@@ -178,7 +178,7 @@
                     ["재산 + 인적 피해", "both"]
                   ], @insurance_claim.damage_type),
                   { include_blank: "선택해 주세요" },
-                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" %>
+                  class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition" %>
           </div>
 
           <div>
@@ -186,7 +186,7 @@
             <div class="relative">
               <%= f.number_field :estimated_damage_amount, min: 0, step: 10000,
                     placeholder: "500000",
-                    class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition pr-12" %>
+                    class: "w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition pr-12" %>
               <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">원</span>
             </div>
             <p class="text-xs text-gray-500 mt-2">💡 대략적인 금액이어도 괜찮아요</p>
@@ -197,7 +197,7 @@
             <%= f.text_area :incident_description, rows: 6, required: true,
                   placeholder: "예:\n화장실 배관에서 누수가 발생하여 아래층 천장과 벽지가 훼손되었습니다. 아래층 주민이 천장에 물이 떨어진다고 신고했고, 긴급 수리를 진행했습니다.",
                   data: { action: "input->insurance-step#validateInput" },
-                  class: "w-full px-4 py-4 text-base border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition resize-none" %>
+                  class: "w-full px-4 py-4 text-base border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition resize-none" %>
             <p class="text-xs text-gray-500 mt-2">자세히 적어주실수록 심사가 빨라져요</p>
           </div>
 
@@ -211,13 +211,13 @@
                 <%= f.select :insurance_company,
                       options_for_select(INSURANCE_COMPANY_OPTIONS, @insurance_claim.insurance_company),
                       { include_blank: "선택해 주세요" },
-                      class: "w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" %>
+                      class: "w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition" %>
               </div>
               <div>
                 <%= f.label :policy_number, "증권번호", class: "block text-sm font-medium text-gray-700 mb-2" %>
                 <%= f.text_field :policy_number,
                       placeholder: "12345678-01-001",
-                      class: "w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" %>
+                      class: "w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition" %>
               </div>
             </div>
           </div>
@@ -233,20 +233,20 @@
                   <%= f.label :victim_name, "피해자 성명", class: "block text-sm font-medium text-gray-700 mb-2" %>
                   <%= f.text_field :victim_name,
                         placeholder: "홍길동",
-                        class: "w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" %>
+                        class: "w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition" %>
                 </div>
                 <div>
                   <%= f.label :victim_phone, "피해자 연락처", class: "block text-sm font-medium text-gray-700 mb-2" %>
                   <%= f.text_field :victim_phone,
                         placeholder: "010-1234-5678",
-                        class: "w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" %>
+                        class: "w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition" %>
                 </div>
               </div>
               <div>
                 <%= f.label :victim_address, "피해자 주소", class: "block text-sm font-medium text-gray-700 mb-2" %>
                 <%= f.text_area :victim_address, rows: 2,
                       placeholder: "피해를 입은 분의 주소를 입력하세요",
-                      class: "w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition resize-none" %>
+                      class: "w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition resize-none" %>
               </div>
             </div>
           </div>
@@ -254,33 +254,33 @@
       </div>
 
       <!-- 단계 3: 증빙 서류 -->
-      <div data-insurance-step-target="step" class="hidden bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
+      <div data-insurance-step-target="step" class="hidden bg-white rounded-3xl border border-gray-200 p-8">
         <div class="mb-6">
           <h2 class="text-2xl font-bold text-gray-900 mb-2">증빙 서류가 있나요?</h2>
           <p class="text-gray-600">나중에 추가할 수도 있으니 지금 없어도 괜찮아요</p>
         </div>
 
         <div class="space-y-6">
-          <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+          <div class="bg-gradient-to-br from-primary-50 to-indigo-50 rounded-2xl p-6 border border-primary-100">
             <h3 class="font-bold text-gray-900 mb-3 flex items-center gap-2">
               <span class="text-xl">📋</span>
               이런 서류가 도움이 돼요
             </h3>
             <ul class="space-y-2 text-sm text-gray-700">
               <li class="flex items-start gap-2">
-                <svg class="w-4 h-4 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-4 h-4 text-primary-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                 </svg>
                 <span>누수 현장 사진 (여러 각도에서 찍으면 좋아요)</span>
               </li>
               <li class="flex items-start gap-2">
-                <svg class="w-4 h-4 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-4 h-4 text-primary-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                 </svg>
                 <span>수리 견적서 또는 영수증</span>
               </li>
               <li class="flex items-start gap-2">
-                <svg class="w-4 h-4 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-4 h-4 text-primary-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                 </svg>
                 <span>피해 확인서 (이웃 서명)</span>
@@ -288,13 +288,13 @@
             </ul>
           </div>
 
-          <div class="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
+          <div class="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:border-primary-400 hover:bg-primary-50 transition-all cursor-pointer">
             <%= f.file_field :supporting_documents, multiple: true, accept: "image/*,application/pdf",
                   class: "hidden",
                   id: "file-upload" %>
             <label for="file-upload" class="cursor-pointer">
-              <div class="inline-block p-4 bg-blue-100 rounded-2xl mb-4">
-                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="inline-block p-4 bg-primary-100 rounded-2xl mb-4">
+                <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                 </svg>
               </div>
@@ -306,7 +306,7 @@
       </div>
 
       <!-- 단계 4: 확인 및 제출 -->
-      <div data-insurance-step-target="step" class="hidden bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
+      <div data-insurance-step-target="step" class="hidden bg-white rounded-3xl border border-gray-200 p-8">
         <div class="mb-6 text-center">
           <div class="inline-block p-4 bg-green-100 rounded-2xl mb-4">
             <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -342,22 +342,22 @@
             </ul>
           </div>
 
-          <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+          <div class="bg-gradient-to-br from-primary-50 to-indigo-50 rounded-2xl p-6 border border-primary-100">
             <h3 class="font-semibold text-gray-900 mb-2 flex items-center gap-2">
               <span class="text-xl">⏱️</span>
               다음 단계는?
             </h3>
             <ol class="space-y-2 text-sm text-gray-700">
               <li class="flex gap-2">
-                <span class="font-bold text-blue-600">1.</span>
+                <span class="font-bold text-primary-600">1.</span>
                 <span>임시 저장하시면 신청서를 확인하실 수 있어요</span>
               </li>
               <li class="flex gap-2">
-                <span class="font-bold text-blue-600">2.</span>
+                <span class="font-bold text-primary-600">2.</span>
                 <span>신청서를 보험사에 제출해주세요 (1분이면 완료!)</span>
               </li>
               <li class="flex gap-2">
-                <span class="font-bold text-blue-600">3.</span>
+                <span class="font-bold text-primary-600">3.</span>
                 <span>평균 7~14일 후 보험금이 입금돼요</span>
               </li>
             </ol>
@@ -377,7 +377,7 @@
         <button type="button"
                 data-insurance-step-target="nextBtn"
                 data-action="click->insurance-step#next"
-                class="ml-auto px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl">
+                class="ml-auto px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl">
           다음 →
         </button>
 

@@ -1,10 +1,10 @@
 <% content_for :title, "의견 보내기" %>
 
-<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
+<div class="min-h-screen bg-gradient-to-br from-primary-50 via-white to-purple-50 py-12">
   <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- 헤더 -->
     <div class="text-center mb-8">
-      <div class="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-3">
+      <div class="inline-flex items-center px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium mb-3">
         💬 Feedback
       </div>
       <h1 class="text-4xl font-bold text-gray-900 mb-3">의견 보내기</h1>
@@ -35,7 +35,7 @@
                 placeholder: "개선이 필요한 부분, 불편한 점, 제안사항 등을 자유롭게 작성해주세요.\n\n예시:\n• 이 기능이 있으면 좋겠어요\n• 이 부분이 불편해요\n• 버그를 발견했어요",
                 required: true,
                 autofocus: true,
-                class: "w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-base resize-none" %>
+                class: "w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition text-base resize-none" %>
           <p class="mt-2 text-sm text-gray-500">💡 최소 10자 이상 입력해주세요</p>
         </div>
 
@@ -55,7 +55,7 @@
               <%= f.text_field :name,
                     value: current_user&.name,
                     placeholder: "익명",
-                    class: "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" %>
+                    class: "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition" %>
             </div>
 
             <!-- 이메일 -->
@@ -64,7 +64,7 @@
               <%= f.email_field :email,
                     value: current_user&.email,
                     placeholder: "your@email.com",
-                    class: "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" %>
+                    class: "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition" %>
               <p class="mt-1 text-xs text-gray-500">답변이 필요한 경우 연락드리겠습니다</p>
             </div>
           </div>
@@ -73,19 +73,19 @@
         <!-- 제출 버튼 -->
         <div class="flex gap-3 pt-6">
           <%= link_to "취소", :back, class: "flex-1 px-6 py-4 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-semibold text-center" %>
-          <%= f.submit "의견 보내기", class: "flex-1 px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all font-semibold shadow-lg shadow-blue-500/30" %>
+          <%= f.submit "의견 보내기", class: "flex-1 px-6 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl hover:from-primary-700 hover:to-primary-800 transition-all font-semibold shadow-lg shadow-primary-500/30" %>
         </div>
       <% end %>
     </div>
 
     <!-- 안내 -->
-    <div class="mt-6 bg-blue-50 border border-blue-100 rounded-xl p-5">
+    <div class="mt-6 bg-primary-50 border border-primary-100 rounded-xl p-5">
       <div class="flex items-start gap-3">
-        <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+        <svg class="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
         </svg>
         <div class="flex-1">
-          <p class="text-sm text-blue-800">
+          <p class="text-sm text-primary-800">
             <strong>보내주신 의견은 서비스 개선에 큰 도움이 됩니다.</strong><br>
             익명으로 보내실 수 있으며, 답변이 필요한 경우 연락처를 남겨주세요.
           </p>

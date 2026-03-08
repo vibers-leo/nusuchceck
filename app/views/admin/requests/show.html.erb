@@ -2,13 +2,13 @@
   <!-- 뒤로가기 + 헤더 -->
   <div class="flex items-center justify-between">
     <div>
-      <%= link_to admin_requests_path, class: "text-sm text-blue-600 hover:text-blue-800 flex items-center" do %>
+      <%= link_to admin_requests_path, class: "text-sm text-primary-600 hover:text-primary-800 flex items-center" do %>
         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
         목록으로
       <% end %>
-      <h1 class="text-2xl font-bold text-gray-900 mt-2">신고 #<%= @request.id %> (관리자)</h1>
+      <h1 class="text-2xl font-bold text-gray-900 mt-2">체크 #<%= @request.id %> (관리자)</h1>
     </div>
     <div>
       <%= render "shared/status_badge", status: @request.status %>
@@ -16,7 +16,7 @@
   </div>
 
   <!-- 상태 타임라인 -->
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+  <div class="bg-white rounded-2xl border border-gray-100 p-6">
     <%= render "shared/status_timeline", request_record: @request %>
   </div>
 
@@ -24,7 +24,7 @@
     <!-- 좌측: 정보 -->
     <div class="lg:col-span-2 space-y-6">
       <!-- 기본 정보 -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <h2 class="text-lg font-semibold text-gray-900 mb-4">기본 정보</h2>
         <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div>
@@ -73,14 +73,14 @@
 
       <!-- 견적 정보 -->
       <% if @request.estimates.any? %>
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="bg-white rounded-2xl border border-gray-100 p-6">
           <h2 class="text-lg font-semibold text-gray-900 mb-4">견적 목록</h2>
           <% @request.estimates.recent.each do |estimate| %>
             <div class="border rounded-lg p-4 mb-3 last:mb-0">
               <div class="flex items-center justify-between mb-2">
                 <span class="font-medium text-gray-900">견적 #<%= estimate.id %></span>
                 <div class="flex items-center gap-2">
-                  <span class="text-lg font-semibold text-blue-600"><%= number_to_currency(estimate.total_amount, unit: "₩", precision: 0) %></span>
+                  <span class="text-lg font-semibold text-primary-600"><%= number_to_currency(estimate.total_amount, unit: "₩", precision: 0) %></span>
                   <%
                     est_badge = case estimate.status
                       when "pending"  then "bg-yellow-100 text-yellow-800"
@@ -100,7 +100,7 @@
 
       <!-- 단계별 에스크로 -->
       <% if @request.escrow_transactions.any? %>
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="bg-white rounded-2xl border border-gray-100 p-6">
           <h2 class="text-lg font-semibold text-gray-900 mb-4">에스크로 거래 내역</h2>
           <div class="space-y-3">
             <% @request.escrow_transactions.each do |escrow| %>
@@ -120,7 +120,7 @@
             <% end %>
             <div class="pt-2 border-t flex justify-between text-sm font-medium">
               <span class="text-gray-600">총 결제</span>
-              <span class="text-blue-600"><%= number_to_currency(@request.escrow_transactions.sum(:amount), unit: "₩", precision: 0) %></span>
+              <span class="text-primary-600"><%= number_to_currency(@request.escrow_transactions.sum(:amount), unit: "₩", precision: 0) %></span>
             </div>
           </div>
         </div>
@@ -131,14 +131,14 @@
     <div class="space-y-6">
       <!-- 오더 배정 (공개 등록 / 직접 배정) -->
       <% if @request.reported? || @request.open? %>
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="bg-white rounded-2xl border border-gray-100 p-6">
           <h2 class="text-lg font-semibold text-gray-900 mb-4">오더 배정</h2>
 
           <% if @request.reported? %>
             <!-- 공개 등록 (권장) -->
-            <div class="mb-4 p-3 bg-emerald-50 rounded-lg border border-emerald-100">
-              <p class="text-sm text-emerald-700 font-medium mb-2">공개 오더 풀에 등록 (권장)</p>
-              <p class="text-xs text-emerald-600 mb-3">검증된 전문가들이 선착순으로 선택할 수 있습니다</p>
+            <div class="mb-4 p-3 bg-primary-50 rounded-lg border border-emerald-100">
+              <p class="text-sm text-primary-700 font-medium mb-2">공개 오더 풀에 등록 (권장)</p>
+              <p class="text-xs text-primary-600 mb-3">검증된 전문가들이 선착순으로 선택할 수 있습니다</p>
               <%= button_to "공개 등록",
                     publish_admin_request_path(@request),
                     method: :post,
@@ -172,19 +172,19 @@
 
       <!-- 공개 오더 대기 중 안내 -->
       <% if @request.open? %>
-        <div class="bg-blue-50 rounded-xl border border-blue-100 p-4">
-          <div class="flex items-center text-blue-700 mb-1">
+        <div class="bg-primary-50 rounded-xl border border-primary-100 p-4">
+          <div class="flex items-center text-primary-700 mb-1">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <span class="text-sm font-semibold">공개 오더 풀 등록됨</span>
           </div>
-          <p class="text-xs text-blue-600">전문가들이 선착순으로 선택 중입니다</p>
+          <p class="text-xs text-primary-600">전문가들이 선착순으로 선택 중입니다</p>
         </div>
       <% end %>
 
       <!-- 관리 작업 -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <h2 class="text-lg font-semibold text-gray-900 mb-4">관리 작업</h2>
         <div class="space-y-3">
           <% if @request.no_leak_found? %>
@@ -200,18 +200,18 @@
                   finalize_admin_request_path(@request),
                   method: :post,
                   class: "#{btn_classes(:success, :md)} w-full",
-                  data: { turbo_confirm: "이 신고를 최종 종료하시겠습니까?" } %>
+                  data: { turbo_confirm: "이 체크를 최종 종료하시겠습니까?" } %>
           <% end %>
 
           <% if @request.status.in?(%w[closed cancelled]) %>
-            <p class="text-sm text-gray-500 text-center">이 신고는 이미 종료/취소 되었습니다.</p>
+            <p class="text-sm text-gray-500 text-center">이 체크는 이미 종료/취소 되었습니다.</p>
           <% end %>
         </div>
       </div>
 
       <!-- 하자보수 보증기간 설정 -->
       <% if @request.closed? %>
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="bg-white rounded-2xl border border-gray-100 p-6">
           <h2 class="text-lg font-semibold text-gray-900 mb-4">하자보수 보증</h2>
           <% if @request.warranty_expires_at.present? %>
             <div class="p-3 bg-orange-50 rounded-lg border border-orange-100 mb-3">
@@ -235,7 +235,7 @@
 
         <!-- 고객 불만 CS -->
         <% if @request.has_complaint? %>
-          <div class="bg-red-50 rounded-xl shadow-sm border border-red-200 p-6">
+          <div class="bg-red-50 rounded-2xl border border-red-200 p-6">
             <h2 class="text-lg font-semibold text-red-900 mb-3">🚨 고객 불만 접수</h2>
             <div class="bg-white rounded-lg p-3 mb-3 border border-red-100">
               <p class="text-sm text-gray-800 whitespace-pre-wrap"><%= @request.customer_complaint %></p>
@@ -251,7 +251,7 @@
       <% end %>
 
       <!-- 일시 정보 -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <h2 class="text-lg font-semibold text-gray-900 mb-4">일시 기록</h2>
         <dl class="space-y-3 text-sm">
           <div class="flex justify-between">

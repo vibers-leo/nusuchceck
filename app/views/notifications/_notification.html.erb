@@ -1,4 +1,4 @@
-<div class="<%= notification.unread? ? 'bg-blue-50' : 'bg-white' %> hover:bg-gray-50 transition-smooth border-b border-gray-100 last:border-b-0"
+<div class="<%= notification.unread? ? 'bg-primary-50' : 'bg-white' %> hover:bg-gray-50 transition-smooth border-b border-gray-100 last:border-b-0"
      data-notification-id="<%= notification.id %>">
   <div class="p-4"
        data-action="click->notifications#markAsRead"
@@ -17,7 +17,7 @@
       </div>
       <% if notification.unread? %>
         <div class="flex-shrink-0">
-          <span class="inline-block w-2 h-2 bg-blue-600 rounded-full"></span>
+          <span class="inline-block w-2 h-2 bg-primary-600 rounded-full"></span>
         </div>
       <% end %>
     </div>

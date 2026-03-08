@@ -68,7 +68,7 @@ export default class extends Controller {
       }
     }).then(response => {
       if (response.ok) {
-        notificationElement.classList.remove('bg-blue-50')
+        notificationElement.classList.remove('bg-primary-50')
         notificationElement.classList.add('bg-white')
         this.unreadCountValue = Math.max(0, this.unreadCountValue - 1)
         this.updateBadge()
@@ -89,7 +89,7 @@ export default class extends Controller {
       if (response.ok) {
         // 모든 알림 배경색 변경
         this.listTarget.querySelectorAll('[data-notification-id]').forEach(el => {
-          el.classList.remove('bg-blue-50')
+          el.classList.remove('bg-primary-50')
           el.classList.add('bg-white')
         })
         this.unreadCountValue = 0

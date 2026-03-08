@@ -7,11 +7,11 @@
 
   <!-- 통계 카드 -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-100">
+    <div class="bg-gradient-to-br from-primary-50 to-indigo-50 rounded-xl p-5 border border-primary-100">
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-sm text-blue-700 font-medium">작성 중</p>
-          <p class="text-3xl font-bold text-blue-900 mt-1"><%= @insurance_claims.by_status(:draft).count %></p>
+          <p class="text-sm text-primary-700 font-medium">작성 중</p>
+          <p class="text-3xl font-bold text-primary-900 mt-1"><%= @insurance_claims.by_status(:draft).count %></p>
         </div>
         <span class="text-4xl">✏️</span>
       </div>
@@ -40,7 +40,7 @@
   <% if @insurance_claims.any? %>
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <% @insurance_claims.each do |claim| %>
-        <%= link_to masters_insurance_claim_path(claim), class: "block bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition" do %>
+        <%= link_to masters_insurance_claim_path(claim), class: "block bg-white rounded-2xl border border-gray-100 hover:shadow-md transition" do %>
           <div class="p-5">
             <div class="flex items-center justify-between mb-3">
               <span class="text-sm font-mono text-gray-500"><%= claim.claim_number %></span>
@@ -68,7 +68,7 @@
                 사고일: <%= claim.incident_date.strftime("%Y-%m-%d") %>
               </p>
               <% if claim.estimated_damage_amount.present? %>
-                <p class="flex items-center text-blue-600 font-medium">
+                <p class="flex items-center text-primary-600 font-medium">
                   <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
                   </svg>
@@ -100,17 +100,17 @@
           description: "고객을 위해 보험청구서를 작성해보세요" %>
 
     <!-- 안내 카드 -->
-    <div class="mt-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+    <div class="mt-8 bg-gradient-to-br from-primary-50 to-indigo-50 rounded-2xl p-6 border border-primary-100">
       <div class="flex items-center gap-2 mb-4">
         <span class="text-2xl">💡</span>
         <h3 class="font-bold text-gray-900">보험청구서는 언제 작성하나요?</h3>
       </div>
       <div class="space-y-3 text-sm text-gray-700">
         <p>공사를 완료하고 고객이 보험청구를 원할 때 <strong>대신 작성</strong>해드릴 수 있어요</p>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mt-4 pt-4 border-t border-blue-200">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mt-4 pt-4 border-t border-primary-200">
           <div class="bg-white rounded-lg p-3">
-            <p class="font-semibold text-gray-900 mb-1 text-xs">1️⃣ 신고 확인</p>
-            <p class="text-gray-600 text-xs">내 작업 목록에서<br/>완료된 신고 선택</p>
+            <p class="font-semibold text-gray-900 mb-1 text-xs">1️⃣ 체크 확인</p>
+            <p class="text-gray-600 text-xs">내 작업 목록에서<br/>완료된 체크 선택</p>
           </div>
           <div class="bg-white rounded-lg p-3">
             <p class="font-semibold text-gray-900 mb-1 text-xs">2️⃣ 청구서 작성</p>
@@ -156,7 +156,7 @@
 
     <!-- CTA -->
     <div class="mt-6 text-center">
-      <%= link_to masters_requests_path, class: "inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition shadow-lg hover:shadow-xl" do %>
+      <%= link_to masters_requests_path, class: "inline-flex items-center gap-2 px-8 py-4 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 transition shadow-lg hover:shadow-xl" do %>
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
         </svg>

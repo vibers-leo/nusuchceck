@@ -1,29 +1,76 @@
 {
-  "settings": {},
+  "settings": {
+    "screenshots_enabled": false
+  },
   "rules": [
     {
-      "patterns": ["/users/sign_in", "/users/sign_up"],
+      "patterns": [".*"],
       "properties": {
-        "context": "modal"
+        "context": "default",
+        "pull_to_refresh_enabled": true
+      }
+    },
+    {
+      "patterns": ["/users/sign_in", "/users/sign_up", "/users/password"],
+      "properties": {
+        "context": "modal",
+        "pull_to_refresh_enabled": false
       }
     },
     {
       "patterns": ["/customers/requests/new"],
       "properties": {
-        "context": "modal"
+        "context": "modal",
+        "pull_to_refresh_enabled": false
       }
     },
     {
       "patterns": ["/customers/requests/[0-9]+/reviews/new"],
       "properties": {
-        "context": "modal"
+        "context": "modal",
+        "pull_to_refresh_enabled": false
       }
     },
     {
-      "patterns": [".+"],
+      "patterns": ["/customers/requests/[0-9]+/insurance_claims/new"],
+      "properties": {
+        "context": "modal",
+        "pull_to_refresh_enabled": false
+      }
+    },
+    {
+      "patterns": ["/leak_inspections/new"],
+      "properties": {
+        "context": "modal",
+        "pull_to_refresh_enabled": false
+      }
+    },
+    {
+      "patterns": ["/masters/estimates/new", "/masters/estimates/[0-9]+/edit"],
+      "properties": {
+        "context": "modal",
+        "pull_to_refresh_enabled": false
+      }
+    },
+    {
+      "patterns": ["/customers/toss_payments/.*"],
+      "properties": {
+        "context": "modal",
+        "pull_to_refresh_enabled": false
+      }
+    },
+    {
+      "patterns": ["/customers/profile/edit"],
+      "properties": {
+        "context": "modal",
+        "pull_to_refresh_enabled": false
+      }
+    },
+    {
+      "patterns": ["/requests/[0-9]+/messages"],
       "properties": {
         "context": "default",
-        "pull_to_refresh_enabled": true
+        "pull_to_refresh_enabled": false
       }
     }
   ]

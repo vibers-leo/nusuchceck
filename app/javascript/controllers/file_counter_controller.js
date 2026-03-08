@@ -22,10 +22,10 @@ export default class extends Controller {
     // 카운터 색상 변경
     if (count > 0) {
       this.photoCountTarget.classList.remove('text-gray-400')
-      this.photoCountTarget.classList.add('text-blue-600', 'font-bold')
+      this.photoCountTarget.classList.add('text-primary-600', 'font-bold')
     } else {
       this.photoCountTarget.classList.add('text-gray-400')
-      this.photoCountTarget.classList.remove('text-blue-600', 'font-bold')
+      this.photoCountTarget.classList.remove('text-primary-600', 'font-bold')
     }
   }
 
@@ -38,10 +38,10 @@ export default class extends Controller {
     // 카운터 색상 변경
     if (count > 0) {
       this.videoCountTarget.classList.remove('text-gray-400')
-      this.videoCountTarget.classList.add('text-blue-600', 'font-bold')
+      this.videoCountTarget.classList.add('text-primary-600', 'font-bold')
     } else {
       this.videoCountTarget.classList.add('text-gray-400')
-      this.videoCountTarget.classList.remove('text-blue-600', 'font-bold')
+      this.videoCountTarget.classList.remove('text-primary-600', 'font-bold')
     }
   }
 }

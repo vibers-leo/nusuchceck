@@ -135,24 +135,24 @@ export default class extends Controller {
 
       if (stepNum < this.currentStepValue) {
         // 완료된 단계
-        circle.classList.remove('bg-gray-300', 'bg-blue-600', 'text-gray-600', 'text-white')
+        circle.classList.remove('bg-gray-300', 'bg-primary-600', 'text-gray-600', 'text-white')
         circle.classList.add('bg-green-500', 'text-white')
         circle.innerHTML = '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>'
-        label.classList.remove('text-gray-600', 'text-blue-600')
+        label.classList.remove('text-gray-600', 'text-primary-600')
         label.classList.add('text-green-600')
       } else if (stepNum === this.currentStepValue) {
         // 현재 단계
         circle.classList.remove('bg-gray-300', 'bg-green-500', 'text-gray-600')
-        circle.classList.add('bg-blue-600', 'text-white')
+        circle.classList.add('bg-primary-600', 'text-white')
         circle.textContent = stepNum
         label.classList.remove('text-gray-600', 'text-green-600')
-        label.classList.add('text-blue-600', 'font-semibold')
+        label.classList.add('text-primary-600', 'font-semibold')
       } else {
         // 미완료 단계
-        circle.classList.remove('bg-blue-600', 'bg-green-500', 'text-white')
+        circle.classList.remove('bg-primary-600', 'bg-green-500', 'text-white')
         circle.classList.add('bg-gray-300', 'text-gray-600')
         circle.textContent = stepNum
-        label.classList.remove('text-blue-600', 'text-green-600', 'font-semibold')
+        label.classList.remove('text-primary-600', 'text-green-600', 'font-semibold')
         label.classList.add('text-gray-600')
       }
     })
@@ -223,12 +223,12 @@ export default class extends Controller {
     if (saveIndicator) {
       saveIndicator.textContent = '💾 자동 저장 중...'
       saveIndicator.classList.remove('text-green-600', 'text-gray-500')
-      saveIndicator.classList.add('text-blue-600')
+      saveIndicator.classList.add('text-primary-600')
 
       // 1초 후 저장 완료 표시
       setTimeout(() => {
         saveIndicator.textContent = '✅ 저장됨'
-        saveIndicator.classList.remove('text-blue-600')
+        saveIndicator.classList.remove('text-primary-600')
         saveIndicator.classList.add('text-green-600')
 
         setTimeout(() => {

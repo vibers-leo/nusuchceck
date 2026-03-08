@@ -6,7 +6,7 @@
 <div class="max-w-xl mx-auto py-8 px-4">
   <!-- 헤더 -->
   <div class="mb-6">
-    <%= link_to customers_request_path(@request), class: "text-sm text-blue-600 hover:text-blue-800 flex items-center mb-3" do %>
+    <%= link_to customers_request_path(@request), class: "text-sm text-primary-600 hover:text-primary-800 flex items-center mb-3" do %>
       <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
       </svg>
@@ -17,7 +17,7 @@
   </div>
 
   <!-- 결제 정보 요약 -->
-  <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+  <div class="bg-primary-50 border border-primary-200 rounded-xl p-4 mb-6">
     <div class="flex justify-between items-center mb-2">
       <span class="text-sm text-gray-600">체크 번호</span>
       <span class="text-sm font-mono font-medium text-gray-900">#<%= @request.id %></span>
@@ -26,9 +26,9 @@
       <span class="text-sm text-gray-600">결제 항목</span>
       <span class="text-sm font-medium text-gray-900"><%= @order_name %></span>
     </div>
-    <div class="flex justify-between items-center pt-2 border-t border-blue-200">
+    <div class="flex justify-between items-center pt-2 border-t border-primary-200">
       <span class="font-semibold text-gray-900">결제 금액</span>
-      <span class="text-xl font-bold text-blue-700">
+      <span class="text-xl font-bold text-primary-700">
         <%= number_to_currency(@amount, unit: "₩", precision: 0) %>
       </span>
     </div>
@@ -44,7 +44,7 @@
   </div>
 
   <!-- 토스페이먼츠 위젯 영역 -->
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-4">
+  <div class="bg-white rounded-2xl border border-gray-100 p-6 mb-4">
     <div id="payment-method" class="mb-4"></div>
     <div id="agreement" class="mb-4"></div>
   </div>
@@ -52,7 +52,7 @@
   <!-- 결제 버튼 -->
   <button
     id="payment-button"
-    class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg rounded-xl transition shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+    class="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold text-lg rounded-xl transition shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
     disabled
   >
     <span id="payment-button-text">결제 수단 로딩 중...</span>

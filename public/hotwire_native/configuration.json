@@ -1,8 +1,37 @@
 {
   "settings": {
-    "screenshots_enabled": false
+    "screenshots_enabled": false,
+    "tabs": [
+      {
+        "title": "홈",
+        "visit": "/"
+      },
+      {
+        "title": "AI진단",
+        "visit": "/leak_inspections/new"
+      },
+      {
+        "title": "체크",
+        "visit": "/customers/requests/new"
+      },
+      {
+        "title": "알림",
+        "visit": "/notifications"
+      },
+      {
+        "title": "마이",
+        "visit": "/customers/profile"
+      }
+    ]
   },
   "rules": [
+    {
+      "patterns": [".*"],
+      "properties": {
+        "context": "default",
+        "pull_to_refresh_enabled": true
+      }
+    },
     {
       "patterns": ["/users/sign_in", "/users/sign_up", "/users/password"],
       "properties": {
@@ -16,7 +45,8 @@
       "properties": {
         "context": "modal",
         "pull_to_refresh_enabled": false,
-        "title": "누수 체크 접수"
+        "title": "누수 체크 접수",
+        "animated": true
       }
     },
     {
@@ -49,6 +79,22 @@
         "context": "default",
         "pull_to_refresh_enabled": true,
         "title": "내 체크"
+      }
+    },
+    {
+      "patterns": ["/customers/profile"],
+      "properties": {
+        "context": "default",
+        "pull_to_refresh_enabled": true,
+        "title": "마이페이지"
+      }
+    },
+    {
+      "patterns": ["/customers/profile/edit"],
+      "properties": {
+        "context": "modal",
+        "pull_to_refresh_enabled": false,
+        "title": "프로필 수정"
       }
     },
     {
@@ -89,6 +135,70 @@
         "context": "default",
         "pull_to_refresh_enabled": false,
         "title": "점검 결과"
+      }
+    },
+    {
+      "patterns": ["/requests/[0-9]+/messages"],
+      "properties": {
+        "context": "default",
+        "pull_to_refresh_enabled": false,
+        "title": "채팅"
+      }
+    },
+    {
+      "patterns": ["/masters/requests"],
+      "properties": {
+        "context": "default",
+        "pull_to_refresh_enabled": true,
+        "title": "내 오더"
+      }
+    },
+    {
+      "patterns": ["/masters/requests/open_orders"],
+      "properties": {
+        "context": "default",
+        "pull_to_refresh_enabled": true,
+        "title": "공개 오더"
+      }
+    },
+    {
+      "patterns": ["/masters/requests/[0-9]+"],
+      "properties": {
+        "context": "default",
+        "pull_to_refresh_enabled": true,
+        "title": "오더 상세"
+      }
+    },
+    {
+      "patterns": ["/masters/estimates/new", "/masters/estimates/[0-9]+/edit"],
+      "properties": {
+        "context": "modal",
+        "pull_to_refresh_enabled": false,
+        "title": "견적 작성"
+      }
+    },
+    {
+      "patterns": ["/expert/dashboard"],
+      "properties": {
+        "context": "default",
+        "pull_to_refresh_enabled": true,
+        "title": "전문가 대시보드"
+      }
+    },
+    {
+      "patterns": ["/expert/settlements"],
+      "properties": {
+        "context": "default",
+        "pull_to_refresh_enabled": true,
+        "title": "정산 내역"
+      }
+    },
+    {
+      "patterns": ["/customers/toss_payments/.*"],
+      "properties": {
+        "context": "modal",
+        "pull_to_refresh_enabled": false,
+        "title": "결제"
       }
     }
   ]

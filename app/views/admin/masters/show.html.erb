@@ -9,10 +9,10 @@
     <!-- 좌측: 정보 -->
     <div class="lg:col-span-2 space-y-6">
       <!-- 프로필 정보 -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <div class="flex items-start space-x-4 mb-6">
-          <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-            <span class="text-blue-600 font-bold text-2xl"><%= @master.name&.first %></span>
+          <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
+            <span class="text-primary-600 font-bold text-2xl"><%= @master.name&.first %></span>
           </div>
           <div>
             <h2 class="text-xl font-bold text-gray-900"><%= @master.name %></h2>
@@ -74,7 +74,7 @@
                 <% if profile.service_areas_list.any? %>
                   <div class="flex flex-wrap gap-1">
                     <% profile.service_areas_list.each do |area| %>
-                      <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-blue-100 text-blue-700"><%= area %></span>
+                      <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-primary-100 text-primary-700"><%= area %></span>
                     <% end %>
                   </div>
                 <% else %>
@@ -90,9 +90,9 @@
         <% end %>
       </div>
 
-      <!-- 최근 신고 -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">최근 배정 신고</h2>
+      <!-- 최근 체크 -->
+      <div class="bg-white rounded-2xl border border-gray-100 p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">최근 배정 체크</h2>
         <% recent_requests = @master.assigned_requests.recent.limit(10) %>
         <% if recent_requests.any? %>
           <div class="space-y-2">
@@ -100,7 +100,7 @@
               <div class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50">
                 <%= link_to admin_request_path(request), class: "flex-1 flex items-center justify-between" do %>
                   <div>
-                    <span class="font-mono text-sm text-blue-600">#<%= request.id %></span>
+                    <span class="font-mono text-sm text-primary-600">#<%= request.id %></span>
                     <span class="ml-2 text-sm text-gray-900"><%= request.customer&.name %></span>
                   </div>
                   <div class="flex items-center gap-2">
@@ -112,12 +112,12 @@
             <% end %>
           </div>
         <% else %>
-          <p class="text-sm text-gray-500">배정된 신고가 없습니다.</p>
+          <p class="text-sm text-gray-500">배정된 체크가 없습니다.</p>
         <% end %>
       </div>
 
       <!-- 리뷰 목록 -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <h2 class="text-lg font-semibold text-gray-900 mb-4">리뷰</h2>
         <% if @master.reviews.any? %>
           <div class="space-y-4">
@@ -155,7 +155,7 @@
 
     <!-- 우측: 관리 액션 -->
     <div class="space-y-6">
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <h2 class="text-lg font-semibold text-gray-900 mb-4">인증 관리</h2>
         <div class="space-y-3">
           <% if @master.verified? %>
@@ -182,15 +182,15 @@
       </div>
 
       <!-- 통계 요약 -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <h2 class="text-lg font-semibold text-gray-900 mb-4">활동 요약</h2>
         <dl class="space-y-3 text-sm">
           <div class="flex justify-between">
-            <dt class="text-gray-500">전체 신고</dt>
+            <dt class="text-gray-500">전체 체크</dt>
             <dd class="font-medium text-gray-900"><%= @master.assigned_requests.count %>건</dd>
           </div>
           <div class="flex justify-between">
-            <dt class="text-gray-500">진행중 신고</dt>
+            <dt class="text-gray-500">진행중 체크</dt>
             <dd class="font-medium text-gray-900"><%= @master.active_requests.count %>건</dd>
           </div>
           <div class="flex justify-between">

@@ -8,7 +8,7 @@
     <div class="space-y-4">
       <% @insurance_claims.each do |claim| %>
         <%= link_to customers_insurance_claim_path(claim),
-              class: "block bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition p-5" do %>
+              class: "block bg-white rounded-2xl border border-gray-100 hover:shadow-md transition p-5" do %>
           <div class="flex justify-between items-start">
             <div class="flex-1">
               <div class="flex items-center gap-2">
@@ -16,7 +16,7 @@
                 <span class="px-3 py-1 rounded-full text-xs font-medium
                   <%= case claim.status
                       when 'draft' then 'bg-gray-100 text-gray-700'
-                      when 'submitted' then 'bg-blue-100 text-blue-700'
+                      when 'submitted' then 'bg-primary-100 text-primary-700'
                       when 'under_review' then 'bg-yellow-100 text-yellow-700'
                       when 'approved' then 'bg-green-100 text-green-700'
                       when 'rejected' then 'bg-red-100 text-red-700'
@@ -48,7 +48,7 @@
 
     <div class="mt-8 text-center">
       <%= link_to new_customers_insurance_claim_path,
-            class: "inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition shadow-lg" do %>
+            class: "inline-flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition shadow-lg" do %>
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
         </svg>
@@ -66,26 +66,26 @@
           description: "누수로 인한 피해를 보상받을 수 있어요" %>
 
     <!-- 보험청구 안내 -->
-    <div class="mt-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+    <div class="mt-8 bg-gradient-to-br from-primary-50 to-indigo-50 rounded-2xl p-6 border border-primary-100">
       <div class="flex items-center gap-2 mb-4">
         <span class="text-2xl">💡</span>
         <h3 class="font-bold text-gray-900">이런 경우 보험청구가 가능해요</h3>
       </div>
       <ul class="space-y-3 text-sm text-gray-700">
         <li class="flex items-start gap-3">
-          <span class="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">✓</span>
+          <span class="flex-shrink-0 w-6 h-6 bg-primary-500 text-white rounded-full flex items-center justify-center text-xs font-bold">✓</span>
           <span><strong>내 집 누수로 아래층에 피해</strong>를 입힌 경우</span>
         </li>
         <li class="flex items-start gap-3">
-          <span class="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">✓</span>
+          <span class="flex-shrink-0 w-6 h-6 bg-primary-500 text-white rounded-full flex items-center justify-center text-xs font-bold">✓</span>
           <span><strong>배관 파열로 이웃 집에 손해</strong>를 끼친 경우</span>
         </li>
         <li class="flex items-start gap-3">
-          <span class="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">✓</span>
+          <span class="flex-shrink-0 w-6 h-6 bg-primary-500 text-white rounded-full flex items-center justify-center text-xs font-bold">✓</span>
           <span><strong>수리 비용을 보험으로 처리</strong>하고 싶은 경우</span>
         </li>
       </ul>
-      <div class="mt-6 pt-4 border-t border-blue-200">
+      <div class="mt-6 pt-4 border-t border-primary-200">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
             <p class="font-semibold text-gray-900 mb-1">📋 필요한 서류</p>
@@ -101,7 +101,7 @@
 
     <div class="mt-6 text-center">
       <%= link_to new_customers_insurance_claim_path,
-            class: "inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-xl font-bold text-lg hover:bg-blue-700 transition shadow-lg hover:shadow-xl" do %>
+            class: "inline-flex items-center gap-2 px-8 py-4 bg-primary-600 text-white rounded-xl font-bold text-lg hover:bg-primary-700 transition shadow-lg hover:shadow-xl" do %>
         💼 보험 신청하기
       <% end %>
       <p class="text-xs text-gray-500 mt-3">신청서 작성은 5분이면 충분해요</p>

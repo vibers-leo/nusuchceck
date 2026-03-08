@@ -3,23 +3,23 @@
     <h1 class="text-2xl font-bold text-gray-900">🔔 알림</h1>
     <% if @unread_count > 0 %>
       <%= button_to "모두 읽음 처리", mark_all_as_read_notifications_path, method: :post,
-            class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium" %>
+            class: "px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-medium" %>
     <% end %>
   </div>
 
   <% if @unread_count > 0 %>
-    <div class="mb-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
-      <p class="text-sm text-blue-800">
+    <div class="mb-4 bg-primary-50 border border-primary-200 rounded-lg p-4">
+      <p class="text-sm text-primary-800">
         <strong><%= @unread_count %>개</strong>의 읽지 않은 알림이 있어요
       </p>
     </div>
   <% end %>
 
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+  <div class="bg-white rounded-2xl border border-gray-100">
     <% if @notifications.any? %>
       <div class="divide-y divide-gray-200">
         <% @notifications.each do |notification| %>
-          <div class="<%= notification.unread? ? 'bg-blue-50' : 'bg-white' %> hover:bg-gray-50 transition-smooth p-6">
+          <div class="<%= notification.unread? ? 'bg-primary-50' : 'bg-white' %> hover:bg-gray-50 transition-smooth p-6">
             <div class="flex gap-4">
               <div class="flex-shrink-0 text-3xl">
                 <%= notification.icon %>
@@ -38,14 +38,14 @@
                       <div class="mt-3">
                         <%= link_to "자세히 보기 →",
                               notification_path(notification.notifiable),
-                              class: "inline-flex items-center text-sm text-blue-600 hover:text-blue-800 font-medium" %>
+                              class: "inline-flex items-center text-sm text-primary-600 hover:text-primary-800 font-medium" %>
                       </div>
                     <% end %>
                   </div>
                   <div class="flex items-center gap-2">
                     <% if notification.unread? %>
                       <%= button_to mark_as_read_notification_path(notification), method: :post,
-                            class: "px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-xs font-medium" do %>
+                            class: "px-3 py-1.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-xs font-medium" do %>
                         읽음 처리
                       <% end %>
                     <% else %>

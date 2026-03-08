@@ -2,7 +2,7 @@
   <h1 class="text-2xl font-bold text-gray-900">마스터 관리</h1>
 
   <!-- 데스크톱 테이블 -->
-  <div class="hidden md:block bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+  <div class="hidden md:block bg-white rounded-2xl border border-gray-100 overflow-hidden">
     <div class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200" aria-label="마스터 목록">
         <thead class="bg-gray-50">
@@ -21,8 +21,8 @@
             <tr class="hover:bg-gray-50">
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
-                  <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <span class="text-blue-600 font-bold text-sm"><%= master.name&.first %></span>
+                  <div class="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
+                    <span class="text-primary-600 font-bold text-sm"><%= master.name&.first %></span>
                   </div>
                   <span class="ml-3 text-sm font-medium text-gray-900"><%= master.name %></span>
                 </div>
@@ -51,7 +51,7 @@
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <%= link_to "상세", admin_master_path(master), class: "text-blue-600 hover:text-blue-800 text-sm font-medium" %>
+                <%= link_to "상세", admin_master_path(master), class: "text-primary-600 hover:text-primary-800 text-sm font-medium" %>
               </td>
             </tr>
           <% end %>
@@ -63,10 +63,10 @@
   <!-- 모바일 카드 목록 -->
   <div class="md:hidden space-y-3">
     <% @masters.each do |master| %>
-      <%= link_to admin_master_path(master), class: "block bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition" do %>
+      <%= link_to admin_master_path(master), class: "block bg-white rounded-2xl border border-gray-100 p-4 hover:shadow-md transition" do %>
         <div class="flex items-center mb-3">
-          <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-            <span class="text-blue-600 font-bold"><%= master.name&.first %></span>
+          <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
+            <span class="text-primary-600 font-bold"><%= master.name&.first %></span>
           </div>
           <div class="ml-3">
             <p class="text-sm font-medium text-gray-900"><%= master.name %></p>

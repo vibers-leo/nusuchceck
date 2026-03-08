@@ -2,7 +2,7 @@
   <%= render "shared/page_header",
       title: "견적서 ##{@estimate.id}",
       back_path: customers_request_path(@estimate.request),
-      back_text: "신고 상세로 돌아가기" %>
+      back_text: "체크 상세로 돌아가기" %>
 
   <div class="flex items-center justify-end mb-4">
     <%
@@ -19,11 +19,11 @@
     </span>
   </div>
 
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-6">
+  <div class="bg-white rounded-2xl border border-gray-100 p-6 space-y-6">
     <!-- 기본 정보 -->
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
       <div>
-        <dt class="font-medium text-gray-500">신고 번호</dt>
+        <dt class="font-medium text-gray-500">체크 번호</dt>
         <dd class="mt-1 text-gray-900">#<%= @estimate.request_id %></dd>
       </div>
       <div>
@@ -88,7 +88,7 @@
         </div>
         <div class="flex justify-between w-64 pt-2 border-t-2 border-gray-300 text-base">
           <span class="font-bold text-gray-900">총액</span>
-          <span class="font-bold text-blue-600"><%= number_to_currency(@estimate.total_amount, unit: "₩", precision: 0) %></span>
+          <span class="font-bold text-primary-600"><%= number_to_currency(@estimate.total_amount, unit: "₩", precision: 0) %></span>
         </div>
       </div>
     </div>

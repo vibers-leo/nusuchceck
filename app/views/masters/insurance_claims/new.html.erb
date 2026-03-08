@@ -4,44 +4,44 @@
     <p class="mt-3 text-lg text-gray-600">고객을 위해 보험청구서를 작성해주세요</p>
     <p class="text-gray-600">전문가가 작성하면 승인률이 높아져요</p>
     <% if @insurance_claim.request.present? %>
-      <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-full text-sm text-blue-700 font-medium">
+      <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-primary-50 rounded-full text-sm text-primary-700 font-medium">
         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
         </svg>
-        신고(NSC-<%= @insurance_claim.request.id.to_s.rjust(6, '0') %>)에서 정보가 자동으로 채워졌어요
+        체크(NSC-<%= @insurance_claim.request.id.to_s.rjust(6, '0') %>)에서 정보가 자동으로 채워졌어요
       </div>
     <% end %>
   </div>
 
   <!-- 절차 안내 -->
-  <div class="mb-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+  <div class="mb-8 bg-gradient-to-br from-primary-50 to-indigo-50 rounded-2xl p-6 border border-primary-100">
     <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
       <span class="text-xl">📋</span>
       이렇게 진행돼요
     </h3>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
       <div class="bg-white rounded-xl p-4">
-        <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold mb-2">1</div>
+        <div class="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold mb-2">1</div>
         <p class="font-semibold text-gray-900 text-sm">청구서 작성</p>
         <p class="text-xs text-gray-600 mt-1">견적서와 영수증 첨부</p>
       </div>
       <div class="bg-white rounded-xl p-4">
-        <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold mb-2">2</div>
+        <div class="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold mb-2">2</div>
         <p class="font-semibold text-gray-900 text-sm">고객에게 전송</p>
         <p class="text-xs text-gray-600 mt-1">검토 요청 알림 발송</p>
       </div>
       <div class="bg-white rounded-xl p-4">
-        <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold mb-2">3</div>
+        <div class="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold mb-2">3</div>
         <p class="font-semibold text-gray-900 text-sm">고객 검토</p>
         <p class="text-xs text-gray-600 mt-1">고객이 내용 확인</p>
       </div>
       <div class="bg-white rounded-xl p-4">
-        <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold mb-2">4</div>
+        <div class="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold mb-2">4</div>
         <p class="font-semibold text-gray-900 text-sm">자동 제출</p>
         <p class="text-xs text-gray-600 mt-1">승인 시 보험사 접수</p>
       </div>
     </div>
-    <div class="mt-4 pt-4 border-t border-blue-200 text-sm">
+    <div class="mt-4 pt-4 border-t border-primary-200 text-sm">
       <p class="font-semibold text-gray-900 mb-2">💡 꼭 첨부해야 할 서류</p>
       <ul class="text-gray-700 space-y-1 text-xs">
         <li>• 공사 견적서 또는 영수증 (필수)</li>
@@ -53,7 +53,7 @@
   </div>
 
   <div class="mb-4">
-    <%= link_to masters_insurance_claims_path, class: "text-sm text-blue-600 hover:text-blue-800 flex items-center" do %>
+    <%= link_to masters_insurance_claims_path, class: "text-sm text-primary-600 hover:text-primary-800 flex items-center" do %>
       <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
       </svg>
@@ -61,7 +61,7 @@
     <% end %>
   </div>
 
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+  <div class="bg-white rounded-2xl border border-gray-100 p-6">
     <%= form_with(model: [:masters, @insurance_claim],
                   url: masters_request_insurance_claims_path(@insurance_claim.request),
                   html: { multipart: true }, class: "space-y-6") do |f| %>
@@ -78,7 +78,7 @@
           <span>👤</span>
           <span>고객 정보</span>
         </legend>
-        <p class="text-xs text-gray-600">신고 정보에서 자동으로 채워졌어요</p>
+        <p class="text-xs text-gray-600">체크 정보에서 자동으로 채워졌어요</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <%= f.label :applicant_name, "성명 *", class: "block text-sm font-medium text-gray-900 mb-1" %>
@@ -173,7 +173,7 @@
           <span class="text-xs font-normal text-gray-500">(선택사항)</span>
         </legend>
         <p class="text-xs text-gray-600">고객이 가입한 보험이 있다면 입력해주세요</p>
-        <div class="px-4 py-3 bg-blue-50 rounded-lg text-sm text-blue-700">
+        <div class="px-4 py-3 bg-primary-50 rounded-lg text-sm text-primary-700">
           <p class="flex items-start gap-2">
             <svg class="w-4 h-4 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
@@ -250,10 +250,10 @@
             <li>• 피해 확인서 (아래층 피해가 있는 경우)</li>
           </ul>
         </div>
-        <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-blue-400 transition">
+        <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-primary-400 transition">
           <%= f.file_field :supporting_documents, multiple: true, accept: "image/*,application/pdf",
                 required: true,
-                class: "w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer cursor-pointer" %>
+                class: "w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary-600 file:text-white hover:file:bg-primary-700 file:cursor-pointer cursor-pointer" %>
           <p class="mt-2 text-xs text-gray-500">사진, PDF 파일 · 최대 10개 · 각 파일당 10MB 이하</p>
         </div>
         <p class="text-xs text-red-600 font-medium">⚠️ 견적서/영수증이 없으면 보험사 심사가 거부될 수 있어요</p>
@@ -273,7 +273,7 @@
           <%= link_to "취소", masters_insurance_claims_path,
                 class: "px-5 py-2.5 rounded-lg font-medium text-gray-700 hover:bg-gray-100 transition" %>
           <%= f.submit "💾 임시 저장하기",
-                class: "px-8 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition shadow-lg hover:shadow-xl" %>
+                class: "px-8 py-3 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 transition shadow-lg hover:shadow-xl" %>
         </div>
         <p class="text-xs text-center text-gray-500 mt-3">저장 후 내용을 확인하고 고객에게 보낼 수 있어요</p>
       </div>

@@ -1,19 +1,19 @@
-<%# 상태 뱃지 파셜 - status 변수를 받아서 색상별 뱃지 표시 %>
+<%# 당근마켓 스타일 상태 뱃지 - pill 형태 %>
 <%
   badge_colors = {
-    "reported"               => "bg-blue-100 text-blue-800",
-    "assigned"               => "bg-yellow-100 text-yellow-800",
-    "visiting"               => "bg-amber-100 text-amber-800",
-    "detecting"              => "bg-orange-100 text-orange-800",
-    "no_leak_found"          => "bg-gray-100 text-gray-800",
-    "estimate_pending"       => "bg-indigo-100 text-indigo-800",
-    "estimate_submitted"     => "bg-cyan-100 text-cyan-800",
-    "construction_agreed"    => "bg-teal-100 text-teal-800",
-    "escrow_deposited"       => "bg-emerald-100 text-emerald-800",
-    "constructing"           => "bg-purple-100 text-purple-800",
-    "construction_completed" => "bg-lime-100 text-lime-800",
+    "reported"               => "bg-gray-100 text-gray-700",
+    "assigned"               => "bg-primary-50 text-primary-700",
+    "visiting"               => "bg-primary-100 text-primary-700",
+    "detecting"              => "bg-amber-50 text-amber-700",
+    "no_leak_found"          => "bg-gray-100 text-gray-600",
+    "estimate_pending"       => "bg-primary-50 text-primary-700",
+    "estimate_submitted"     => "bg-primary-100 text-primary-700",
+    "construction_agreed"    => "bg-primary-100 text-primary-800",
+    "escrow_deposited"       => "bg-primary-50 text-primary-700",
+    "constructing"           => "bg-violet-50 text-violet-700",
+    "construction_completed" => "bg-green-50 text-green-700",
     "closed"                 => "bg-green-100 text-green-800",
-    "cancelled"              => "bg-red-100 text-red-800"
+    "cancelled"              => "bg-red-50 text-red-600"
   }
 
   status_labels = {
@@ -32,9 +32,9 @@
     "cancelled"              => "취소"
   }
 
-  css_class = badge_colors[status.to_s] || "bg-gray-100 text-gray-800"
+  css_class = badge_colors[status.to_s] || "bg-gray-100 text-gray-700"
   label = status_labels[status.to_s] || status.to_s.humanize
 %>
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= css_class %>" role="status" aria-label="상태: <%= label %>">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold <%= css_class %>" role="status" aria-label="상태: <%= label %>">
   <%= label %>
 </span>

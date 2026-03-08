@@ -1,7 +1,7 @@
 <div class="max-w-2xl mx-auto">
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 md:p-10">
+  <div class="bg-white rounded-2xl border border-gray-100 p-8 md:p-10">
     <div class="text-center mb-8">
-      <div class="inline-flex items-center px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium mb-4">
+      <div class="inline-flex items-center px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium mb-4">
         전문가 가입
       </div>
       <h1 class="text-3xl font-bold text-gray-900">파트너 전문가 등록</h1>
@@ -31,7 +31,7 @@
       <!-- 기본 정보 섹션 -->
       <div class="border-b border-gray-100 pb-6">
         <h3 class="text-base font-semibold text-gray-800 mb-4 flex items-center">
-          <svg class="w-4 h-4 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
           </svg>
           기본 정보
@@ -55,7 +55,7 @@
       <!-- 비밀번호 섹션 -->
       <div class="border-b border-gray-100 pb-6">
         <h3 class="text-base font-semibold text-gray-800 mb-4 flex items-center">
-          <svg class="w-4 h-4 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
           </svg>
           비밀번호
@@ -81,7 +81,7 @@
         <!-- 경력 + 전문 분야 -->
         <div class="border-b border-gray-100 pb-6">
           <h3 class="text-base font-semibold text-gray-800 mb-4 flex items-center">
-            <svg class="w-4 h-4 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
             </svg>
             전문 분야 및 경력
@@ -108,7 +108,7 @@
             </label>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
               <% MasterProfile::SPECIALTY_OPTIONS.each do |specialty| %>
-                <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-emerald-400 hover:bg-emerald-50 transition-colors has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50">
+                <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-emerald-400 hover:bg-primary-50 transition-colors has-[:checked]:border-emerald-500 has-[:checked]:bg-primary-50">
                   <%= pf.check_box :specialty_types,
                     { multiple: true, include_hidden: false },
                     specialty, nil %>
@@ -123,7 +123,7 @@
         <!-- 서비스 지역 섹션 -->
         <div class="border-b border-gray-100 pb-6">
           <h3 class="text-base font-semibold text-gray-800 mb-4 flex items-center">
-            <svg class="w-4 h-4 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
@@ -136,7 +136,7 @@
                 name="user[master_profile_attributes][service_areas][]"
                 placeholder="예: 서울시 강남구"
                 class="<%= input_classes(:text) %> flex-1">
-              <button type="button" onclick="addServiceArea()" class="px-3 py-2 bg-emerald-100 text-emerald-700 rounded-lg hover:bg-emerald-200 transition-colors text-sm font-medium whitespace-nowrap">
+              <button type="button" onclick="addServiceArea()" class="px-3 py-2 bg-primary-100 text-primary-700 rounded-lg hover:bg-emerald-200 transition-colors text-sm font-medium whitespace-nowrap">
                 + 추가
               </button>
             </div>
@@ -147,7 +147,7 @@
         <!-- 자기소개 섹션 -->
         <div class="border-b border-gray-100 pb-6">
           <h3 class="text-base font-semibold text-gray-800 mb-4 flex items-center">
-            <svg class="w-4 h-4 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
             </svg>
             간단 자기소개 <span class="text-gray-400 font-normal text-sm ml-1">(선택)</span>
@@ -163,14 +163,14 @@
 
       <!-- 가입 버튼 -->
       <div class="pt-2">
-        <%= f.submit "전문가 가입하기", class: "w-full px-6 py-3.5 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors cursor-pointer text-base" %>
+        <%= f.submit "전문가 가입하기", class: "w-full px-6 py-3.5 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors cursor-pointer text-base" %>
       </div>
     <% end %>
 
     <!-- 가입 후 안내 -->
-    <div class="mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-100">
-      <h4 class="text-sm font-semibold text-emerald-800 mb-2">가입 후 진행 절차</h4>
-      <ol class="text-xs text-emerald-700 space-y-1 list-decimal list-inside">
+    <div class="mt-6 p-4 bg-primary-50 rounded-lg border border-emerald-100">
+      <h4 class="text-sm font-semibold text-primary-800 mb-2">가입 후 진행 절차</h4>
+      <ol class="text-xs text-primary-700 space-y-1 list-decimal list-inside">
         <li>프로필에서 자격증, 경력사항, 계좌정보를 등록해 주세요</li>
         <li>관리자가 자격을 검토한 후 인증을 완료합니다 (1-2 영업일)</li>
         <li>인증 완료 후 공개 오더 목록에서 원하는 작업을 선택할 수 있습니다</li>
@@ -180,14 +180,14 @@
     <!-- 하단 링크 -->
     <div class="mt-6 text-center text-sm text-gray-500">
       이미 계정이 있으신가요?
-      <%= link_to "로그인", new_user_session_path, class: "text-emerald-600 hover:text-emerald-800 font-semibold" %>
+      <%= link_to "로그인", new_user_session_path, class: "text-primary-600 hover:text-primary-800 font-semibold" %>
     </div>
 
     <!-- 고객 가입 안내 -->
     <div class="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-200 text-center">
       <p class="text-sm text-gray-600">
         누수 수리가 필요한 고객이신가요?
-        <%= link_to "고객 회원가입", new_user_registration_path, class: "text-blue-600 hover:text-blue-800 font-semibold" %>
+        <%= link_to "고객 회원가입", new_user_registration_path, class: "text-primary-600 hover:text-primary-800 font-semibold" %>
       </p>
     </div>
   </div>

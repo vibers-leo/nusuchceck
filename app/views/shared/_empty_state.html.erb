@@ -1,31 +1,43 @@
-<%# 사용법: render "shared/empty_state", icon: "document", title: "데이터 없음", description: "..." %>
-<%# 옵션: icon (document|search|user), title, description, cta_text, cta_path %>
-
-<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
+<%# 당근마켓 스타일 빈 상태 - 친근하고 따뜻한 톤 %>
+<div class="py-16 text-center">
   <% case local_assigns.fetch(:icon, "document") %>
   <% when "document" %>
-    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-    </svg>
+    <div class="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
+      <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+      </svg>
+    </div>
   <% when "search" %>
-    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-    </svg>
+    <div class="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
+      <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+    </div>
   <% when "user" %>
-    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-    </svg>
+    <div class="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
+      <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+      </svg>
+    </div>
+  <% when "water" %>
+    <div class="w-16 h-16 mx-auto bg-primary-50 rounded-full flex items-center justify-center mb-4">
+      <svg class="h-8 w-8 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3c-4.97 4.97-7 8.03-7 11a7 7 0 1014 0c0-2.97-2.03-6.03-7-11z"/>
+      </svg>
+    </div>
   <% end %>
 
-  <h3 class="mt-4 text-lg font-medium text-gray-900"><%= local_assigns.fetch(:title, "데이터 없음") %></h3>
+  <h3 class="text-base font-semibold text-gray-900"><%= local_assigns.fetch(:title, "아직 내용이 없어요") %></h3>
 
   <% if local_assigns[:description] %>
-    <p class="mt-2 text-sm text-gray-500"><%= description %></p>
+    <p class="mt-1.5 text-sm text-gray-500 leading-relaxed"><%= description %></p>
   <% end %>
 
   <% if local_assigns[:cta_text] && local_assigns[:cta_path] %>
-    <div class="mt-6">
-      <%= link_to cta_text, cta_path, class: btn_classes(:primary, :md) %>
+    <div class="mt-5">
+      <%= link_to cta_path, class: "inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-semibold bg-primary-600 text-white hover:bg-primary-700 transition-colors" do %>
+        <%= cta_text %>
+      <% end %>
     </div>
   <% end %>
 </div>

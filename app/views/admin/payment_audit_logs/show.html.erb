@@ -21,7 +21,7 @@
             <% action_class = case @payment_audit_log.action
                               when "success" then "bg-green-100 text-green-800"
                               when "fail" then "bg-red-100 text-red-800"
-                              when "attempt" then "bg-blue-100 text-blue-800"
+                              when "attempt" then "bg-primary-100 text-primary-800"
                               when "refund" then "bg-yellow-100 text-yellow-800"
                               when "cancel" then "bg-gray-100 text-gray-800"
                               when "webhook_received" then "bg-purple-100 text-purple-800"
@@ -42,7 +42,7 @@
           <dt class="text-sm font-medium text-gray-500">사용자</dt>
           <dd class="mt-1 text-sm text-gray-900">
             <% if @payment_audit_log.user %>
-              <%= link_to @payment_audit_log.user.email, admin_user_path(@payment_audit_log.user), class: "text-blue-600 hover:text-blue-800" %>
+              <%= link_to @payment_audit_log.user.email, admin_user_path(@payment_audit_log.user), class: "text-primary-600 hover:text-primary-800" %>
               <span class="text-gray-500">(#<%= @payment_audit_log.user.id %>)</span>
             <% else %>
               <span class="text-gray-400">없음</span>
@@ -54,7 +54,7 @@
           <dt class="text-sm font-medium text-gray-500">에스크로 거래</dt>
           <dd class="mt-1 text-sm text-gray-900">
             <% if @payment_audit_log.escrow_transaction %>
-              <%= link_to "##{@payment_audit_log.escrow_transaction.id}", admin_escrow_transaction_path(@payment_audit_log.escrow_transaction), class: "text-blue-600 hover:text-blue-800" %>
+              <%= link_to "##{@payment_audit_log.escrow_transaction.id}", admin_escrow_transaction_path(@payment_audit_log.escrow_transaction), class: "text-primary-600 hover:text-primary-800" %>
               <span class="text-gray-500">
                 (<%= @payment_audit_log.escrow_transaction.escrow_type %> / <%= number_to_currency(@payment_audit_log.escrow_transaction.amount, unit: "₩", precision: 0) %>)
               </span>
@@ -84,9 +84,9 @@
         <% if @payment_audit_log.details["order_id"] || @payment_audit_log.details["amount"] || @payment_audit_log.details["error_message"] %>
           <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
             <% if @payment_audit_log.details["order_id"] %>
-              <div class="bg-blue-50 rounded-lg p-4">
-                <div class="text-sm font-medium text-blue-900">Order ID</div>
-                <div class="mt-1 text-lg font-mono text-blue-700"><%= @payment_audit_log.details["order_id"] %></div>
+              <div class="bg-primary-50 rounded-lg p-4">
+                <div class="text-sm font-medium text-primary-900">Order ID</div>
+                <div class="mt-1 text-lg font-mono text-primary-700"><%= @payment_audit_log.details["order_id"] %></div>
               </div>
             <% end %>
 
@@ -128,7 +128,7 @@
                   <% action_class = case log.action
                                     when "success" then "bg-green-100 text-green-800"
                                     when "fail" then "bg-red-100 text-red-800"
-                                    when "attempt" then "bg-blue-100 text-blue-800"
+                                    when "attempt" then "bg-primary-100 text-primary-800"
                                     when "refund" then "bg-yellow-100 text-yellow-800"
                                     when "cancel" then "bg-gray-100 text-gray-800"
                                     when "webhook_received" then "bg-purple-100 text-purple-800"
@@ -142,7 +142,7 @@
                     <span class="text-sm text-gray-500 font-mono"><%= log.details["order_id"] %></span>
                   <% end %>
                 </div>
-                <%= link_to "상세", admin_payment_audit_log_path(log), class: "text-blue-600 hover:text-blue-800 text-sm" %>
+                <%= link_to "상세", admin_payment_audit_log_path(log), class: "text-primary-600 hover:text-primary-800 text-sm" %>
               </div>
             <% end %>
           </div>

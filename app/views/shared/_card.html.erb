@@ -1,12 +1,8 @@
-<%# 사용법: render "shared/card", title: "제목" do %>
-<%#   카드 내용 %>
-<%# end %>
-<%# 옵션: title, action (우측 상단 링크/버튼) %>
-
-<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+<%# 당근마켓 스타일 카드 - border 기반, shadow 최소 %>
+<div class="bg-white rounded-2xl border border-gray-100 p-5">
   <% if local_assigns[:title] %>
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-semibold text-gray-900"><%= title %></h2>
+      <h2 class="text-lg font-bold text-gray-900"><%= title %></h2>
       <% if local_assigns[:action] %>
         <%= action %>
       <% end %>

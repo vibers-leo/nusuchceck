@@ -1,0 +1,40 @@
+{
+  "name": "누수체크",
+  "short_name": "누수체크",
+  "description": "AI 기반 누수 감지, 전문가 매칭, 보험청구 자동화 플랫폼",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#0d9488",
+  "lang": "ko",
+  "categories": ["utilities", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "누수 체크하기",
+      "short_name": "체크",
+      "url": "/customers/requests/new",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "AI 빠른 점검",
+      "short_name": "AI점검",
+      "url": "/leak_inspections/new",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

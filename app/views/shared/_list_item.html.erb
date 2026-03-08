@@ -1,0 +1,36 @@
+<%# 당근마켓 스타일 리스트 아이템 %>
+<%# 사용법: render "shared/list_item", title: "제목", subtitle: "부제목", path: some_path %>
+<%# 옵션: title, subtitle, meta (시간/위치), badge_status, thumbnail_url, path, price %>
+
+<%= link_to (local_assigns[:path] || "#"), class: "block list-item-touch" do %>
+  <div class="flex items-start py-4 px-1 border-b border-gray-100">
+    <%# 썸네일 %>
+    <% if local_assigns[:thumbnail_url] %>
+      <div class="flex-shrink-0 mr-4">
+        <img src="<%= thumbnail_url %>" alt="" class="w-24 h-24 rounded-xl object-cover bg-gray-100" loading="lazy">
+      </div>
+    <% end %>
+
+    <%# 콘텐츠 %>
+    <div class="flex-1 min-w-0">
+      <div class="flex items-start justify-between">
+        <h3 class="text-[15px] font-semibold text-gray-900 truncate pr-2"><%= title %></h3>
+        <% if local_assigns[:badge_status] %>
+          <%= render "shared/status_badge", status: badge_status %>
+        <% end %>
+      </div>
+
+      <% if local_assigns[:subtitle] %>
+        <p class="text-sm text-gray-500 mt-0.5 truncate"><%= subtitle %></p>
+      <% end %>
+
+      <% if local_assigns[:meta] %>
+        <p class="text-xs text-gray-400 mt-1"><%= meta %></p>
+      <% end %>
+
+      <% if local_assigns[:price] %>
+        <p class="text-[15px] font-bold text-gray-900 mt-1.5"><%= price %></p>
+      <% end %>
+    </div>
+  </div>
+<% end %>

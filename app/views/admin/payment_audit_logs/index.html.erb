@@ -9,7 +9,7 @@
   <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
     <div class="bg-white rounded-lg shadow p-4">
       <div class="text-sm text-gray-600">결제 시도</div>
-      <div class="text-2xl font-bold text-blue-600"><%= @stats[:total_attempts] %></div>
+      <div class="text-2xl font-bold text-primary-600"><%= @stats[:total_attempts] %></div>
     </div>
 
     <div class="bg-white rounded-lg shadow p-4">
@@ -56,7 +56,7 @@
                          ["웹훅 수신", "webhook_received"]
                        ], params.dig(:q, :action_eq)),
                        {},
-                       class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+                       class: "block w-full rounded-md border-gray-300 focus:border-primary-500 focus:ring-primary-500" %>
         </div>
 
         <!-- User ID 필터 -->
@@ -64,7 +64,7 @@
           <%= f.label :user_id_eq, "사용자 ID", class: "block text-sm font-medium text-gray-700 mb-1" %>
           <%= f.text_field :user_id_eq,
                            placeholder: "사용자 ID",
-                           class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+                           class: "block w-full rounded-md border-gray-300 focus:border-primary-500 focus:ring-primary-500" %>
         </div>
 
         <!-- IP Address 필터 -->
@@ -72,19 +72,19 @@
           <%= f.label :ip_address_cont, "IP 주소", class: "block text-sm font-medium text-gray-700 mb-1" %>
           <%= f.text_field :ip_address_cont,
                            placeholder: "IP 주소",
-                           class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+                           class: "block w-full rounded-md border-gray-300 focus:border-primary-500 focus:ring-primary-500" %>
         </div>
 
         <!-- 날짜 필터 -->
         <div>
           <%= f.label :created_at_gteq, "날짜 (이후)", class: "block text-sm font-medium text-gray-700 mb-1" %>
           <%= f.date_field :created_at_gteq,
-                           class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+                           class: "block w-full rounded-md border-gray-300 focus:border-primary-500 focus:ring-primary-500" %>
         </div>
       </div>
 
       <div class="flex gap-2">
-        <%= f.submit "검색", class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition" %>
+        <%= f.submit "검색", class: "px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition" %>
         <%= link_to "초기화", admin_payment_audit_logs_path, class: "px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition" %>
       </div>
     <% end %>
@@ -113,7 +113,7 @@
               <% action_class = case log.action
                                 when "success" then "bg-green-100 text-green-800"
                                 when "fail" then "bg-red-100 text-red-800"
-                                when "attempt" then "bg-blue-100 text-blue-800"
+                                when "attempt" then "bg-primary-100 text-primary-800"
                                 when "refund" then "bg-yellow-100 text-yellow-800"
                                 when "cancel" then "bg-gray-100 text-gray-800"
                                 when "webhook_received" then "bg-purple-100 text-purple-800"
@@ -125,14 +125,14 @@
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
               <% if log.user %>
-                <%= link_to log.user.email, admin_user_path(log.user), class: "text-blue-600 hover:text-blue-800" %>
+                <%= link_to log.user.email, admin_user_path(log.user), class: "text-primary-600 hover:text-primary-800" %>
               <% else %>
                 <span class="text-gray-400">-</span>
               <% end %>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
               <% if log.escrow_transaction %>
-                <%= link_to "##{log.escrow_transaction.id}", admin_escrow_transaction_path(log.escrow_transaction), class: "text-blue-600 hover:text-blue-800" %>
+                <%= link_to "##{log.escrow_transaction.id}", admin_escrow_transaction_path(log.escrow_transaction), class: "text-primary-600 hover:text-primary-800" %>
               <% else %>
                 <span class="text-gray-400">-</span>
               <% end %>
@@ -151,7 +151,7 @@
               <%= l(log.created_at, format: :short) %>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm">
-              <%= link_to "상세", admin_payment_audit_log_path(log), class: "text-blue-600 hover:text-blue-800" %>
+              <%= link_to "상세", admin_payment_audit_log_path(log), class: "text-primary-600 hover:text-primary-800" %>
             </td>
           </tr>
         <% end %>

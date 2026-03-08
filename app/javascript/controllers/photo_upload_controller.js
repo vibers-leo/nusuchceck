@@ -41,17 +41,17 @@ export default class extends Controller {
 
   dragover(event) {
     event.preventDefault()
-    this.dropzoneTarget.classList.add("border-blue-400", "bg-blue-50")
+    this.dropzoneTarget.classList.add("border-primary-400", "bg-primary-50")
   }
 
   dragleave(event) {
     event.preventDefault()
-    this.dropzoneTarget.classList.remove("border-blue-400", "bg-blue-50")
+    this.dropzoneTarget.classList.remove("border-primary-400", "bg-primary-50")
   }
 
   drop(event) {
     event.preventDefault()
-    this.dropzoneTarget.classList.remove("border-blue-400", "bg-blue-50")
+    this.dropzoneTarget.classList.remove("border-primary-400", "bg-primary-50")
 
     const files = event.dataTransfer.files
     if (files.length > 0 && files[0].type.startsWith("image/")) {

@@ -1,6 +1,6 @@
 <div class="max-w-2xl mx-auto py-8">
   <div class="mb-6">
-    <%= link_to customers_insurance_claim_path(@insurance_claim), class: "text-sm text-blue-600 hover:text-blue-800 flex items-center mb-3" do %>
+    <%= link_to customers_insurance_claim_path(@insurance_claim), class: "text-sm text-primary-600 hover:text-primary-800 flex items-center mb-3" do %>
       <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
       </svg>
@@ -19,7 +19,7 @@
     </p>
   </div>
 
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+  <div class="bg-white rounded-2xl border border-gray-100 p-6">
     <%= form_with(model: [:customers, @insurance_claim],
                   html: { multipart: true }, class: "space-y-6",
                   data: { controller: "form-validation", action: "submit->form-validation#submit" }) do |f| %>
@@ -159,9 +159,9 @@
           <span>증빙 서류 추가</span>
         </legend>
         <p class="text-xs text-gray-600">새로운 서류를 추가할 수 있어요. 기존 서류는 유지돼요</p>
-        <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-blue-400 transition">
+        <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-primary-400 transition">
           <%= f.file_field :supporting_documents, multiple: true, accept: "image/*,application/pdf",
-                class: "w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer cursor-pointer" %>
+                class: "w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary-600 file:text-white hover:file:bg-primary-700 file:cursor-pointer cursor-pointer" %>
           <p class="mt-2 text-xs text-gray-500">사진, PDF 파일 · 최대 10개 · 각 파일당 10MB 이하</p>
         </div>
       </fieldset>
@@ -171,7 +171,7 @@
           <%= link_to "취소", customers_insurance_claim_path(@insurance_claim),
                 class: "px-5 py-2.5 rounded-lg font-medium text-gray-700 hover:bg-gray-100 transition" %>
           <%= f.submit "💾 저장하기",
-                class: "px-8 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition shadow-lg hover:shadow-xl" %>
+                class: "px-8 py-3 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 transition shadow-lg hover:shadow-xl" %>
         </div>
         <p class="text-xs text-center text-gray-500 mt-3">저장 후에도 언제든지 다시 수정할 수 있어요</p>
       </div>

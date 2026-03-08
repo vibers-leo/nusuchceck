@@ -1,7 +1,7 @@
 <div class="space-y-6 py-8">
   <!-- 헤더 -->
   <div class="text-center mb-8">
-    <div class="inline-flex items-center px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium mb-3">
+    <div class="inline-flex items-center px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium mb-3">
       선착순 오더
     </div>
     <h1 class="text-3xl font-bold text-gray-900">공개 오더 목록</h1>
@@ -13,9 +13,9 @@
     <%= link_to masters_requests_path, class: "px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 border-b-2 border-transparent hover:border-gray-300 transition-colors" do %>
       내 진행 중 작업
     <% end %>
-    <span class="px-4 py-2 text-sm font-medium text-emerald-700 border-b-2 border-emerald-500">
+    <span class="px-4 py-2 text-sm font-medium text-primary-700 border-b-2 border-emerald-500">
       공개 오더
-      <span class="ml-1.5 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-emerald-500 text-white rounded-full">
+      <span class="ml-1.5 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-primary-500 text-white rounded-full">
         <%= @requests.total_count %>
       </span>
     </span>
@@ -23,28 +23,28 @@
 
   <!-- 지역 필터 토글 -->
   <% if @my_areas.any? %>
-    <div class="flex items-center gap-3 p-3 bg-blue-50 border border-blue-100 rounded-xl">
-      <svg class="w-5 h-5 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+    <div class="flex items-center gap-3 p-3 bg-primary-50 border border-primary-100 rounded-xl">
+      <svg class="w-5 h-5 text-primary-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
         <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
       </svg>
       <div class="flex-1 min-w-0">
-        <p class="text-sm text-blue-800">
+        <p class="text-sm text-primary-800">
           <strong>내 서비스 지역:</strong>
           <%= @my_areas.join(", ") %>
         </p>
       </div>
       <% if @filter_my_area %>
         <%= link_to open_orders_masters_requests_path(params.permit(:q).to_h),
-              class: "flex-shrink-0 px-3 py-1.5 bg-blue-600 text-white text-xs font-bold rounded-lg" do %>
+              class: "flex-shrink-0 px-3 py-1.5 bg-primary-600 text-white text-xs font-bold rounded-lg" do %>
           내 지역만 보는 중
         <% end %>
         <%= link_to open_orders_masters_requests_path(params.permit(:q).merge(my_area: "0").to_h),
-              class: "flex-shrink-0 px-3 py-1.5 bg-white text-blue-700 border border-blue-300 text-xs font-medium rounded-lg" do %>
+              class: "flex-shrink-0 px-3 py-1.5 bg-white text-primary-700 border border-primary-300 text-xs font-medium rounded-lg" do %>
           전체 보기
         <% end %>
       <% else %>
         <%= link_to open_orders_masters_requests_path(params.permit(:q).merge(my_area: "1").to_h),
-              class: "flex-shrink-0 px-3 py-1.5 bg-blue-600 text-white text-xs font-bold rounded-lg hover:bg-blue-700 transition" do %>
+              class: "flex-shrink-0 px-3 py-1.5 bg-primary-600 text-white text-xs font-bold rounded-lg hover:bg-primary-700 transition" do %>
           내 지역만 보기
         <% end %>
       <% end %>
@@ -52,7 +52,7 @@
   <% end %>
 
   <!-- 필터 -->
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+  <div class="bg-white rounded-2xl border border-gray-100 p-4">
     <%= search_form_for @q, url: open_orders_masters_requests_path, html: { method: :get, class: "flex flex-col sm:flex-row gap-3" } do |f| %>
       <% if @filter_my_area %>
         <%= hidden_field_tag :my_area, "1" %>
@@ -124,7 +124,7 @@
           price_range_max = (estimated_price * 1.2).to_i
         %>
 
-        <%= link_to masters_request_path(request), class: "block bg-white rounded-2xl shadow-sm border-2 border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all p-5" do %>
+        <%= link_to masters_request_path(request), class: "block bg-white rounded-2xl border-2 border-gray-100 hover:border-primary-200 hover:shadow-lg transition-all p-5" do %>
           <!-- 헤더: 시간 + 지역 뱃지 -->
           <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2">
@@ -132,7 +132,7 @@
                 <%= time_ago_in_words(request.created_at) %> 전
               </span>
               <% if is_my_area %>
-                <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-bold rounded-full">
+                <span class="px-2 py-0.5 bg-primary-100 text-primary-700 text-xs font-bold rounded-full">
                   내 지역
                 </span>
               <% end %>
@@ -147,13 +147,13 @@
 
           <!-- 거리 + 주소 (강조) -->
           <div class="flex items-start gap-2 mb-3">
-            <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+            <svg class="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
             </svg>
             <div class="flex-1 min-w-0">
               <p class="text-sm font-semibold text-gray-900"><%= truncate(request.address, length: 40) %></p>
               <% if is_my_area %>
-                <p class="text-xs text-blue-600 font-medium mt-0.5">🎯 가까운 지역이에요</p>
+                <p class="text-xs text-primary-600 font-medium mt-0.5">🎯 가까운 지역이에요</p>
               <% end %>
             </div>
           </div>
@@ -194,7 +194,7 @@
             <%= button_to "수락하기",
                   claim_masters_request_path(request),
                   method: :post,
-                  class: "flex-1 text-center px-4 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all shadow-md",
+                  class: "flex-1 text-center px-4 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white text-sm font-bold rounded-xl hover:from-primary-700 hover:to-primary-800 transition-all shadow-md",
                   data: { confirm: "이 오더를 수락하시겠습니까? 선착순이므로 이미 다른 전문가가 수락했을 수 있습니다." },
                   form: { class: "flex-1" } %>
           </div>
@@ -211,8 +211,8 @@
           title: "현재 공개된 오더가 없어요",
           description: "새로운 오더가 등록되면 바로 알려드릴게요" %>
 
-    <div class="mt-6 bg-emerald-50 rounded-xl p-6 border border-emerald-100 text-center">
-      <p class="text-emerald-700 text-sm font-medium">
+    <div class="mt-6 bg-primary-50 rounded-xl p-6 border border-emerald-100 text-center">
+      <p class="text-primary-700 text-sm font-medium">
         고객이 누수 체크를 신청하면 관리자가 검토 후 공개 등록합니다.
         <br>등록 즉시 알림을 받으실 수 있도록 알림을 켜두세요.
       </p>

@@ -1,7 +1,7 @@
 <div class="relative" data-controller="notifications" data-notifications-unread-count-value="<%= current_user.notifications.unread.count %>" data-action="click@window->notifications#close">
   <!-- 알림 벨 버튼 -->
   <button type="button"
-          class="relative p-2 text-white hover:bg-blue-600 rounded-lg transition-smooth"
+          class="relative p-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-smooth"
           data-action="click->notifications#toggle"
           aria-label="알림">
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -25,7 +25,7 @@
       </h3>
       <button type="button"
               data-action="click->notifications#markAllAsRead"
-              class="text-xs text-blue-600 hover:text-blue-800 font-medium">
+              class="text-xs text-primary-600 hover:text-primary-700 font-medium">
         모두 읽음
       </button>
     </div>
@@ -46,7 +46,7 @@
 
     <!-- 푸터 -->
     <div class="px-4 py-3 border-t border-gray-200 text-center">
-      <%= link_to "모든 알림 보기", notifications_path, class: "text-sm text-blue-600 hover:text-blue-800 font-medium" %>
+      <%= link_to "모든 알림 보기", notifications_path, class: "text-sm text-primary-600 hover:text-primary-700 font-medium" %>
     </div>
   </div>
 </div>

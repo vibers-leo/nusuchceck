@@ -1,7 +1,7 @@
 <% content_for :title, "누수체크 - 준비중" %>
 
 <!-- Coming Soon Hero Section -->
-<section class="relative bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800 -mx-4 sm:-mx-6 lg:-mx-8 -mt-8 px-4 sm:px-6 lg:px-8 min-h-screen flex items-center overflow-hidden">
+<section class="relative bg-gradient-to-br from-primary-700 via-primary-600 to-primary-800 -mx-4 sm:-mx-6 lg:-mx-8 -mt-8 px-4 sm:px-6 lg:px-8 min-h-screen flex items-center overflow-hidden">
   <!-- 배경 이미지 -->
   <div class="absolute inset-0 opacity-35">
     <img src="https://images.pexels.com/photos/7836293/pexels-photo-7836293.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750"
@@ -9,13 +9,13 @@
          class="w-full h-full object-cover"
          loading="eager">
   </div>
-  <div class="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-blue-800/60"></div>
+  <div class="absolute inset-0 bg-gradient-to-br from-primary-900/40 to-primary-800/60"></div>
 
   <div class="relative max-w-4xl mx-auto text-center text-white w-full py-20">
     <!-- 로고/브랜드 -->
     <div class="mb-8 animate-fade-in">
       <div class="inline-flex items-center gap-3 px-6 py-3 bg-white/20 rounded-2xl backdrop-blur-sm">
-        <svg class="w-8 h-8 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-8 h-8 text-primary-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
         </svg>
         <span class="text-2xl font-bold">누수체크</span>
@@ -25,16 +25,16 @@
     <!-- 메인 타이틀 -->
     <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-16 animate-fade-in" style="animation-delay: 0.2s">
       누수 문제 해결을 위한<br>
-      <span class="text-blue-200">새로운 플랫폼</span>을 준비중입니다
+      <span class="text-primary-200">새로운 플랫폼</span>을 준비중입니다
     </h1>
 
     <!-- 피드백 요청 -->
     <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.4s">
       <h2 class="text-2xl font-bold mb-4">이런 기능이 꼭 필요하다면 의견을 주세요</h2>
-      <p class="text-blue-100 mb-6">여러분의 소중한 피드백으로 더 나은 서비스를 만들겠습니다</p>
+      <p class="text-primary-100 mb-6">여러분의 소중한 피드백으로 더 나은 서비스를 만들겠습니다</p>
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="mailto:contact@nusucheck.com" class="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-700 rounded-xl font-semibold hover:bg-gray-100 shadow-lg hover:shadow-xl transition-all duration-200">
+        <a href="mailto:contact@nusucheck.com" class="inline-flex items-center justify-center px-8 py-4 bg-white text-primary-700 rounded-xl font-semibold hover:bg-gray-100 shadow-lg hover:shadow-xl transition-all duration-200">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
           </svg>
@@ -52,20 +52,20 @@
 
     <!-- 출시 알림 신청 -->
     <div class="mt-12 animate-fade-in" style="animation-delay: 0.6s">
-      <p class="text-sm text-blue-200 mb-4">출시 소식을 가장 먼저 받아보세요</p>
+      <p class="text-sm text-primary-200 mb-4">출시 소식을 가장 먼저 받아보세요</p>
       <%= form_with url: email_subscriptions_path, method: :post, class: "max-w-md mx-auto flex gap-3" do |f| %>
         <%= f.email_field :email,
                           placeholder: "이메일 주소 입력",
-                          class: "flex-1 px-6 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white/50 backdrop-blur-sm",
+                          class: "flex-1 px-6 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-primary-200 focus:outline-none focus:ring-2 focus:ring-white/50 backdrop-blur-sm",
                           required: true %>
         <%= f.submit "알림 신청",
-                     class: "px-8 py-3 bg-white text-blue-700 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-200 whitespace-nowrap" %>
+                     class: "px-8 py-3 bg-white text-primary-700 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-200 whitespace-nowrap" %>
       <% end %>
     </div>
 
     <!-- 하단 정보 -->
     <div class="mt-16 pt-8 border-t border-white/20 animate-fade-in" style="animation-delay: 0.8s">
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-blue-200">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-primary-200">
         <a href="mailto:contact@nusucheck.com" class="hover:text-white transition-colors">
           📧 contact@nusucheck.com
         </a>

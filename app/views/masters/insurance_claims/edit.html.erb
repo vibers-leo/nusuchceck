@@ -1,6 +1,6 @@
 <div class="max-w-2xl mx-auto py-8">
   <div class="mb-6">
-    <%= link_to masters_insurance_claim_path(@insurance_claim), class: "text-sm text-blue-600 hover:text-blue-800 flex items-center mb-3" do %>
+    <%= link_to masters_insurance_claim_path(@insurance_claim), class: "text-sm text-primary-600 hover:text-primary-800 flex items-center mb-3" do %>
       <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
       </svg>
@@ -22,16 +22,16 @@
     </div>
   <% end %>
 
-  <div class="mb-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-5 border border-blue-100">
+  <div class="mb-6 bg-gradient-to-br from-primary-50 to-indigo-50 rounded-2xl p-5 border border-primary-100">
     <p class="text-sm text-gray-800 flex items-start gap-2">
-      <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+      <svg class="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
         <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
       </svg>
       <span>수정 후 <strong>반드시 저장</strong>해주세요. 저장하지 않으면 변경사항이 사라져요</span>
     </p>
   </div>
 
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+  <div class="bg-white rounded-2xl border border-gray-100 p-6">
     <%= form_with(model: [:masters, @insurance_claim],
                   html: { multipart: true }, class: "space-y-6") do |f| %>
 
@@ -164,9 +164,9 @@
           <span>증빙 서류 추가</span>
         </legend>
         <p class="text-xs text-gray-600">새로운 서류를 추가할 수 있어요. 기존 서류는 유지돼요</p>
-        <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-blue-400 transition">
+        <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-primary-400 transition">
           <%= f.file_field :supporting_documents, multiple: true, accept: "image/*,application/pdf",
-                class: "w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer cursor-pointer" %>
+                class: "w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary-600 file:text-white hover:file:bg-primary-700 file:cursor-pointer cursor-pointer" %>
           <p class="mt-2 text-xs text-gray-500">사진, PDF 파일 · 최대 10개 · 각 파일당 10MB 이하</p>
         </div>
       </fieldset>
@@ -176,7 +176,7 @@
           <%= link_to "취소", masters_insurance_claim_path(@insurance_claim),
                 class: "px-5 py-2.5 rounded-lg font-medium text-gray-700 hover:bg-gray-100 transition" %>
           <%= f.submit "💾 저장하기",
-                class: "px-8 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition shadow-lg hover:shadow-xl" %>
+                class: "px-8 py-3 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 transition shadow-lg hover:shadow-xl" %>
         </div>
         <p class="text-xs text-center text-gray-500 mt-3">저장 후 고객에게 검토 요청을 보낼 수 있어요</p>
       </div>
