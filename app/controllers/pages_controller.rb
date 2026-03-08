@@ -12,4 +12,8 @@ class PagesController < ApplicationController
 
   def pricing
   end
+
+  def how_it_works
+    # 서비스 소개 페이지
+  end
 end

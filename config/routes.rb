@@ -95,6 +95,9 @@ Rails.application.routes.draw do
         patch :auto_submit           # 보험사에 자동 이메일 발송
       end
     end
+
+    # 전문가 목록/상세
+    resources :masters, only: [:index, :show]
   end
 
   # Master namespace
@@ -226,4 +229,5 @@ Rails.application.routes.draw do
   get "home", to: "pages#home"
   get "about", to: "pages#about"
   get "pricing", to: "pages#pricing"
+  get "how-it-works", to: "pages#how_it_works", as: :how_it_works
 end

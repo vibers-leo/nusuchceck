@@ -60,6 +60,8 @@
       <!-- 메뉴 -->
       <div class="flex items-center gap-8">
         <%= link_to "홈", customers_dashboard_path, class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{request.path == customers_dashboard_path ? 'text-primary-600' : ''}" %>
+        <%= link_to "서비스 소개", how_it_works_path, class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{request.path == how_it_works_path ? 'text-primary-600' : ''}" %>
+        <%= link_to "전문가", customers_masters_path, class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{request.path == customers_masters_path ? 'text-primary-600' : ''}" %>
         <%= link_to "내 요청", customers_requests_path, class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{request.path == customers_requests_path ? 'text-primary-600' : ''}" %>
         <%= link_to "보험청구", customers_insurance_claims_path, class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{request.path.start_with?('/customers/insurance_claims') ? 'text-primary-600' : ''}" %>
 
