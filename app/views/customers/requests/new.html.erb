@@ -17,7 +17,7 @@
       </div>
 
       <!-- 프로그레스 바 (Toss 스타일 - 얇고 미니멀) -->
-      <div class="h-1 bg-gray-100 rounded-full overflow-hidden -mt-1">
+      <div class="h-1 bg-gray-100 rounded-full overflow-hidden -mt-1" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="14" aria-label="폼 작성 진행률">
         <div data-check-wizard-target="progressBar" class="h-full bg-primary-500 rounded-full transition-all duration-500 ease-out" style="width: 14%"></div>
       </div>
     </div>
@@ -231,31 +231,41 @@
         </div>
 
         <!-- 영상 업로드 영역 (더 크고 눈에 띄게) -->
-        <div class="border-4 border-dashed border-primary-500 rounded-3xl p-12 text-center hover:border-primary-600 hover:bg-primary-50 bg-gradient-to-br from-primary-50/50 to-blue-50/30 transition-all cursor-pointer shadow-sm hover:shadow-md video-upload-box" id="video-drop-zone">
+        <div class="border-4 border-dashed border-primary-500 rounded-3xl p-12 text-center hover:border-primary-600 hover:bg-primary-50 bg-gradient-to-br from-primary-50/50 to-blue-50/30 transition-all cursor-pointer shadow-sm hover:shadow-md video-upload-box"
+             id="video-drop-zone"
+             role="button"
+             tabindex="0"
+             aria-label="영상 파일 업로드: 촬영하거나 기존 영상을 선택하세요. 10초 이상 권장, 최대 2GB까지 업로드 가능"
+             aria-describedby="video-upload-help">
           <%= f.file_field :videos,
                 multiple: true,
                 accept: "video/mp4,video/quicktime,video/avi,video/webm,video/3gpp",
                 capture: "environment",
                 class: "hidden",
                 id: "video-upload",
+                aria-label="영상 파일 선택",
                 data: {
                   file_counter_target: "videoInput",
                   action: "change->file-counter#updateVideoCounts change->check-wizard#onFileChange"
                 } %>
           <label for="video-upload" class="cursor-pointer block">
-            <div class="inline-block p-8 bg-gradient-to-br from-primary-600 to-blue-600 rounded-3xl mb-6 shadow-lg">
+            <div class="inline-block p-8 bg-gradient-to-br from-primary-600 to-blue-600 rounded-3xl mb-6 shadow-lg" aria-hidden="true">
               <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
               </svg>
             </div>
             <p class="text-2xl font-bold text-gray-900 mb-3">📱 촬영하거나 기존 영상 선택</p>
             <p class="text-lg text-primary-700 font-semibold mb-2">10초 이상 권장</p>
-            <p class="text-base text-gray-600"><strong class="text-primary-600">최대 2GB까지</strong> 업로드 가능 · MP4, MOV, WebM</p>
+            <p id="video-upload-help" class="text-base text-gray-600"><strong class="text-primary-600">최대 2GB까지</strong> 업로드 가능 · MP4, MOV, WebM</p>
           </label>
         </div>
 
-        <!-- 업로드된 파일 표시 -->
-        <div data-file-counter-target="videoCount" class="mt-4 text-center text-sm font-medium text-gray-500">
+        <!-- 업로드된 파일 표시 (스크린 리더 알림) -->
+        <div data-file-counter-target="videoCount"
+             class="mt-4 text-center text-sm font-medium text-gray-500"
+             role="status"
+             aria-live="polite"
+             aria-atomic="true">
         </div>
 
         <!-- 촬영 팁 (노란색 박스로 눈에 띄게) -->

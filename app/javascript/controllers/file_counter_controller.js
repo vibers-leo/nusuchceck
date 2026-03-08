@@ -9,6 +9,27 @@ export default class extends Controller {
 
   connect() {
     this.updateVideoCounts()
+    this.setupDropZone()
+  }
+
+  // 드롭존 키보드 접근성 설정
+  setupDropZone() {
+    const dropZone = document.getElementById('video-drop-zone')
+    if (dropZone) {
+      dropZone.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          this.videoInputTarget.click()
+        }
+      })
+
+      dropZone.addEventListener('click', (e) => {
+        // label 클릭이 아닌 경우에만 처리
+        if (e.target === dropZone) {
+          this.videoInputTarget.click()
+        }
+      })
+    }
   }
 
   updateVideoCounts() {

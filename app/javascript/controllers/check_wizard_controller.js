@@ -237,6 +237,12 @@ export default class extends Controller {
     const percentage = (this.currentStepValue / this.totalStepsValue) * 100
     if (this.hasProgressBarTarget) {
       this.progressBarTarget.style.width = `${percentage}%`
+
+      // 접근성: 프로그레스 바 ARIA 속성 업데이트
+      const progressContainer = this.progressBarTarget.parentElement
+      if (progressContainer) {
+        progressContainer.setAttribute('aria-valuenow', Math.round(percentage))
+      }
     }
   }
 
