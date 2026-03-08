@@ -4,6 +4,8 @@ class User < ApplicationRecord
 
   # Associations
   has_many :notifications, as: :recipient, dependent: :destroy
+  has_many :user_coupons, dependent: :destroy
+  has_many :coupons, through: :user_coupons
 
   validates :name, presence: true
   validates :phone, format: { with: /\A01[016789]-?\d{3,4}-?\d{4}\z/, allow_blank: true }

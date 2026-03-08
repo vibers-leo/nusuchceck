@@ -618,3 +618,65 @@ puts ""
 puts "🌐 배포 URL: https://nusucheck.fly.dev"
 puts "✨ 이제 로그인해서 모든 기능을 체험하실 수 있습니다!"
 puts ""
+
+# ===== 쿠폰 데이터 생성 =====
+puts "\n🎁 쿠폰 데이터 생성 중..."
+
+coupons_data = [
+  {
+    code: "FIRST30",
+    name: "첫 체크 30% 할인",
+    description: "처음 누수체크를 이용하시는 분께 출장비 + 검사비 30% 할인",
+    coupon_type: "percentage",
+    discount_value: 30,
+    max_discount: 50000,
+    valid_from: Time.current,
+    valid_until: Time.current + 6.months,
+    usage_limit: 1000
+  },
+  {
+    code: "FRIEND50K",
+    name: "친구 초대 5만원 할인",
+    description: "친구를 초대하면 나도, 친구도 5만원 할인",
+    coupon_type: "fixed_amount",
+    discount_value: 50000,
+    min_amount: 100000,
+    valid_from: Time.current,
+    valid_until: Time.current + 1.year,
+    usage_limit: nil
+  },
+  {
+    code: "REVIEW10K",
+    name: "리뷰 작성 1만원",
+    description: "수리 완료 후 리뷰를 남겨주시면 다음 체크 때 사용 가능한 1만원 쿠폰",
+    coupon_type: "fixed_amount",
+    discount_value: 10000,
+    valid_from: Time.current,
+    valid_until: Time.current + 3.months,
+    usage_limit: nil
+  },
+  {
+    code: "REVIEW20K",
+    name: "사진 리뷰 2만원",
+    description: "사진 첨부 리뷰 작성 시 2만원 쿠폰",
+    coupon_type: "fixed_amount",
+    discount_value: 20000,
+    valid_from: Time.current,
+    valid_until: Time.current + 3.months,
+    usage_limit: nil
+  }
+]
+
+coupons_data.each do |data|
+  Coupon.find_or_create_by!(code: data[:code]) do |coupon|
+    coupon.assign_attributes(data)
+  end
+end
+
+# 고객들에게 쿠폰 지급
+[customer, customer2, customer3, customer4].each do |cust|
+  UserCoupon.find_or_create_by!(user: cust, coupon: Coupon.find_by(code: "FIRST30"))
+end
+
+puts "   ✓ 쿠폰 #{Coupon.count}개 생성 완료"
+puts ""

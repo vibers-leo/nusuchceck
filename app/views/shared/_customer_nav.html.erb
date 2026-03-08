@@ -58,12 +58,42 @@
       <% end %>
 
       <!-- 메뉴 -->
-      <div class="flex items-center gap-8">
+      <div class="flex items-center gap-6">
         <%= link_to "홈", customers_dashboard_path, class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{request.path == customers_dashboard_path ? 'text-primary-600' : ''}" %>
-        <%= link_to "서비스 소개", how_it_works_path, class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{request.path == how_it_works_path ? 'text-primary-600' : ''}" %>
         <%= link_to "전문가", customers_masters_path, class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{request.path == customers_masters_path ? 'text-primary-600' : ''}" %>
         <%= link_to "내 요청", customers_requests_path, class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{request.path == customers_requests_path ? 'text-primary-600' : ''}" %>
-        <%= link_to "보험청구", customers_insurance_claims_path, class: "text-gray-700 hover:text-primary-600 font-medium transition-colors #{request.path.start_with?('/customers/insurance_claims') ? 'text-primary-600' : ''}" %>
+
+        <!-- 더보기 드롭다운 -->
+        <div class="relative group">
+          <button class="text-gray-700 hover:text-primary-600 font-medium transition-colors flex items-center gap-1">
+            <span>더보기</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+
+          <!-- 드롭다운 메뉴 -->
+          <div class="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+            <%= link_to how_it_works_path, class: "block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors first:rounded-t-xl" do %>
+              서비스 소개
+            <% end %>
+            <%= link_to reviews_path, class: "block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
+              ⭐ 리뷰/후기
+            <% end %>
+            <%= link_to faq_path, class: "block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
+              💬 FAQ
+            <% end %>
+            <%= link_to events_path, class: "block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
+              🎁 이벤트
+            <% end %>
+            <%= link_to customers_insurance_claims_path, class: "block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
+              📋 보험청구
+            <% end %>
+            <%= link_to customers_payments_path, class: "block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors last:rounded-b-xl" do %>
+              💳 결제 내역
+            <% end %>
+          </div>
+        </div>
 
         <!-- CTA 버튼 -->
         <%= link_to new_customers_request_path, class: "inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-primary-600 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all font-bold" do %>
@@ -73,14 +103,29 @@
           <span>새 체크</span>
         <% end %>
 
-        <!-- 프로필 -->
-        <%= link_to customers_profile_path, class: "flex items-center gap-2 text-gray-700 hover:text-primary-600 transition-colors" do %>
-          <div class="w-9 h-9 bg-primary-100 rounded-full flex items-center justify-center">
-            <svg class="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
-            </svg>
+        <!-- 프로필 드롭다운 -->
+        <div class="relative group">
+          <button class="flex items-center gap-2 text-gray-700 hover:text-primary-600 transition-colors">
+            <div class="w-9 h-9 bg-primary-100 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+          </button>
+
+          <!-- 프로필 드롭다운 메뉴 -->
+          <div class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+            <%= link_to customers_profile_path, class: "block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors first:rounded-t-xl" do %>
+              👤 내 프로필
+            <% end %>
+            <%= link_to customers_settings_path, class: "block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
+              ⚙️ 설정
+            <% end %>
+            <%= link_to destroy_user_session_path, method: :delete, class: "block px-4 py-3 text-red-600 hover:bg-red-50 transition-colors last:rounded-b-xl" do %>
+              🚪 로그아웃
+            <% end %>
           </div>
-        <% end %>
+        </div>
       </div>
     </div>
   </div>
