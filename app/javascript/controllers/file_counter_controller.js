@@ -1,8 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
-// 파일 업로드 카운터 컨트롤러 (영상만, 당근마켓 스타일 + 드래그 앤 드롭)
+// 파일 업로드 카운터 컨트롤러 (영상만, 당근마켓 스타일 + 드래그 앤 드롭 + 미리보기)
 export default class extends Controller {
-  static targets = ["videoInput", "videoCount"]
+  static targets = ["videoInput", "videoCount", "videoPreview", "videoPreviewContainer"]
   static values = {
     videoMax: { type: Number, default: 10 }
   }
@@ -11,6 +11,31 @@ export default class extends Controller {
     this.updateVideoCounts()
     this.setupDropZone()
     this.setupDragAndDrop()
+    this.setupRemoveVideo()
+  }
+
+  // 영상 제거 이벤트 설정
+  setupRemoveVideo() {
+    this.element.addEventListener('remove-video', (e) => {
+      const index = e.detail.index
+      this.removeVideoAtIndex(index)
+    })
+  }
+
+  // 특정 인덱스의 영상 제거
+  removeVideoAtIndex(index) {
+    const dt = new DataTransfer()
+    const files = Array.from(this.videoInputTarget.files)
+
+    files.forEach((file, i) => {
+      if (i !== index) {
+        dt.items.add(file)
+      }
+    })
+
+    this.videoInputTarget.files = dt.files
+    this.updateVideoCounts()
+    this.videoInputTarget.dispatchEvent(new Event('change', { bubbles: true }))
   }
 
   // 드롭존 키보드 접근성 설정
@@ -115,8 +140,82 @@ export default class extends Controller {
           <span class="font-bold">${count}개 영상 선택됨</span>
         </div>
       `
+
+      // 미리보기 생성
+      this.showVideoPreviews()
     } else {
       this.videoCountTarget.textContent = ''
+      this.hideVideoPreviews()
     }
+  }
+
+  showVideoPreviews() {
+    if (!this.hasVideoPreviewTarget || !this.hasVideoPreviewContainerTarget) return
+
+    // 미리보기 컨테이너 초기화
+    this.videoPreviewContainerTarget.innerHTML = ''
+
+    const files = Array.from(this.videoInputTarget.files)
+
+    files.forEach((file, index) => {
+      const reader = new FileReader()
+
+      reader.onload = (e) => {
+        const videoUrl = e.target.result
+
+        const previewCard = document.createElement('div')
+        previewCard.className = 'bg-white rounded-2xl p-4 border-2 border-gray-200 fade-in'
+        previewCard.innerHTML = `
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-40 h-24 bg-gray-100 rounded-xl overflow-hidden">
+              <video
+                src="${videoUrl}"
+                class="w-full h-full object-cover"
+                controls
+                preload="metadata"
+              ></video>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-semibold text-gray-900 text-sm truncate">${file.name}</p>
+              <p class="text-xs text-gray-500 mt-1">${this.formatFileSize(file.size)}</p>
+              <p class="text-xs text-gray-400 mt-1">${file.type || '비디오 파일'}</p>
+            </div>
+            <button
+              type="button"
+              class="flex-shrink-0 w-8 h-8 rounded-full bg-red-100 hover:bg-red-200 transition flex items-center justify-center"
+              data-index="${index}"
+              onclick="this.closest('[data-controller=\\"file-counter\\"]').dispatchEvent(new CustomEvent('remove-video', { detail: { index: ${index} } }))"
+              aria-label="영상 제거">
+              <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        `
+
+        this.videoPreviewContainerTarget.appendChild(previewCard)
+      }
+
+      reader.readAsDataURL(file)
+    })
+
+    // 미리보기 영역 표시
+    this.videoPreviewTarget.classList.remove('hidden')
+  }
+
+  hideVideoPreviews() {
+    if (!this.hasVideoPreviewTarget) return
+    this.videoPreviewTarget.classList.add('hidden')
+  }
+
+  // 파일 크기 포맷팅 (바이트 → MB/GB)
+  formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes'
+
+    const k = 1024
+    const sizes = ['Bytes', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i]
   }
 }
