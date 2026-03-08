@@ -157,6 +157,12 @@ export default class extends Controller {
 
     const files = Array.from(this.videoInputTarget.files)
 
+    // 대용량 파일 경고 (100MB 이상)
+    const largeFiles = files.filter(f => f.size > 100 * 1024 * 1024)
+    if (largeFiles.length > 0) {
+      this.showLargeFileWarning(largeFiles)
+    }
+
     files.forEach((file, index) => {
       const reader = new FileReader()
 
@@ -217,5 +223,28 @@ export default class extends Controller {
     const i = Math.floor(Math.log(bytes) / Math.log(k))
 
     return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i]
+  }
+
+  // 대용량 파일 경고 표시
+  showLargeFileWarning(largeFiles) {
+    const totalSize = largeFiles.reduce((sum, f) => sum + f.size, 0)
+    const warning = document.createElement('div')
+    warning.className = 'mb-3 p-4 bg-yellow-50 border-2 border-yellow-200 rounded-xl fade-in'
+    warning.innerHTML = `
+      <div class="flex items-start gap-3">
+        <svg class="w-6 h-6 text-yellow-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+        </svg>
+        <div class="flex-1">
+          <p class="font-bold text-yellow-900 text-sm">대용량 영상이 포함되어 있어요</p>
+          <p class="text-yellow-800 text-sm mt-1">
+            총 <strong>${this.formatFileSize(totalSize)}</strong> 파일을 업로드합니다.
+            <br>인터넷 연결이 느리면 시간이 걸릴 수 있어요. 제출 후 잠시 기다려주세요.
+          </p>
+        </div>
+      </div>
+    `
+
+    this.videoPreviewContainerTarget.insertBefore(warning, this.videoPreviewContainerTarget.firstChild)
   }
 }
