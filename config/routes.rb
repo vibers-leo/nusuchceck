@@ -70,6 +70,15 @@ Rails.application.routes.draw do
     # 프로필 관리
     resource :profile, only: [:show, :edit, :update], controller: "profiles"
 
+    # 설정 페이지
+    get "settings", to: "settings#index", as: :settings
+    namespace :settings do
+      resource :notifications, only: [:show, :update], controller: "notifications"
+    end
+
+    # 결제 내역
+    resources :payments, only: [:index]
+
     resources :requests, only: [:index, :show, :new, :create] do
       member do
         post :cancel
@@ -230,4 +239,7 @@ Rails.application.routes.draw do
   get "about", to: "pages#about"
   get "pricing", to: "pages#pricing"
   get "how-it-works", to: "pages#how_it_works", as: :how_it_works
+  get "reviews", to: "pages#reviews", as: :reviews
+  get "faq", to: "pages#faq", as: :faq
+  get "events", to: "pages#events", as: :events
 end

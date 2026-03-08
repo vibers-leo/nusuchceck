@@ -1,0 +1,120 @@
+<!-- 온보딩 플로우 (토스 스타일 슬라이드) -->
+<div data-controller="onboarding" class="fixed inset-0 z-50 bg-white hidden" data-onboarding-target="container">
+  <!-- 진행 표시 (상단) -->
+  <div class="absolute top-0 left-0 right-0 h-1 bg-gray-200">
+    <div data-onboarding-target="progressBar" class="h-full bg-gradient-to-r from-primary-600 to-purple-600 transition-all duration-300" style="width: 25%"></div>
+  </div>
+
+  <!-- 건너뛰기 버튼 -->
+  <button data-action="click->onboarding#skip" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 font-semibold z-10">
+    건너뛰기
+  </button>
+
+  <!-- 슬라이드 컨테이너 -->
+  <div class="h-full flex items-center justify-center px-4">
+    <div class="max-w-md w-full">
+      <!-- 슬라이드 1: 누수, 10분이면 해결 -->
+      <div data-onboarding-target="slide" class="text-center">
+        <div class="mb-8">
+          <div class="inline-block p-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mb-6">
+            <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            누수, 10분이면 해결
+          </h2>
+          <p class="text-lg text-gray-600 leading-relaxed">
+            복잡한 절차 없이 스마트폰 하나로<br>
+            누수 문제를 빠르게 해결하세요
+          </p>
+        </div>
+      </div>
+
+      <!-- 슬라이드 2: 영상 한 번으로 AI 진단 -->
+      <div data-onboarding-target="slide" class="text-center hidden">
+        <div class="mb-8">
+          <div class="inline-block p-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full mb-6">
+            <svg class="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            영상 한 번으로 AI 진단
+          </h2>
+          <p class="text-lg text-gray-600 leading-relaxed">
+            10초 영상만 촬영하면<br>
+            AI가 누수 위치와 원인을 자동 분석해요
+          </p>
+        </div>
+      </div>
+
+      <!-- 슬라이드 3: 검증된 전문가 매칭 -->
+      <div data-onboarding-target="slide" class="text-center hidden">
+        <div class="mb-8">
+          <div class="inline-block p-8 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full mb-6">
+            <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            검증된 전문가 매칭
+          </h2>
+          <p class="text-lg text-gray-600 leading-relaxed">
+            평균 평점 4.8점 이상<br>
+            검증된 전문가가 24시간 내 견적을 보내드려요
+          </p>
+        </div>
+      </div>
+
+      <!-- 슬라이드 4: 보험청구까지 자동화 -->
+      <div data-onboarding-target="slide" class="text-center hidden">
+        <div class="mb-8">
+          <div class="inline-block p-8 bg-gradient-to-br from-green-500 to-green-600 rounded-full mb-6">
+            <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            보험청구까지 자동화
+          </h2>
+          <p class="text-lg text-gray-600 leading-relaxed">
+            복잡한 서류 작성 NO!<br>
+            AI가 보험청구 서류를 자동으로 생성해드려요
+          </p>
+        </div>
+      </div>
+
+      <!-- 네비게이션 버튼 -->
+      <div class="flex justify-between items-center mt-12">
+        <!-- 이전 버튼 -->
+        <button data-action="click->onboarding#prev"
+                data-onboarding-target="prevBtn"
+                class="hidden px-6 py-3 text-gray-600 font-semibold hover:text-gray-900 transition-colors">
+          ← 이전
+        </button>
+
+        <!-- 닷 인디케이터 -->
+        <div class="flex gap-2 mx-auto">
+          <div data-onboarding-target="dot" class="w-2 h-2 rounded-full bg-primary-600"></div>
+          <div data-onboarding-target="dot" class="w-2 h-2 rounded-full bg-gray-300"></div>
+          <div data-onboarding-target="dot" class="w-2 h-2 rounded-full bg-gray-300"></div>
+          <div data-onboarding-target="dot" class="w-2 h-2 rounded-full bg-gray-300"></div>
+        </div>
+
+        <!-- 다음/시작 버튼 -->
+        <button data-action="click->onboarding#next"
+                data-onboarding-target="nextBtn"
+                class="px-8 py-3 bg-gradient-to-r from-primary-600 to-purple-600 text-white rounded-xl font-bold hover:shadow-lg transition-all">
+          다음 →
+        </button>
+
+        <button data-action="click->onboarding#finish"
+                data-onboarding-target="finishBtn"
+                class="hidden px-8 py-3 bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-xl font-bold hover:shadow-lg transition-all">
+          시작하기
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

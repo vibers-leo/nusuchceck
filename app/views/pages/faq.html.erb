@@ -1,0 +1,396 @@
+<!-- FAQ/고객센터 페이지 (토스 스타일 아코디언) -->
+<%= render "shared/customer_nav" if user_signed_in? %>
+
+<div class="min-h-screen bg-gray-50 <%= user_signed_in? ? 'pb-20 md:pb-8' : '' %>">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <!-- 헤더 -->
+    <div class="text-center mb-12">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+        💬 자주 묻는 질문
+      </h1>
+      <p class="text-lg text-gray-600">
+        궁금한 점을 빠르게 찾아보세요
+      </p>
+    </div>
+
+    <!-- 검색 박스 -->
+    <div class="mb-10">
+      <div class="relative">
+        <input type="text"
+               placeholder="질문을 검색하세요..."
+               class="w-full px-6 py-4 pl-12 rounded-2xl border-2 border-gray-200 focus:border-primary-600 focus:outline-none text-lg"
+               id="faq-search">
+        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- FAQ 카테고리 탭 -->
+    <div class="mb-8 flex flex-wrap gap-3">
+      <button class="faq-category-btn active px-6 py-2.5 rounded-full font-semibold transition-colors" data-category="all">
+        전체
+      </button>
+      <button class="faq-category-btn px-6 py-2.5 rounded-full font-semibold transition-colors" data-category="service">
+        서비스 이용
+      </button>
+      <button class="faq-category-btn px-6 py-2.5 rounded-full font-semibold transition-colors" data-category="payment">
+        결제/환불
+      </button>
+      <button class="faq-category-btn px-6 py-2.5 rounded-full font-semibold transition-colors" data-category="insurance">
+        보험청구
+      </button>
+      <button class="faq-category-btn px-6 py-2.5 rounded-full font-semibold transition-colors" data-category="matching">
+        전문가 매칭
+      </button>
+    </div>
+
+    <!-- FAQ 아코디언 -->
+    <div class="space-y-3">
+      <!-- 서비스 이용 -->
+      <details class="faq-item group bg-white rounded-2xl border border-gray-200 overflow-hidden" data-category="service">
+        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+          <h3 class="font-bold text-gray-900 text-lg pr-4">
+            누수체크는 어떤 서비스인가요?
+          </h3>
+          <svg class="w-6 h-6 text-gray-400 transform group-open:rotate-180 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-700 leading-relaxed">
+          <p class="mb-3">
+            누수체크는 AI 기반 누수 감지와 검증된 전문가 매칭, 보험청구 자동화를 하나로 통합한 플랫폼입니다.
+          </p>
+          <ul class="space-y-2 list-disc list-inside text-gray-600">
+            <li>스마트폰으로 영상 촬영만 하면 AI가 누수 위치와 원인을 빠르게 진단</li>
+            <li>검증된 전문가가 24시간 내 견적 제공</li>
+            <li>에스크로 결제로 안전한 거래 보장</li>
+            <li>보험청구 서류를 자동으로 생성하여 간편하게 제출</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="faq-item group bg-white rounded-2xl border border-gray-200 overflow-hidden" data-category="service">
+        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+          <h3 class="font-bold text-gray-900 text-lg pr-4">
+            어떻게 이용하나요?
+          </h3>
+          <svg class="w-6 h-6 text-gray-400 transform group-open:rotate-180 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-700 leading-relaxed">
+          <ol class="space-y-3 list-decimal list-inside">
+            <li class="font-semibold">📹 영상 촬영
+              <p class="font-normal text-gray-600 ml-6 mt-1">누수 부위를 10초 이상 촬영하여 업로드</p>
+            </li>
+            <li class="font-semibold">🤖 AI 진단
+              <p class="font-normal text-gray-600 ml-6 mt-1">AI가 영상을 분석하여 누수 위치와 원인 파악</p>
+            </li>
+            <li class="font-semibold">👷 전문가 매칭
+              <p class="font-normal text-gray-600 ml-6 mt-1">주변 검증된 전문가가 24시간 내 견적 제공</p>
+            </li>
+            <li class="font-semibold">🔧 안심 수리
+              <p class="font-normal text-gray-600 ml-6 mt-1">에스크로 결제로 안전하게 수리 진행</p>
+            </li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="faq-item group bg-white rounded-2xl border border-gray-200 overflow-hidden" data-category="service">
+        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+          <h3 class="font-bold text-gray-900 text-lg pr-4">
+            영상을 왜 촬영해야 하나요?
+          </h3>
+          <svg class="w-6 h-6 text-gray-400 transform group-open:rotate-180 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-700 leading-relaxed">
+          <p class="mb-3">
+            영상은 사진보다 10배 더 정확한 진단을 가능하게 합니다:
+          </p>
+          <ul class="space-y-2 list-disc list-inside text-gray-600">
+            <li>물이 떨어지는 속도와 양을 정확히 파악</li>
+            <li>주변 환경(천장, 벽, 바닥)을 한 번에 확인</li>
+            <li>소리까지 녹음되어 누수 원인 추정에 도움</li>
+            <li>전문가가 현장 방문 전에도 정확한 견적 가능</li>
+          </ul>
+          <p class="mt-3 text-primary-600 font-semibold">
+            💡 팁: 10초 이상 천천히 촬영하면 더욱 정확해요!
+          </p>
+        </div>
+      </details>
+
+      <!-- 결제/환불 -->
+      <details class="faq-item group bg-white rounded-2xl border border-gray-200 overflow-hidden" data-category="payment">
+        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+          <h3 class="font-bold text-gray-900 text-lg pr-4">
+            결제는 어떻게 하나요?
+          </h3>
+          <svg class="w-6 h-6 text-gray-400 transform group-open:rotate-180 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-700 leading-relaxed">
+          <p class="mb-3">
+            누수체크는 <strong class="text-primary-600">에스크로 결제</strong>를 사용하여 안전한 거래를 보장합니다:
+          </p>
+          <ol class="space-y-3 list-decimal list-inside">
+            <li>견적 승인 후 출장비, 검사비, 공사비를 순차적으로 입금</li>
+            <li>입금된 금액은 누수체크가 안전하게 보관</li>
+            <li>각 단계 완료 확인 후 전문가에게 지급</li>
+            <li>문제 발생 시 100% 환불 가능</li>
+          </ol>
+          <div class="mt-4 p-4 bg-blue-50 rounded-xl">
+            <p class="text-sm text-blue-900">
+              <strong>💳 지원 결제 수단:</strong> 신용카드, 체크카드, 계좌이체, 간편결제 (토스, 카카오페이, 네이버페이)
+            </p>
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item group bg-white rounded-2xl border border-gray-200 overflow-hidden" data-category="payment">
+        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+          <h3 class="font-bold text-gray-900 text-lg pr-4">
+            환불 정책은 어떻게 되나요?
+          </h3>
+          <svg class="w-6 h-6 text-gray-400 transform group-open:rotate-180 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-700 leading-relaxed">
+          <table class="w-full text-left">
+            <thead class="border-b-2 border-gray-200">
+              <tr>
+                <th class="pb-3 font-bold text-gray-900">상황</th>
+                <th class="pb-3 font-bold text-gray-900">환불율</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr>
+                <td class="py-3 text-gray-700">전문가 매칭 전 취소</td>
+                <td class="py-3 text-primary-600 font-semibold">100% 환불</td>
+              </tr>
+              <tr>
+                <td class="py-3 text-gray-700">출장 전 취소 (24시간 전)</td>
+                <td class="py-3 text-primary-600 font-semibold">100% 환불</td>
+              </tr>
+              <tr>
+                <td class="py-3 text-gray-700">출장 당일 취소</td>
+                <td class="py-3 text-orange-600 font-semibold">출장비 제외 환불</td>
+              </tr>
+              <tr>
+                <td class="py-3 text-gray-700">검사 후 수리 안 함</td>
+                <td class="py-3 text-orange-600 font-semibold">검사비 제외 환불</td>
+              </tr>
+              <tr>
+                <td class="py-3 text-gray-700">수리 중 하자 발견 시</td>
+                <td class="py-3 text-primary-600 font-semibold">100% 환불 (보증)</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="mt-4 text-sm text-gray-500">
+            * 환불은 영업일 기준 3-5일 내 처리됩니다.
+          </p>
+        </div>
+      </details>
+
+      <!-- 보험청구 -->
+      <details class="faq-item group bg-white rounded-2xl border border-gray-200 overflow-hidden" data-category="insurance">
+        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+          <h3 class="font-bold text-gray-900 text-lg pr-4">
+            보험청구는 어떻게 하나요?
+          </h3>
+          <svg class="w-6 h-6 text-gray-400 transform group-open:rotate-180 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-700 leading-relaxed">
+          <p class="mb-3">
+            누수체크는 보험청구 서류를 <strong class="text-primary-600">자동으로 생성</strong>해드립니다:
+          </p>
+          <ol class="space-y-3 list-decimal list-inside">
+            <li>수리 완료 후 "보험청구" 메뉴에서 신청</li>
+            <li>보험사, 증권번호 등 간단한 정보만 입력</li>
+            <li>AI가 자동으로 청구서류 생성 (진단서, 견적서, 영수증)</li>
+            <li>PDF 다운로드 또는 이메일로 보험사에 직접 발송</li>
+          </ol>
+          <div class="mt-4 p-4 bg-green-50 rounded-xl">
+            <p class="text-sm text-green-900">
+              <strong>✅ 자동 생성 서류:</strong> 사고 경위서, 피해 사진, 수리 견적서, 영수증, 입금 확인증
+            </p>
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item group bg-white rounded-2xl border border-gray-200 overflow-hidden" data-category="insurance">
+        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+          <h3 class="font-bold text-gray-900 text-lg pr-4">
+            보험 처리 기간은 얼마나 걸리나요?
+          </h3>
+          <svg class="w-6 h-6 text-gray-400 transform group-open:rotate-180 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-700 leading-relaxed">
+          <p class="mb-3">
+            보험사마다 다르지만 평균적으로:
+          </p>
+          <ul class="space-y-2 list-disc list-inside text-gray-600">
+            <li><strong>서류 제출:</strong> 누수체크에서 즉시 (자동 생성)</li>
+            <li><strong>보험사 심사:</strong> 3-7영업일</li>
+            <li><strong>보험금 지급:</strong> 심사 완료 후 2-3영업일</li>
+          </ul>
+          <p class="mt-3 text-sm text-gray-500">
+            * 간단한 누수 사고의 경우 평균 7-10일 내 처리됩니다.
+          </p>
+        </div>
+      </details>
+
+      <!-- 전문가 매칭 -->
+      <details class="faq-item group bg-white rounded-2xl border border-gray-200 overflow-hidden" data-category="matching">
+        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+          <h3 class="font-bold text-gray-900 text-lg pr-4">
+            전문가는 어떻게 선정되나요?
+          </h3>
+          <svg class="w-6 h-6 text-gray-400 transform group-open:rotate-180 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-700 leading-relaxed">
+          <p class="mb-3">
+            누수체크는 엄격한 검증 절차를 거친 전문가만 활동합니다:
+          </p>
+          <ul class="space-y-2 list-disc list-inside text-gray-600">
+            <li><strong>사업자등록증 확인</strong> (필수)</li>
+            <li><strong>경력 증빙</strong> (최소 3년 이상)</li>
+            <li><strong>장비 보유 확인</strong> (누수탐지기 등)</li>
+            <li><strong>평균 평점 4.0 이상 유지</strong> (필수)</li>
+            <li><strong>보험 가입 확인</strong> (배상책임보험)</li>
+          </ul>
+          <div class="mt-4 p-4 bg-purple-50 rounded-xl">
+            <p class="text-sm text-purple-900">
+              <strong>✨ 검증 배지:</strong> 모든 조건을 충족한 전문가에게만 파란색 체크 마크를 부여합니다.
+            </p>
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item group bg-white rounded-2xl border border-gray-200 overflow-hidden" data-category="matching">
+        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+          <h3 class="font-bold text-gray-900 text-lg pr-4">
+            전문가를 직접 선택할 수 있나요?
+          </h3>
+          <svg class="w-6 h-6 text-gray-400 transform group-open:rotate-180 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </summary>
+        <div class="px-6 pb-6 text-gray-700 leading-relaxed">
+          <p class="mb-3">
+            네, 두 가지 방법으로 전문가를 선택할 수 있습니다:
+          </p>
+          <div class="space-y-4">
+            <div class="p-4 bg-blue-50 rounded-xl">
+              <p class="font-bold text-blue-900 mb-2">1. 자동 매칭 (추천)</p>
+              <p class="text-sm text-blue-800">
+                체크 접수 후 주변 전문가들이 24시간 내 견적을 보내면, 그 중에서 선택
+              </p>
+            </div>
+            <div class="p-4 bg-green-50 rounded-xl">
+              <p class="font-bold text-green-900 mb-2">2. 직접 선택</p>
+              <p class="text-sm text-green-800">
+                "전문가" 메뉴에서 프로필, 평점, 리뷰를 보고 직접 상담 요청
+              </p>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- 더 궁금한 점이 있으신가요? -->
+    <div class="mt-16 text-center bg-white rounded-3xl p-10 border border-gray-200">
+      <h2 class="text-2xl font-bold text-gray-900 mb-3">
+        더 궁금한 점이 있으신가요?
+      </h2>
+      <p class="text-gray-600 mb-6">
+        채팅이나 이메일로 언제든 문의하세요
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <%= link_to "채팅 문의하기", "#", class: "inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition-colors" do %>
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/>
+            <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/>
+          </svg>
+          <span>채팅 문의</span>
+        <% end %>
+
+        <%= link_to "이메일 보내기", "mailto:support@nusucheck.kr", class: "inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-gray-700 border-2 border-gray-200 rounded-xl font-semibold hover:bg-gray-50 transition-colors" do %>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          <span>support@nusucheck.kr</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// FAQ 검색 기능
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('faq-search');
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  searchInput?.addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+
+    faqItems.forEach(item => {
+      const title = item.querySelector('h3').textContent.toLowerCase();
+      const content = item.querySelector('.px-6.pb-6').textContent.toLowerCase();
+
+      if (title.includes(searchTerm) || content.includes(searchTerm)) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+
+  // 카테고리 필터
+  const categoryBtns = document.querySelectorAll('.faq-category-btn');
+
+  categoryBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const category = this.dataset.category;
+
+      // 버튼 active 상태 변경
+      categoryBtns.forEach(b => {
+        b.classList.remove('active', 'bg-primary-600', 'text-white');
+        b.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-200');
+      });
+      this.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-200');
+      this.classList.add('active', 'bg-primary-600', 'text-white');
+
+      // FAQ 아이템 필터링
+      faqItems.forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+});
+</script>
+
+<style>
+.faq-category-btn.active {
+  @apply bg-primary-600 text-white;
+}
+
+.faq-category-btn:not(.active) {
+  @apply bg-white text-gray-700 border border-gray-200 hover:bg-gray-50;
+}
+</style>

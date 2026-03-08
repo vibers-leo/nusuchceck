@@ -3,13 +3,36 @@
 class Customers::PaymentsController < ApplicationController
   include CustomerAccessible
 
-  before_action :set_request
+  before_action :set_request, except: [:index]
 
   ESCROW_TYPE_LABELS = {
     "trip"         => "누수체크 출장비",
     "detection"    => "누수체크 탐지비",
     "construction" => "누수체크 공사비"
   }.freeze
+
+  # GET /customers/payments
+  # 결제 내역 목록
+  def index
+    @payments = current_user.escrow_transactions
+                           .includes(:request)
+                           .order(created_at: :desc)
+                           .page(params[:page])
+                           .per(20)
+
+    # 필터
+    if params[:status].present?
+      @payments = @payments.where(status: params[:status])
+    end
+
+    if params[:start_date].present? && params[:end_date].present?
+      @payments = @payments.where(created_at: params[:start_date]..params[:end_date])
+    end
+
+    # 통계
+    @total_amount = current_user.escrow_transactions.where(status: 'completed').sum(:amount)
+    @pending_amount = current_user.escrow_transactions.where(status: 'pending').sum(:amount)
+  end
 
   # GET /customers/payments/checkout
   # params: request_id, escrow_type, amount

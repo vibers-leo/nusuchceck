@@ -1,0 +1,146 @@
+<!-- 알림 설정 페이지 (토스 스타일 토글) -->
+<%= render "shared/customer_nav" %>
+
+<div class="min-h-screen bg-gray-50 pb-20 md:pb-8">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <!-- 헤더 -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">
+        🔔 알림 설정
+      </h1>
+      <p class="text-gray-600">
+        받고 싶은 알림만 선택하세요
+      </p>
+    </div>
+
+    <%= form_with model: @user, url: customers_settings_notifications_path, method: :patch, local: true do |f| %>
+      <!-- 알림 수단 -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 mb-6">
+        <h2 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <svg class="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+          </svg>
+          <span>알림 수단</span>
+        </h2>
+
+        <div class="space-y-4">
+          <!-- 이메일 알림 -->
+          <div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+            <div>
+              <p class="font-semibold text-gray-900">이메일 알림</p>
+              <p class="text-sm text-gray-500">이메일로 알림을 받습니다</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <%= f.check_box :email_notifications, class: "sr-only peer", checked: @user.email_notifications.nil? ? true : @user.email_notifications %>
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+            </label>
+          </div>
+
+          <!-- 푸시 알림 -->
+          <div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+            <div>
+              <p class="font-semibold text-gray-900">푸시 알림</p>
+              <p class="text-sm text-gray-500">앱 푸시 알림을 받습니다</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <%= f.check_box :push_notifications, class: "sr-only peer", checked: @user.push_notifications.nil? ? true : @user.push_notifications %>
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+            </label>
+          </div>
+
+          <!-- SMS 알림 -->
+          <div class="flex items-center justify-between py-3">
+            <div>
+              <p class="font-semibold text-gray-900">SMS 알림</p>
+              <p class="text-sm text-gray-500">문자 메시지로 알림을 받습니다</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <%= f.check_box :sms_notifications, class: "sr-only peer", checked: @user.sms_notifications.nil? ? false : @user.sms_notifications %>
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 알림 유형 -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 mb-6">
+        <h2 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <svg class="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+          </svg>
+          <span>알림 유형</span>
+        </h2>
+
+        <div class="space-y-4">
+          <!-- 견적 도착 -->
+          <div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+            <div>
+              <p class="font-semibold text-gray-900">견적 도착</p>
+              <p class="text-sm text-gray-500">전문가가 견적을 보냈을 때</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <%= f.check_box :estimate_notification, class: "sr-only peer", checked: @user.estimate_notification.nil? ? true : @user.estimate_notification %>
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+            </label>
+          </div>
+
+          <!-- 공사 시작/완료 -->
+          <div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+            <div>
+              <p class="font-semibold text-gray-900">공사 시작/완료</p>
+              <p class="text-sm text-gray-500">공사 진행 상황 업데이트</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <%= f.check_box :construction_notification, class: "sr-only peer", checked: @user.construction_notification.nil? ? true : @user.construction_notification %>
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+            </label>
+          </div>
+
+          <!-- 보험 승인 -->
+          <div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+            <div>
+              <p class="font-semibold text-gray-900">보험 승인</p>
+              <p class="text-sm text-gray-500">보험청구 심사 결과</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <%= f.check_box :insurance_notification, class: "sr-only peer", checked: @user.insurance_notification.nil? ? true : @user.insurance_notification %>
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+            </label>
+          </div>
+
+          <!-- 마케팅 알림 -->
+          <div class="flex items-center justify-between py-3">
+            <div>
+              <p class="font-semibold text-gray-900">마케팅 알림 (선택)</p>
+              <p class="text-sm text-gray-500">이벤트, 프로모션 등</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <%= f.check_box :marketing_notification, class: "sr-only peer", checked: @user.marketing_notification.nil? ? false : @user.marketing_notification %>
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 안내 -->
+      <div class="bg-blue-50 rounded-xl p-4 mb-6">
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+          </svg>
+          <div class="text-sm text-blue-900">
+            <p class="font-semibold mb-1">중요 알림은 항상 발송됩니다</p>
+            <p class="text-blue-800">결제 확인, 환불 처리 등 중요한 알림은 설정과 관계없이 항상 발송됩니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 저장 버튼 -->
+      <div class="flex gap-3">
+        <%= link_to "취소", customers_dashboard_path, class: "flex-1 px-6 py-4 bg-white border-2 border-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors text-center" %>
+        <%= f.submit "저장하기", class: "flex-1 px-6 py-4 bg-gradient-to-r from-primary-600 to-purple-600 text-white rounded-xl font-bold hover:shadow-lg transition-all" %>
+      </div>
+    <% end %>
+  </div>
+</div>

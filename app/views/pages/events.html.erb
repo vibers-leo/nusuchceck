@@ -1,0 +1,212 @@
+<!-- 이벤트/쿠폰 페이지 (토스 스타일) -->
+<%= render "shared/customer_nav" if user_signed_in? %>
+
+<div class="min-h-screen bg-gray-50 <%= user_signed_in? ? 'pb-20 md:pb-8' : '' %>">
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <!-- 헤더 -->
+    <div class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+        🎁 이벤트 & 혜택
+      </h1>
+      <p class="text-lg text-gray-600">
+        진행 중인 이벤트와 쿠폰을 확인하세요
+      </p>
+    </div>
+
+    <!-- 진행 중인 이벤트 -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">진행 중인 이벤트</h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- 이벤트 1: 첫 체크 할인 -->
+        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl p-8 text-white relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-40 h-40 bg-white opacity-10 rounded-full -mr-20 -mt-20"></div>
+          <div class="absolute bottom-0 left-0 w-32 h-32 bg-white opacity-10 rounded-full -ml-16 -mb-16"></div>
+
+          <div class="relative z-10">
+            <span class="inline-block px-3 py-1 bg-white bg-opacity-20 rounded-full text-xs font-bold mb-4">
+              🎉 신규 고객
+            </span>
+            <h3 class="text-2xl font-bold mb-3">
+              첫 체크 30% 할인
+            </h3>
+            <p class="text-blue-100 mb-6">
+              처음 누수체크를 이용하시는 분께<br>
+              출장비 + 검사비 30% 할인 혜택!
+            </p>
+            <div class="flex items-center justify-between">
+              <p class="text-sm text-blue-200">
+                ~ 2026년 6월 30일
+              </p>
+              <button class="px-6 py-2.5 bg-white text-blue-600 rounded-xl font-bold hover:shadow-lg transition-all">
+                쿠폰 받기
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 이벤트 2: 친구 초대 -->
+        <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-3xl p-8 text-white relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-40 h-40 bg-white opacity-10 rounded-full -mr-20 -mt-20"></div>
+          <div class="absolute bottom-0 left-0 w-32 h-32 bg-white opacity-10 rounded-full -ml-16 -mb-16"></div>
+
+          <div class="relative z-10">
+            <span class="inline-block px-3 py-1 bg-white bg-opacity-20 rounded-full text-xs font-bold mb-4">
+              👥 친구 초대
+            </span>
+            <h3 class="text-2xl font-bold mb-3">
+              친구 초대 시 5만원
+            </h3>
+            <p class="text-purple-100 mb-6">
+              친구를 초대하면 나도, 친구도<br>
+              5만원 할인 쿠폰 지급!
+            </p>
+            <div class="flex items-center justify-between">
+              <p class="text-sm text-purple-200">
+                친구당 최대 10명
+              </p>
+              <button class="px-6 py-2.5 bg-white text-purple-600 rounded-xl font-bold hover:shadow-lg transition-all">
+                초대하기
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 이벤트 3: 리뷰 작성 -->
+        <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-3xl p-8 text-white relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-40 h-40 bg-white opacity-10 rounded-full -mr-20 -mt-20"></div>
+          <div class="absolute bottom-0 left-0 w-32 h-32 bg-white opacity-10 rounded-full -ml-16 -mb-16"></div>
+
+          <div class="relative z-10">
+            <span class="inline-block px-3 py-1 bg-white bg-opacity-20 rounded-full text-xs font-bold mb-4">
+              ✍️ 리뷰 작성
+            </span>
+            <h3 class="text-2xl font-bold mb-3">
+              리뷰 작성 시 1만원
+            </h3>
+            <p class="text-green-100 mb-6">
+              수리 완료 후 리뷰를 남겨주시면<br>
+              다음 체크 때 사용 가능한 1만원 쿠폰!
+            </p>
+            <div class="flex items-center justify-between">
+              <p class="text-sm text-green-200">
+                사진 첨부 시 2만원
+              </p>
+              <button class="px-6 py-2.5 bg-white text-green-600 rounded-xl font-bold hover:shadow-lg transition-all">
+                리뷰 쓰기
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 이벤트 4: 보험청구 자동화 -->
+        <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl p-8 text-white relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-40 h-40 bg-white opacity-10 rounded-full -mr-20 -mt-20"></div>
+          <div class="absolute bottom-0 left-0 w-32 h-32 bg-white opacity-10 rounded-full -ml-16 -mb-16"></div>
+
+          <div class="relative z-10">
+            <span class="inline-block px-3 py-1 bg-white bg-opacity-20 rounded-full text-xs font-bold mb-4">
+              📋 보험청구
+            </span>
+            <h3 class="text-2xl font-bold mb-3">
+              보험청구 서류 무료
+            </h3>
+            <p class="text-orange-100 mb-6">
+              누수체크 이용 고객은<br>
+              보험청구 서류 자동 생성 무료!
+            </p>
+            <div class="flex items-center justify-between">
+              <p class="text-sm text-orange-200">
+                이벤트 기간 동안 계속
+              </p>
+              <button class="px-6 py-2.5 bg-white text-orange-600 rounded-xl font-bold hover:shadow-lg transition-all">
+                자세히 보기
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 내 쿠폰함 (로그인 시) -->
+    <% if user_signed_in? %>
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">내 쿠폰함</h2>
+
+        <div class="bg-white rounded-3xl border border-gray-200 p-8">
+          <div class="text-center py-12">
+            <div class="inline-block p-6 bg-gray-100 rounded-full mb-4">
+              <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">
+              사용 가능한 쿠폰이 없습니다
+            </h3>
+            <p class="text-gray-600 mb-6">
+              위 이벤트에 참여하고 쿠폰을 받아보세요!
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- 이벤트 참여 방법 -->
+    <div class="bg-blue-50 rounded-2xl p-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">
+        이벤트 참여 방법
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+            <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-2">1. 회원가입</h3>
+          <p class="text-sm text-gray-600">
+            간단한 정보만 입력하면<br>가입 완료!
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+            <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-2">2. 누수 체크</h3>
+          <p class="text-sm text-gray-600">
+            영상 촬영하고<br>AI 진단 받기
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+            <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-3 3a1 1 0 100 2h.01a1 1 0 100-2H10zm-4 1a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1zm1-4a1 1 0 100 2h.01a1 1 0 100-2H7zm2 1a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm4-4a1 1 0 100 2h.01a1 1 0 100-2H13zM9 9a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zM7 8a1 1 0 000 2h.01a1 1 0 000-2H7z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-2">3. 쿠폰 받기</h3>
+          <p class="text-sm text-gray-600">
+            이벤트 참여하고<br>쿠폰 자동 지급
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA (하단) -->
+    <% unless user_signed_in? %>
+      <div class="mt-16 text-center bg-white rounded-3xl p-10 border border-gray-200">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+          지금 가입하고 혜택받으세요!
+        </h2>
+        <p class="text-gray-600 mb-6">
+          신규 고객 30% 할인 쿠폰이 기다리고 있어요
+        </p>
+        <%= link_to "무료로 시작하기", new_user_registration_path, class: "inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-600 to-purple-600 text-white rounded-2xl font-bold text-lg hover:shadow-lg transition-all" %>
+      </div>
+    <% end %>
+  </div>
+</div>
