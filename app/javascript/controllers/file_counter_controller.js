@@ -178,7 +178,8 @@ export default class extends Controller {
                 src="${videoUrl}"
                 class="w-full h-full object-cover"
                 controls
-                preload="metadata"
+                preload="none"
+                loading="lazy"
               ></video>
             </div>
             <div class="flex-1 min-w-0">
