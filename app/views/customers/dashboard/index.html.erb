@@ -2,13 +2,13 @@
 <div class="min-h-screen bg-gray-50 pb-20 md:pb-8">
   <div class="max-w-4xl mx-auto px-4 py-6">
     <!-- 인사 카드 -->
-    <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl p-6 mb-6 text-white shadow-lg">
+    <div class="bg-gradient-to-r from-primary-600 to-primary-700 rounded-3xl p-6 mb-6 text-white shadow-lg">
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-2xl font-bold mb-1">
+          <h1 class="text-[26px] font-bold mb-1 leading-tight">
             안녕하세요, <%= current_user.name || current_user.email.split('@').first %>님! 👋
           </h1>
-          <p class="text-blue-100 text-sm">오늘도 안전한 하루 되세요</p>
+          <p class="text-primary-100 text-[15px]">오늘도 안전한 하루 되세요</p>
         </div>
         <%= link_to customers_profile_path, class: "flex-shrink-0 w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition" do %>
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -20,9 +20,9 @@
 
     <!-- 빠른 액션 (당근마켓 스타일) -->
     <div class="grid grid-cols-3 gap-3 mb-6">
-      <%= link_to new_customers_request_path, class: "bg-white rounded-2xl p-5 text-center hover:shadow-lg transition-all border-2 border-gray-100 hover:border-blue-200" do %>
-        <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-          <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <%= link_to new_customers_request_path, class: "bg-white rounded-2xl p-5 text-center hover:shadow-lg transition-all border-2 border-gray-100 hover:border-primary-200 card-hover" do %>
+        <div class="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
           </svg>
         </div>
@@ -30,7 +30,7 @@
         <p class="text-xs text-gray-500 mt-1">새로 접수</p>
       <% end %>
 
-      <%= link_to customers_requests_path, class: "bg-white rounded-2xl p-5 text-center hover:shadow-lg transition-all border-2 border-gray-100 hover:border-blue-200" do %>
+      <%= link_to customers_requests_path, class: "bg-white rounded-2xl p-5 text-center hover:shadow-lg transition-all border-2 border-gray-100 hover:border-primary-200 card-hover" do %>
         <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
           <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
@@ -40,7 +40,7 @@
         <p class="text-xs text-gray-500 mt-1"><%= @active_requests.count %>건</p>
       <% end %>
 
-      <%= link_to customers_insurance_claims_path, class: "bg-white rounded-2xl p-5 text-center hover:shadow-lg transition-all border-2 border-gray-100 hover:border-blue-200" do %>
+      <%= link_to customers_insurance_claims_path, class: "bg-white rounded-2xl p-5 text-center hover:shadow-lg transition-all border-2 border-gray-100 hover:border-primary-200 card-hover" do %>
         <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
           <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -54,12 +54,12 @@
     <!-- 통계 카드 (당근마켓 스타일) -->
     <div class="grid grid-cols-3 gap-3 mb-6">
       <div class="bg-white rounded-2xl p-4 text-center border-2 border-gray-100">
-        <p class="text-2xl font-extrabold text-blue-600"><%= @active_requests.count %></p>
+        <p class="text-2xl font-extrabold text-primary-600"><%= @active_requests.count %></p>
         <p class="text-xs text-gray-600 mt-1">진행중</p>
       </div>
 
       <div class="bg-white rounded-2xl p-4 text-center border-2 border-gray-100">
-        <p class="text-2xl font-extrabold text-orange-600"><%= @pending_estimates.count %></p>
+        <p class="text-2xl font-extrabold text-yellow-600"><%= @pending_estimates.count %></p>
         <p class="text-xs text-gray-600 mt-1">견적대기</p>
       </div>
 
@@ -73,16 +73,16 @@
     <div class="mb-6">
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-lg font-bold text-gray-900">진행 중인 체크</h2>
-        <%= link_to "전체 보기 →", customers_requests_path, class: "text-blue-600 hover:text-blue-700 text-sm font-semibold" %>
+        <%= link_to "전체 보기 →", customers_requests_path, class: "text-primary-600 hover:text-primary-700 text-sm font-semibold transition-colors" %>
       </div>
 
       <% if @active_requests.any? %>
         <div class="space-y-3">
           <% @active_requests.each do |request| %>
-            <%= link_to customers_request_path(request), class: "block bg-white rounded-2xl p-5 hover:shadow-lg transition-all border-2 border-gray-100 hover:border-blue-200" do %>
+            <%= link_to customers_request_path(request), class: "block bg-white rounded-2xl p-5 hover:shadow-lg transition-all border-2 border-gray-100 hover:border-primary-200 card-hover" do %>
               <!-- 상태 + 시간 -->
               <div class="flex items-center gap-2 mb-3">
-                <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold">
+                <span class="px-2 py-1 bg-primary-100 text-primary-700 rounded-full text-xs font-bold">
                   <%= request.status_label %>
                 </span>
                 <span class="text-xs text-gray-500">
@@ -106,8 +106,8 @@
               <!-- 담당 전문가 -->
               <% if request.master %>
                 <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-xl">
-                  <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                  <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                    <svg class="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
                     </svg>
                   </div>
@@ -136,7 +136,7 @@
           </div>
           <p class="text-gray-600 mb-4 font-medium">진행 중인 체크가 없어요</p>
           <p class="text-sm text-gray-500 mb-6">누수가 의심되면 바로 체크하세요!</p>
-          <%= link_to new_customers_request_path, class: "inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all font-bold shadow-md" do %>
+          <%= link_to new_customers_request_path, class: "inline-flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-all font-bold shadow-md" do %>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
             </svg>
@@ -172,22 +172,22 @@
     <% end %>
 
     <!-- 도움말 카드 -->
-    <div class="bg-blue-50 rounded-2xl p-5 border-2 border-blue-100">
-      <h3 class="text-sm font-bold text-blue-900 mb-3 flex items-center gap-2">
+    <div class="bg-primary-50 rounded-2xl p-5 border-2 border-primary-100">
+      <h3 class="text-sm font-bold text-primary-900 mb-3 flex items-center gap-2">
         <span>💡</span>
         <span>이용 가이드</span>
       </h3>
-      <ul class="space-y-2 text-xs text-blue-800">
+      <ul class="space-y-2 text-xs text-primary-800">
         <li class="flex items-start gap-2">
-          <span class="text-blue-600 font-bold">•</span>
+          <span class="text-primary-600 font-bold">•</span>
           <span>영상 첨부 시 더 정확한 진단이 가능해요</span>
         </li>
         <li class="flex items-start gap-2">
-          <span class="text-blue-600 font-bold">•</span>
+          <span class="text-primary-600 font-bold">•</span>
           <span>견적은 24시간 이내에 제공됩니다</span>
         </li>
         <li class="flex items-start gap-2">
-          <span class="text-blue-600 font-bold">•</span>
+          <span class="text-primary-600 font-bold">•</span>
           <span>완료 후 리뷰로 다른 고객을 도와주세요</span>
         </li>
       </ul>
