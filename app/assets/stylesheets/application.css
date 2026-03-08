@@ -612,6 +612,7 @@ turbo-frame[busy]::after {
 /* ===== 영상 업로드 박스 펄스 (당근마켓 스타일) ===== */
 .video-upload-box {
   animation: videoPulse 2s ease-in-out infinite;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
 @keyframes videoPulse {
@@ -624,6 +625,12 @@ turbo-frame[busy]::after {
 }
 
 .video-upload-box:hover {
+  animation: none;
+}
+
+/* 드래그 시 확대 효과 (드래그 앤 드롭 피드백) */
+.video-upload-box.scale-105 {
+  transform: scale(1.05);
   animation: none;
 }
 
