@@ -30,7 +30,7 @@ Sentry.init do |config|
 
   # PII (개인정보) 필터링 - 민감한 파라미터 제거
   config.send_default_pii = false
-  config.sanitize_fields = Rails.application.config.filter_parameters.map(&:to_s)
+  # Note: Sentry 6.x는 Rails.application.config.filter_parameters를 자동으로 사용합니다
 
   # 릴리스 추적 (Git 커밋 해시 사용)
   config.release = ENV.fetch('GIT_COMMIT_SHA', 'development')

@@ -19,6 +19,18 @@ services:
           type: redis
           name: nusucheck-redis
           property: connectionString
+      # Sentry Error Tracking
+      - key: SENTRY_DSN
+        sync: false
+      - key: SENTRY_DSN_FRONTEND
+        sync: false
+      - key: SENTRY_TRACES_SAMPLE_RATE
+        value: "0.1"
+      - key: SENTRY_PROFILES_SAMPLE_RATE
+        value: "0.1"
+      # Git Release Tracking
+      - key: GIT_COMMIT_SHA
+        value: latest
     healthCheckPath: /up
     autoDeploy: true
     region: singapore
@@ -45,6 +57,18 @@ services:
           type: redis
           name: nusucheck-redis
           property: connectionString
+      # Sentry Error Tracking
+      - key: SENTRY_DSN
+        sync: false
+      - key: SENTRY_DSN_FRONTEND
+        sync: false
+      - key: SENTRY_TRACES_SAMPLE_RATE
+        value: "0.1"
+      - key: SENTRY_PROFILES_SAMPLE_RATE
+        value: "0.1"
+      # Git Release Tracking
+      - key: GIT_COMMIT_SHA
+        value: latest
     autoDeploy: true
     region: singapore
     plan: free
