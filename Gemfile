@@ -29,6 +29,11 @@ gem "prawn-table"
 # Background Jobs
 gem "sidekiq"
 
+# Error Tracking
+gem "sentry-ruby"
+gem "sentry-rails"
+gem "sentry-sidekiq"
+
 # Pagination & Search
 gem "kaminari"
 gem "ransack"

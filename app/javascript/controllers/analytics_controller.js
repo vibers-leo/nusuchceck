@@ -81,12 +81,27 @@ export default class extends Controller {
   trackError(event) {
     const errorType = event.detail?.type || "unknown"
     const errorMessage = event.detail?.message || ""
+    const step = this.getCurrentStep()
 
+    // Google Analytics
     this.trackEvent("form_error", {
       error_type: errorType,
       error_message: errorMessage,
-      step: this.getCurrentStep()
+      step: step
     })
+
+    // Sentry 에러 추적
+    this.element.dispatchEvent(new CustomEvent("sentry:error", {
+      detail: {
+        error: new Error(errorMessage),
+        context: {
+          error_type: errorType,
+          step: step,
+          form_type: "leak_check_request"
+        }
+      },
+      bubbles: true
+    }))
   }
 
   // Google Analytics 이벤트 전송 (gtag.js)

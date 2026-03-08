@@ -101,35 +101,80 @@ export default class extends Controller {
     const dt = e.dataTransfer
     const files = dt.files
 
-    // 비디오 파일만 필터링
-    const videoFiles = Array.from(files).filter(file =>
-      file.type.startsWith('video/')
-    )
+    try {
+      // 비디오 파일만 필터링
+      const videoFiles = Array.from(files).filter(file =>
+        file.type.startsWith('video/')
+      )
 
-    if (videoFiles.length === 0) {
-      alert('영상 파일만 업로드할 수 있어요 (MP4, MOV, WebM 등)')
-      return
+      if (videoFiles.length === 0) {
+        alert('영상 파일만 업로드할 수 있어요 (MP4, MOV, WebM 등)')
+
+        // Sentry: 잘못된 파일 타입 에러 추적
+        this.element.dispatchEvent(new CustomEvent("sentry:error", {
+          detail: {
+            error: new Error("Invalid file type uploaded"),
+            context: {
+              error_type: "invalid_file_type",
+              uploaded_types: Array.from(files).map(f => f.type).join(', ')
+            }
+          },
+          bubbles: true
+        }))
+
+        return
+      }
+
+      if (videoFiles.length > this.videoMaxValue) {
+        alert(`최대 ${this.videoMaxValue}개의 영상만 업로드할 수 있어요`)
+
+        // Sentry: 파일 개수 초과 에러 추적
+        this.element.dispatchEvent(new CustomEvent("sentry:error", {
+          detail: {
+            error: new Error("Too many files uploaded"),
+            context: {
+              error_type: "file_count_exceeded",
+              file_count: videoFiles.length,
+              max_count: this.videoMaxValue
+            }
+          },
+          bubbles: true
+        }))
+
+        return
+      }
+
+      // DataTransfer 객체로 파일 설정
+      const dataTransfer = new DataTransfer()
+      videoFiles.forEach(file => dataTransfer.items.add(file))
+      this.videoInputTarget.files = dataTransfer.files
+
+      // 드래그 앤 드롭 플래그 설정
+      this.uploadedViaDragDrop = true
+
+      // 카운터 업데이트 및 change 이벤트 발생
+      this.updateVideoCounts()
+      this.videoInputTarget.dispatchEvent(new Event('change', { bubbles: true }))
+
+      // Analytics: 드래그 앤 드롭 이벤트
+      this.trackVideoUpload(videoFiles, "drag_drop")
+    } catch (error) {
+      console.error("File drop error:", error)
+
+      // Sentry: 파일 드롭 처리 에러 추적
+      this.element.dispatchEvent(new CustomEvent("sentry:error", {
+        detail: {
+          error: error,
+          context: {
+            error_type: "file_drop_error",
+            file_count: files.length
+          }
+        },
+        bubbles: true
+      }))
+
+      alert('파일 업로드 중 오류가 발생했어요. 다시 시도해주세요.')
     }
-
-    if (videoFiles.length > this.videoMaxValue) {
-      alert(`최대 ${this.videoMaxValue}개의 영상만 업로드할 수 있어요`)
-      return
-    }
-
-    // DataTransfer 객체로 파일 설정
-    const dataTransfer = new DataTransfer()
-    videoFiles.forEach(file => dataTransfer.items.add(file))
-    this.videoInputTarget.files = dataTransfer.files
-
-    // 드래그 앤 드롭 플래그 설정
-    this.uploadedViaDragDrop = true
-
-    // 카운터 업데이트 및 change 이벤트 발생
-    this.updateVideoCounts()
-    this.videoInputTarget.dispatchEvent(new Event('change', { bubbles: true }))
-
-    // Analytics: 드래그 앤 드롭 이벤트
-    this.trackVideoUpload(videoFiles, "drag_drop")
   }
 
   updateVideoCounts() {
@@ -227,6 +272,27 @@ export default class extends Controller {
         `
 
         this.videoPreviewContainerTarget.appendChild(previewCard)
+      }
+
+      reader.onerror = (error) => {
+        console.error("FileReader error:", error)
+
+        // Sentry: 파일 읽기 에러 추적
+        this.element.dispatchEvent(new CustomEvent("sentry:error", {
+          detail: {
+            error: new Error("Failed to read video file"),
+            context: {
+              error_type: "file_reader_error",
+              file_name: file.name,
+              file_size: file.size,
+              file_type: file.type
+            }
+          },
+          bubbles: true
+        }))
+
+        // 사용자에게 알림
+        alert(`"${file.name}" 파일을 읽을 수 없습니다. 다른 파일을 선택해주세요.`)
       }
 
       reader.readAsDataURL(file)

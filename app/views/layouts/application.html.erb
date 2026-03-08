@@ -11,8 +11,67 @@
   <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
+
+  <!-- Sentry Error Tracking (프로덕션/스테이징만) -->
+  <% if Rails.env.production? || Rails.env.staging? %>
+    <% if ENV['SENTRY_DSN_FRONTEND'].present? %>
+      <script
+        src="https://js.sentry-cdn.com/sentry.browser.7.min.js"
+        crossorigin="anonymous"
+      ></script>
+      <script>
+        Sentry.init({
+          dsn: "<%= ENV['SENTRY_DSN_FRONTEND'] %>",
+          environment: "<%= Rails.env %>",
+          release: "<%= ENV.fetch('GIT_COMMIT_SHA', 'development') %>",
+
+          // 성능 모니터링
+          tracesSampleRate: <%= ENV.fetch('SENTRY_TRACES_SAMPLE_RATE', 0.1).to_f %>,
+
+          // 세션 재생 (선택적)
+          replaysSessionSampleRate: 0.1,
+          replaysOnErrorSampleRate: 1.0,
+
+          // 통합 설정
+          integrations: [
+            new Sentry.BrowserTracing(),
+            new Sentry.Replay({
+              maskAllText: true,
+              blockAllMedia: true
+            })
+          ],
+
+          // 에러 필터링
+          beforeSend(event, hint) {
+            // 개발 도구가 열려있으면 에러를 콘솔에도 출력
+            if (event.exception) {
+              console.error(event.exception);
+            }
+            return event;
+          },
+
+          // 무시할 에러
+          ignoreErrors: [
+            'Non-Error promise rejection captured',
+            'ResizeObserver loop limit exceeded',
+            'Loading chunk',
+            'ChunkLoadError'
+          ]
+        });
+
+        // 현재 사용자 정보 설정 (로그인된 경우)
+        <% if user_signed_in? %>
+          Sentry.setUser({
+            id: "<%= current_user.id %>",
+            email: "<%= current_user.email %>",
+            role: "<%= current_user.role %>"
+          });
+        <% end %>
+      </script>
+    <% end %>
+  <% end %>
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col font-sans<%= ' native-app' if hotwire_native_app? %>">
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans<%= ' native-app' if hotwire_native_app? %>" data-controller="error-tracking">
   <!-- Loading Progress Bar -->
   <div data-controller="loading">
     <div data-loading-target="bar" class="loading-bar hidden"></div>
