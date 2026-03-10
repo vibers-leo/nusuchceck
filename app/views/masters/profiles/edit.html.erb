@@ -52,37 +52,51 @@
       <!-- 계좌 정보 -->
       <h3 class="text-lg font-semibold text-gray-900">계좌 정보</h3>
 
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div>
-          <%= f.label :bank_name, "은행", class: "block text-sm font-medium text-gray-700 mb-1" %>
-          <%= f.select :bank_name,
-                options_for_select([
-                  ["선택", ""],
-                  ["국민은행", "국민은행"],
-                  ["신한은행", "신한은행"],
-                  ["우리은행", "우리은행"],
-                  ["하나은행", "하나은행"],
-                  ["농협은행", "농협은행"],
-                  ["기업은행", "기업은행"],
-                  ["카카오뱅크", "카카오뱅크"],
-                  ["토스뱅크", "토스뱅크"],
-                  ["SC제일은행", "SC제일은행"],
-                  ["대구은행", "대구은행"],
-                  ["부산은행", "부산은행"]
-                ], @profile.bank_name),
-                {}, class: input_classes(:select) %>
+      <div class="space-y-4">
+        <!-- 은행 선택 -->
+        <div data-controller="button-select">
+          <%= f.label :bank_name, "은행", class: "block text-sm font-medium text-gray-700 mb-3" %>
+
+          <%= f.hidden_field :bank_name, id: "bank-name-input" %>
+
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-2">
+            <% [
+              "국민은행", "신한은행", "우리은행", "하나은행",
+              "농협은행", "기업은행", "카카오뱅크", "토스뱅크",
+              "SC제일은행", "대구은행", "부산은행", "경남은행"
+            ].each do |bank| %>
+              <button type="button"
+                      class="select-button relative px-3 py-2.5 rounded-lg border-2 border-gray-200 hover:border-primary-400 hover:bg-primary-50 transition-all text-center <%= 'border-primary-600 bg-primary-50 selected' if @profile.bank_name == bank %>"
+                      data-action="click->button-select#select"
+                      data-field="bank-name"
+                      data-value="<%= bank %>"
+                      role="radio"
+                      aria-checked="<%= @profile.bank_name == bank ? 'true' : 'false' %>">
+                <div class="select-check <%= 'hidden' unless @profile.bank_name == bank %> absolute top-1 right-1">
+                  <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+                <p class="font-medium text-sm text-gray-900"><%= bank %></p>
+              </button>
+            <% end %>
+          </div>
         </div>
-        <div>
-          <%= f.label :account_number, "계좌번호", class: "block text-sm font-medium text-gray-700 mb-1" %>
-          <%= f.text_field :account_number,
-                placeholder: "계좌번호",
-                class: input_classes(:text) %>
-        </div>
-        <div>
-          <%= f.label :account_holder, "예금주", class: "block text-sm font-medium text-gray-700 mb-1" %>
-          <%= f.text_field :account_holder,
-                placeholder: "예금주명",
-                class: input_classes(:text) %>
+
+        <!-- 계좌번호 및 예금주 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <%= f.label :account_number, "계좌번호", class: "block text-sm font-medium text-gray-700 mb-1" %>
+            <%= f.text_field :account_number,
+                  placeholder: "계좌번호",
+                  class: input_classes(:text) %>
+          </div>
+          <div>
+            <%= f.label :account_holder, "예금주", class: "block text-sm font-medium text-gray-700 mb-1" %>
+            <%= f.text_field :account_holder,
+                  placeholder: "예금주명",
+                  class: input_classes(:text) %>
+          </div>
         </div>
       </div>
 

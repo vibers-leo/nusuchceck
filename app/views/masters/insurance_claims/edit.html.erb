@@ -83,16 +83,35 @@
           <%= f.label :incident_detail_address, "상세 주소", class: "block text-sm font-medium text-gray-700 mb-1" %>
           <%= f.text_field :incident_detail_address, class: input_classes(:text) %>
         </div>
-        <div>
-          <%= f.label :damage_type, "피해 유형 *", class: "block text-sm font-medium text-gray-700 mb-1" %>
-          <%= f.select :damage_type,
-                options_for_select([
-                  ["재산 피해", "property_damage"],
-                  ["인적 피해", "personal_injury"],
-                  ["재산 + 인적 피해", "both"]
-                ], @insurance_claim.damage_type),
-                { include_blank: "선택해 주세요" },
-                class: input_classes(:select) %>
+        <div data-controller="button-select">
+          <%= f.label :damage_type, "피해 유형 *", class: "block text-sm font-medium text-gray-700 mb-3" %>
+
+          <%= f.hidden_field :damage_type, id: "damage-type-input" %>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <% [
+              ["property_damage", "🏠", "재산 피해", "물건, 집기 등"],
+              ["personal_injury", "🤕", "인적 피해", "사람이 다침"],
+              ["both", "⚠️", "재산 + 인적", "모두 해당"]
+            ].each do |value, emoji, title, desc| %>
+              <button type="button"
+                      class="select-button relative p-4 rounded-xl border-2 border-gray-200 hover:border-primary-400 hover:bg-primary-50 transition-all text-center <%= 'border-primary-600 bg-primary-50 selected' if @insurance_claim.damage_type == value %>"
+                      data-action="click->button-select#select"
+                      data-field="damage-type"
+                      data-value="<%= value %>"
+                      role="radio"
+                      aria-checked="<%= @insurance_claim.damage_type == value ? 'true' : 'false' %>">
+                <div class="select-check <%= 'hidden' unless @insurance_claim.damage_type == value %> absolute top-2 right-2">
+                  <svg class="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+                <div class="text-3xl mb-2"><%= emoji %></div>
+                <p class="font-bold text-sm text-gray-900 mb-0.5"><%= title %></p>
+                <p class="text-xs text-gray-500"><%= desc %></p>
+              </button>
+            <% end %>
+          </div>
         </div>
         <div>
           <%= f.label :estimated_damage_amount, "공사 금액 (원) *", class: "block text-sm font-medium text-gray-700 mb-1" %>

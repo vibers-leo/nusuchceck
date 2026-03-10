@@ -73,21 +73,40 @@
       </div>
 
       <!-- 증상 유형 (선택) -->
-      <div>
+      <div data-controller="button-select">
         <%= f.label :symptom_type, "어떤 증상인가요?",
-              class: "block text-sm font-medium text-gray-900 mb-2" %>
-        <p class="text-xs text-gray-500 mb-2">💡 비슷한 증상을 선택해주세요 (선택사항)</p>
-        <%= f.select :symptom_type,
-              options_for_select([
-                ["벽면 누수", "wall_leak"],
-                ["천장 누수", "ceiling_leak"],
-                ["바닥 누수", "floor_leak"],
-                ["배관 누수", "pipe_leak"],
-                ["화장실 누수", "toilet_leak"],
-                ["외부 누수", "outdoor_leak"]
-              ], @inspection.symptom_type),
-              { include_blank: "선택해주세요" },
-              class: input_classes(:select) %>
+              class: "block text-sm font-medium text-gray-900 mb-3" %>
+        <p class="text-xs text-gray-500 mb-3">💡 비슷한 증상을 선택해주세요 (선택사항)</p>
+
+        <%= f.hidden_field :symptom_type, id: "symptom-type-input" %>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <% [
+            ["wall_leak", "💧", "벽면 누수", "벽에서 물이 배어나와요"],
+            ["ceiling_leak", "💧", "천장 누수", "천장에서 물이 떨어져요"],
+            ["floor_leak", "💧", "바닥 누수", "바닥이 축축해요"],
+            ["pipe_leak", "🔧", "배관 누수", "배관에서 새는 것 같아요"],
+            ["toilet_leak", "🚽", "화장실 누수", "화장실에서 물이 새요"],
+            ["outdoor_leak", "🏠", "외부 누수", "외벽, 창틀에서 새요"]
+          ].each do |value, emoji, title, desc| %>
+            <button type="button"
+                    class="select-button relative p-4 rounded-xl border-2 border-gray-200 hover:border-primary-400 hover:bg-primary-50 transition-all text-left group <%= 'border-primary-600 bg-primary-50 selected' if @inspection.symptom_type == value %>"
+                    data-action="click->button-select#select"
+                    data-field="symptom_type"
+                    data-value="<%= value %>"
+                    role="radio"
+                    aria-checked="<%= @inspection.symptom_type == value ? 'true' : 'false' %>">
+              <div class="select-check <%= 'hidden' unless @inspection.symptom_type == value %> absolute top-2 right-2">
+                <svg class="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <div class="text-3xl mb-2"><%= emoji %></div>
+              <p class="font-bold text-sm text-gray-900 mb-0.5"><%= title %></p>
+              <p class="text-xs text-gray-500"><%= desc %></p>
+            </button>
+          <% end %>
+        </div>
       </div>
 
       <!-- 제출 버튼 -->

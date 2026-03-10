@@ -88,17 +88,34 @@
           </h3>
 
           <!-- 경력 연수 -->
-          <div class="mb-4">
-            <label class="block text-sm font-semibold text-gray-700 mb-1">경력 연수</label>
-            <%= pf.select :experience_years,
-              options_for_select([
-                ["1년 미만", 0],
-                ["1년", 1], ["2년", 2], ["3년", 3], ["4년", 4], ["5년", 5],
-                ["6년", 6], ["7년", 7], ["8년", 8], ["9년", 9], ["10년", 10],
-                ["11~15년", 13], ["16~20년", 18], ["21년 이상", 25]
-              ], 0),
-              {},
-              class: input_classes(:text) %>
+          <div class="mb-4" data-controller="button-select">
+            <label class="block text-sm font-semibold text-gray-700 mb-3">경력 연수</label>
+
+            <%= pf.hidden_field :experience_years, id: "experience-years-input", value: 0 %>
+
+            <div class="grid grid-cols-3 sm:grid-cols-4 gap-2">
+              <% [
+                ["1년 미만", 0], ["1년", 1], ["2년", 2], ["3년", 3],
+                ["4년", 4], ["5년", 5], ["6년", 6], ["7년", 7],
+                ["8년", 8], ["9년", 9], ["10년", 10], ["11~15년", 13],
+                ["16~20년", 18], ["21년 이상", 25]
+              ].each do |label, value| %>
+                <button type="button"
+                        class="select-button relative px-3 py-3 rounded-lg border-2 border-gray-200 hover:border-primary-400 hover:bg-primary-50 transition-all text-center <%= 'border-primary-600 bg-primary-50 selected' if value == 0 %>"
+                        data-action="click->button-select#select"
+                        data-field="experience-years"
+                        data-value="<%= value %>"
+                        role="radio"
+                        aria-checked="<%= value == 0 ? 'true' : 'false' %>">
+                  <div class="select-check <%= 'hidden' unless value == 0 %> absolute top-1 right-1">
+                    <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                  </div>
+                  <p class="font-semibold text-sm text-gray-900"><%= label %></p>
+                </button>
+              <% end %>
+            </div>
           </div>
 
           <!-- 전문 분야 체크박스 -->
