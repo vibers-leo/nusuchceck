@@ -65,7 +65,7 @@
               <!-- 제목 -->
               <div class="flex items-center gap-2 mb-2">
                 <h3 class="font-bold text-gray-900 text-lg">
-                  <%= payment.escrow_type.present? ? I18n.t("activerecord.attributes.escrow_transaction.escrow_types.#{payment.escrow_type}") : "결제" %>
+                  <%= payment.escrow_type.present? ? payment.escrow_type_label : "결제" %>
                 </h3>
 
                 <!-- 상태 배지 -->
