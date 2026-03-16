@@ -18,7 +18,7 @@ FROM base AS build
 ENV BUNDLE_DEPLOYMENT=""
 
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config curl && \
+    apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config curl libyaml-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install Node.js for Tailwind CSS
