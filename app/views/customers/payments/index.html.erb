@@ -90,7 +90,7 @@
 
               <!-- 요청 정보 -->
               <p class="text-sm text-gray-600 mb-1">
-                체크 #<%= payment.request_id %> - <%= payment.request.symptom_type_label %>
+                체크 #<%= payment.request_id %> - <%= symptom_label(payment.request.symptom_type) %>
               </p>
 
               <!-- 날짜 -->
