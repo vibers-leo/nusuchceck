@@ -206,9 +206,15 @@
   <%= render "shared/flash_messages" %>
 
   <!-- Main content -->
-  <main class="flex-grow<%= hotwire_native_app? ? ' px-4 py-4' : ' max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8' %> w-full">
-    <%= yield %>
-  </main>
+  <% if content_for?(:full_screen_layout) %>
+    <main class="flex-grow flex flex-col overflow-hidden min-h-0">
+      <%= yield %>
+    </main>
+  <% else %>
+    <main class="flex-grow<%= hotwire_native_app? ? ' px-4 py-4' : ' max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8' %> w-full">
+      <%= yield %>
+    </main>
+  <% end %>
 
   <!-- 플로팅 액션 버튼 (FAB) - 당근마켓 스타일 -->
   <% unless hotwire_native_app? %>

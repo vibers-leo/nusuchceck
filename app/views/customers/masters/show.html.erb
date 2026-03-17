@@ -1,0 +1,177 @@
+<%# 전문가 상세 프로필 (당근마켓 스타일) %>
+
+<!-- 뒤로가기 -->
+<div class="mb-4">
+  <%= link_to customers_masters_path, class: "inline-flex items-center text-sm text-gray-500 hover:text-gray-700" do %>
+    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+    </svg>
+    전문가 목록
+  <% end %>
+</div>
+
+<div class="max-w-2xl mx-auto space-y-4">
+
+  <!-- 프로필 카드 -->
+  <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+    <div class="flex items-start gap-4">
+      <!-- 아바타 -->
+      <div class="w-20 h-20 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-md">
+        <span class="text-3xl text-white font-bold"><%= @master.name&.first %></span>
+      </div>
+
+      <div class="flex-1 min-w-0">
+        <!-- 이름 + 인증 -->
+        <div class="flex items-center gap-2 mb-1">
+          <h1 class="text-xl font-bold text-gray-900"><%= @master.name %></h1>
+          <% if @master.master_profile&.verified? %>
+            <div class="flex items-center gap-1 px-2 py-0.5 bg-primary-50 rounded-full border border-primary-200">
+              <svg class="w-3.5 h-3.5 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-xs font-semibold text-primary-700">인증 전문가</span>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- 평점 -->
+        <div class="flex items-center gap-1.5 mb-2">
+          <% if @master.reviews.any? %>
+            <% avg = @master.average_rating %>
+            <div class="flex items-center gap-0.5">
+              <% 5.times do |i| %>
+                <svg class="w-4 h-4 <%= i < avg.round ? 'text-yellow-400' : 'text-gray-200' %>" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+              <% end %>
+            </div>
+            <span class="font-bold text-gray-900"><%= sprintf("%.1f", avg) %></span>
+            <span class="text-sm text-gray-400">(<%= @master.reviews.count %>개 리뷰)</span>
+          <% else %>
+            <span class="text-sm text-gray-400">리뷰 없음</span>
+          <% end %>
+        </div>
+
+        <!-- 경력 -->
+        <div class="flex items-center gap-1.5 text-sm text-gray-600">
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          경력 <span class="font-semibold text-gray-900"><%= @master.master_profile&.experience_years %>년</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 소개글 -->
+    <% if @master.master_profile&.bio.present? %>
+      <div class="mt-4 pt-4 border-t border-gray-100">
+        <p class="text-sm text-gray-700 leading-relaxed"><%= @master.master_profile.bio %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- 전문 장비 -->
+  <% if @master.master_profile&.equipment.present? %>
+    <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+      <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">보유 장비</h2>
+      <div class="flex flex-wrap gap-2">
+        <% @master.master_profile.equipment.each do |equip| %>
+          <span class="px-3 py-1.5 bg-primary-50 text-primary-700 rounded-full text-sm font-medium border border-primary-100">
+            <%= equip %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- 서비스 지역 -->
+  <% if @master.master_profile&.service_areas.present? %>
+    <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+      <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">서비스 지역</h2>
+      <div class="flex flex-wrap gap-2">
+        <% @master.master_profile.service_areas.each do |area| %>
+          <span class="flex items-center gap-1 px-3 py-1.5 bg-gray-50 text-gray-700 rounded-full text-sm font-medium border border-gray-200">
+            <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            <%= area %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- 리뷰 -->
+  <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider">고객 리뷰</h2>
+      <span class="text-sm text-gray-400"><%= @reviews.count %>개</span>
+    </div>
+
+    <% if @reviews.any? %>
+      <div class="space-y-4">
+        <% @reviews.each do |review| %>
+          <div class="<%= @reviews.last == review ? '' : 'border-b border-gray-100 pb-4' %>">
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <span class="text-sm font-bold text-gray-500"><%= review.customer&.name&.first || "?" %></span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <div class="flex items-center gap-0.5">
+                    <% review.rating.times do %>
+                      <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                      </svg>
+                    <% end %>
+                    <% (5 - review.rating).times do %>
+                      <svg class="w-3.5 h-3.5 text-gray-200" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                      </svg>
+                    <% end %>
+                  </div>
+                  <span class="text-xs text-gray-400"><%= review.created_at.strftime("%Y.%m.%d") %></span>
+                </div>
+                <% if review.comment.present? %>
+                  <p class="text-sm text-gray-700 leading-relaxed"><%= review.comment %></p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-6">
+        <p class="text-sm text-gray-400">아직 리뷰가 없어요.</p>
+        <p class="text-xs text-gray-300 mt-1">첫 번째 고객이 되어보세요!</p>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- 하단 CTA -->
+  <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+    <% if user_signed_in? %>
+      <% existing_chat = current_user.requests.joins(:messages).where.not(master_id: nil).where(master_id: @master.id).first rescue nil %>
+      <% if existing_chat %>
+        <p class="text-sm text-gray-500 text-center mb-3">이 전문가와 진행 중인 체크가 있어요.</p>
+        <%= link_to request_messages_path(existing_chat),
+              class: "block w-full text-center py-3.5 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 transition-colors" do %>
+          채팅 이어하기 →
+        <% end %>
+      <% else %>
+        <p class="text-sm text-gray-500 text-center mb-3">누수 체크를 접수하면 전문가와 채팅할 수 있어요.</p>
+        <%= link_to new_customers_request_path,
+              class: "block w-full text-center py-3.5 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 transition-colors" do %>
+          누수 체크 접수하기 →
+        <% end %>
+      <% end %>
+    <% else %>
+      <p class="text-sm text-gray-500 text-center mb-3">로그인 후 상담을 요청할 수 있어요.</p>
+      <%= link_to new_user_session_path,
+            class: "block w-full text-center py-3.5 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 transition-colors" do %>
+        로그인하고 상담하기 →
+      <% end %>
+    <% end %>
+  </div>
+
+</div>

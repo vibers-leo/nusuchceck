@@ -1,67 +1,72 @@
-<%# 카카오톡/당근마켓 스타일 채팅 - 모바일 최적화 %>
+<%# 당근마켓 스타일 채팅 — full-screen, 모바일 최적화 %>
+<% content_for :full_screen_layout, true %>
 <% content_for :title, "채팅" %>
 
-<div class="h-screen flex flex-col bg-gray-100" data-controller="chat" data-chat-request-id-value="<%= @request.id %>" data-chat-current-user-id-value="<%= current_user.id %>">
+<div class="flex flex-col bg-white" style="height: calc(100vh - 56px);"
+     data-controller="chat"
+     data-chat-request-id-value="<%= @request.id %>"
+     data-chat-current-user-id-value="<%= current_user.id %>">
 
   <!-- 상단 헤더 -->
-  <div class="bg-white border-b border-gray-200 px-4 py-3 flex items-center gap-3 flex-shrink-0">
-    <%= link_to :back, class: "text-gray-600 hover:text-gray-900 flex-shrink-0" do %>
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+  <div class="bg-white border-b border-gray-200 px-4 py-3 flex items-center gap-3 flex-shrink-0 shadow-sm">
+    <%= link_to :back, class: "text-gray-500 hover:text-gray-800 flex-shrink-0 p-1" do %>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
       </svg>
     <% end %>
 
     <% other_user = current_user.id == @request.customer_id ? @request.master : @request.customer %>
     <div class="flex items-center gap-2.5 flex-1 min-w-0">
       <% if other_user.present? %>
-        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-          <%= other_user.name&.first %>
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold text-base flex-shrink-0">
+          <%= other_user.name&.first || "?" %>
         </div>
         <div class="min-w-0">
-          <p class="font-semibold text-gray-900 text-sm truncate">
-            <%= other_user.name %>
-            <span class="text-xs font-normal text-gray-500 ml-1"><%= current_user.customer? ? "전문가" : "고객" %></span>
-          </p>
-          <p class="text-xs text-gray-500 truncate"><%= symptom_label(@request.symptom_type) %> · <%= render "shared/status_badge", status: @request.status %></p>
+          <div class="flex items-center gap-1.5">
+            <p class="font-bold text-gray-900 text-[15px] truncate"><%= other_user.name %></p>
+            <span class="text-xs text-gray-400"><%= current_user.customer? ? "전문가" : "고객" %></span>
+          </div>
+          <p class="text-xs text-gray-400 truncate mt-0.5"><%= symptom_label(@request.symptom_type) %></p>
         </div>
       <% else %>
+        <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
         <div class="min-w-0">
-          <p class="font-semibold text-gray-900 text-sm">누수체크</p>
-          <p class="text-xs text-gray-500"><%= symptom_label(@request.symptom_type) %></p>
+          <p class="font-bold text-gray-900 text-[15px]">전문가 매칭 중</p>
+          <p class="text-xs text-gray-400"><%= symptom_label(@request.symptom_type) %></p>
         </div>
       <% end %>
     </div>
 
-    <!-- 상세 링크 -->
-    <% if current_user.customer? %>
-      <%= link_to customers_request_path(@request), class: "flex-shrink-0 p-2 text-gray-500 hover:text-gray-700" do %>
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      <% end %>
-    <% elsif current_user.master? %>
-      <%= link_to masters_request_path(@request), class: "flex-shrink-0 p-2 text-gray-500 hover:text-gray-700" do %>
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      <% end %>
+    <% detail_path = current_user.customer? ? customers_request_path(@request) : masters_request_path(@request) %>
+    <%= link_to detail_path, class: "flex-shrink-0 p-2 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100 transition-colors" do %>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
     <% end %>
   </div>
 
-  <!-- 진행 상태 바 (토스 스타일) -->
-  <div class="bg-white border-b border-gray-100 px-4 py-2 flex-shrink-0">
+  <!-- 진행 상태 바 -->
+  <div class="bg-gray-50 border-b border-gray-100 px-4 py-2.5 flex-shrink-0">
     <%
       steps = [
         { label: "접수", statuses: ["reported", "open"] },
         { label: "매칭", statuses: ["assigned"] },
-        { label: "방문/탐지", statuses: ["visiting", "detecting", "no_leak_found", "estimate_pending"] },
-        { label: "견적/계약", statuses: ["estimate_submitted", "construction_agreed", "escrow_deposited"] },
+        { label: "방문·탐지", statuses: ["visiting", "detecting", "no_leak_found", "estimate_pending"] },
+        { label: "견적·계약", statuses: ["estimate_submitted", "construction_agreed", "escrow_deposited"] },
         { label: "완료", statuses: ["constructing", "construction_completed", "closed"] }
       ]
       current_step_idx = steps.index { |s| s[:statuses].include?(@request.status) } || 0
     %>
-    <div class="flex items-center gap-1">
+    <div class="flex items-center">
       <% steps.each_with_index do |step, idx| %>
         <div class="flex items-center <%= idx < steps.length - 1 ? 'flex-1' : '' %>">
-          <div class="flex flex-col items-center">
-            <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold
-              <%= idx <= current_step_idx ? 'bg-primary-600 text-white' : 'bg-gray-200 text-gray-400' %>">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold
+              <%= idx < current_step_idx ? 'bg-primary-600 text-white' : (idx == current_step_idx ? 'bg-primary-600 text-white ring-4 ring-primary-100' : 'bg-gray-200 text-gray-400') %>">
               <%= idx < current_step_idx ? '✓' : (idx + 1) %>
             </div>
             <span class="text-[9px] mt-0.5 font-medium <%= idx <= current_step_idx ? 'text-primary-600' : 'text-gray-400' %>">
@@ -69,7 +74,7 @@
             </span>
           </div>
           <% if idx < steps.length - 1 %>
-            <div class="flex-1 h-0.5 mx-1 mb-3 <%= idx < current_step_idx ? 'bg-primary-600' : 'bg-gray-200' %>"></div>
+            <div class="flex-1 h-0.5 mx-1 mb-3 rounded-full <%= idx < current_step_idx ? 'bg-primary-500' : 'bg-gray-200' %>"></div>
           <% end %>
         </div>
       <% end %>
@@ -77,51 +82,59 @@
   </div>
 
   <!-- 메시지 영역 -->
-  <div class="flex-1 overflow-y-auto px-4 py-4 space-y-1" data-chat-target="messagesContainer" id="messages">
+  <div class="flex-1 overflow-y-auto px-4 py-4 space-y-1 bg-gray-50"
+       data-chat-target="messagesContainer"
+       id="messages">
     <%= turbo_stream_from "chat_#{@request.id}" %>
     <%= render @messages %>
-    <!-- 타이핑 인디케이터 -->
-    <div class="hidden flex justify-start mb-1.5" data-chat-target="typingIndicator">
-      <div class="bg-white rounded-2xl rounded-bl-md border border-gray-200 px-4 py-2.5 text-xs text-gray-500 italic shadow-sm"></div>
+    <div class="hidden justify-start mb-1.5" data-chat-target="typingIndicator">
+      <div class="flex items-end gap-2">
+        <div class="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0"></div>
+        <div class="bg-white rounded-2xl rounded-bl-md border border-gray-200 px-4 py-3 shadow-sm">
+          <div class="flex gap-1 items-center">
+            <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+            <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+            <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- 전문가 액션 버튼 (채팅창 위 빠른 액션) -->
+  <!-- 전문가 빠른 액션 -->
   <% if current_user.master? && @request.master_id == current_user.id %>
-    <div class="bg-white border-t border-gray-100 px-4 py-2 flex gap-2 overflow-x-auto flex-shrink-0">
+    <div class="bg-white border-t border-gray-100 px-3 py-2 flex gap-2 overflow-x-auto flex-shrink-0 scrollbar-none">
       <% if @request.estimate_pending? %>
         <%= link_to new_masters_request_estimate_path(@request),
-              class: "flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-primary-50 text-primary-700 rounded-xl text-xs font-semibold border border-primary-200 hover:bg-primary-100" do %>
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-          견적서 보내기
+              class: "flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-primary-50 text-primary-700 rounded-xl text-xs font-semibold border border-primary-200 hover:bg-primary-100 transition-colors" do %>
+          📋 견적서 보내기
         <% end %>
       <% end %>
       <% if @request.assigned? || @request.visiting? %>
         <%= button_to visit_masters_request_path(@request), method: :post,
-              class: "flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-green-50 text-green-700 rounded-xl text-xs font-semibold border border-green-200 hover:bg-green-100",
+              class: "flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-green-50 text-green-700 rounded-xl text-xs font-semibold border border-green-200 hover:bg-green-100 transition-colors",
               form: { class: "inline-flex" } do %>
           🚗 방문 시작
         <% end %>
       <% end %>
       <% if @request.detecting? %>
         <%= button_to detection_complete_masters_request_path(@request), method: :post,
-              class: "flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-blue-50 text-blue-700 rounded-xl text-xs font-semibold border border-blue-200 hover:bg-blue-100",
+              class: "flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-blue-50 text-blue-700 rounded-xl text-xs font-semibold border border-blue-200 hover:bg-blue-100 transition-colors",
               form: { class: "inline-flex" } do %>
-          🔍 탐지 완료 (누수 확인)
+          🔍 탐지 완료
         <% end %>
       <% end %>
       <% if @request.constructing? %>
         <%= button_to complete_construction_masters_request_path(@request), method: :post,
-              class: "flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-purple-50 text-purple-700 rounded-xl text-xs font-semibold border border-purple-200 hover:bg-purple-100",
+              class: "flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-purple-50 text-purple-700 rounded-xl text-xs font-semibold border border-purple-200 hover:bg-purple-100 transition-colors",
               form: { class: "inline-flex" } do %>
           ✅ 공사 완료
         <% end %>
       <% end %>
-      <!-- 보험서류 작성 -->
       <% if @request.assigned? || @request.estimate_pending? || @request.estimate_submitted? %>
         <%= link_to new_masters_request_insurance_claim_path(@request),
-              class: "flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-amber-50 text-amber-700 rounded-xl text-xs font-semibold border border-amber-200 hover:bg-amber-100" do %>
-          📋 보험서류 작성
+              class: "flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-amber-50 text-amber-700 rounded-xl text-xs font-semibold border border-amber-200 hover:bg-amber-100 transition-colors" do %>
+          📋 보험서류
         <% end %>
       <% end %>
     </div>
@@ -130,24 +143,24 @@
   <!-- 고객 액션 버튼 -->
   <% if current_user.customer? && @request.customer_id == current_user.id %>
     <% if @request.construction_completed? %>
-      <div class="bg-white border-t border-gray-100 px-4 py-2 flex-shrink-0">
+      <div class="bg-white border-t border-gray-100 px-4 py-2.5 flex-shrink-0">
         <%= button_to confirm_completion_customers_request_path(@request), method: :post,
-              class: "w-full py-3 bg-green-600 text-white rounded-xl text-sm font-bold hover:bg-green-700",
-              data: { confirm: "공사 완료를 확인하시겠습니까? 전문가에게 대금이 지급됩니다." },
+              class: "w-full py-3 bg-green-600 text-white rounded-xl text-sm font-bold hover:bg-green-700 transition-colors",
+              data: { confirm: "공사 완료를 확인할까요? 전문가에게 대금이 지급돼요." },
               form: { class: "w-full" } do %>
           ✅ 공사 완료 확인 및 대금 지급
         <% end %>
       </div>
     <% end %>
     <% if @request.estimate_submitted? %>
-      <div class="bg-white border-t border-gray-100 px-4 py-2 flex-shrink-0">
+      <div class="bg-white border-t border-gray-100 px-4 py-2.5 flex-shrink-0">
         <% estimate = @request.estimates.pending.first || @request.estimates.last %>
         <% if estimate %>
           <%= button_to accept_estimate_customers_request_path(@request, estimate_id: estimate.id), method: :post,
-                class: "w-full py-3 bg-primary-600 text-white rounded-xl text-sm font-bold hover:bg-primary-700",
-                data: { confirm: "견적을 수락하시겠습니까?" },
+                class: "w-full py-3 bg-primary-600 text-white rounded-xl text-sm font-bold hover:bg-primary-700 transition-colors",
+                data: { confirm: "견적을 수락할까요?" },
                 form: { class: "w-full" } do %>
-            견적 수락하기 (<%= number_to_currency(estimate.total_amount, unit: "", precision: 0) %>원)
+            견적 수락하기 · <%= number_to_currency(estimate.total_amount, unit: "", precision: 0) %>원
           <% end %>
         <% end %>
       </div>
@@ -155,7 +168,7 @@
   <% end %>
 
   <!-- 메시지 입력창 -->
-  <div class="bg-white border-t border-gray-100 px-4 py-3 pb-safe flex-shrink-0">
+  <div class="bg-white border-t border-gray-200 px-3 py-3 pb-safe flex-shrink-0">
     <%= form_with(model: [@request, @message],
                  id: "message_form",
                  data: {
@@ -163,30 +176,31 @@
                    action: "turbo:submit-end->chat#resetForm"
                  },
                  class: "flex items-end gap-2") do |f| %>
-
-      <!-- 파일 첨부 버튼 -->
-      <label class="flex-shrink-0 w-10 h-10 flex items-center justify-center text-gray-400 hover:text-gray-600 cursor-pointer">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
+      <label class="flex-shrink-0 w-9 h-9 flex items-center justify-center text-gray-400 hover:text-primary-500 cursor-pointer transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
         <%= f.file_field :images, multiple: true, accept: "image/*", class: "hidden" %>
       </label>
 
-      <!-- 텍스트 입력 -->
-      <div class="flex-1 relative">
+      <div class="flex-1">
         <%= f.text_area :content,
               rows: 1,
-              placeholder: "메시지를 입력하세요...",
+              placeholder: "메시지를 입력하세요",
               data: {
                 chat_target: "input",
                 action: "keydown->chat#handleKeydown input->chat#adjustTextareaHeight"
               },
-              class: "w-full px-4 py-2.5 bg-gray-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-primary-400 focus:outline-none resize-none text-sm leading-relaxed",
-              autofocus: true %>
+              class: "w-full px-4 py-2.5 bg-gray-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-primary-400 focus:outline-none resize-none text-sm leading-relaxed transition-all" %>
       </div>
 
-      <!-- 전송 버튼 -->
-      <%= f.submit "전송",
-            data: { chat_target: "submitButton" },
-            class: "flex-shrink-0 w-10 h-10 bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-colors font-bold text-sm cursor-pointer flex items-center justify-center" %>
+      <button type="submit" form="message_form"
+              data-chat-target="submitButton"
+              class="flex-shrink-0 w-9 h-9 bg-primary-600 text-white rounded-full hover:bg-primary-700 active:bg-primary-800 transition-colors flex items-center justify-center shadow-sm">
+        <svg class="w-4 h-4 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+        </svg>
+      </button>
     <% end %>
   </div>
 </div>
