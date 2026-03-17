@@ -34,12 +34,13 @@
         <div class="space-y-5">
           <h2 class="text-lg font-bold text-gray-900 border-b border-gray-200 pb-2">기본 정보</h2>
 
-          <!-- 이름 -->
+          <!-- 닉네임 -->
           <div>
             <label for="user_name" class="block text-sm font-semibold text-gray-700 mb-1">
-              이름 <span class="text-red-500">*</span>
+              닉네임
             </label>
-            <%= f.text_field :name, autocomplete: "name", placeholder: "홍길동", class: input_classes(:text) %>
+            <%= f.text_field :name, autocomplete: "nickname", placeholder: "물방울1234", class: input_classes(:text) %>
+            <p class="mt-1 text-xs text-gray-500">다른 사람에게 표시되는 이름입니다.</p>
           </div>
 
           <!-- 이메일 -->

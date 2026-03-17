@@ -16,14 +16,13 @@
 
     <%= render "shared/form_errors", resource: @customer %>
 
-    <!-- 이름 -->
+    <!-- 닉네임 -->
     <div>
-      <%= f.label :name, "이름", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.label :name, "닉네임", class: "block text-sm font-medium text-gray-700 mb-1" %>
       <%= f.text_field :name,
-            placeholder: "홍길동",
-            class: input_classes(:text),
-            required: true %>
-      <p class="mt-1 text-xs text-gray-500">실명을 입력해 주세요.</p>
+            placeholder: "물방울1234",
+            class: input_classes(:text) %>
+      <p class="mt-1 text-xs text-gray-500">다른 사람에게 표시되는 이름입니다. 언제든지 변경할 수 있어요.</p>
     </div>
 
     <!-- 전화번호 -->
