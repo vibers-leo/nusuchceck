@@ -7,8 +7,10 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
   config.assets.compile = false
-  # 스토리지 우선순위: OCI > R2 > 로컬 디스크
-  config.active_storage.service = if ENV["OCI_ENDPOINT"].present?
+  # 스토리지 우선순위: Fly 볼륨 > OCI > R2 > 로컬 디스크
+  config.active_storage.service = if File.directory?("/mnt/storage")
+    :fly_disk
+  elsif ENV["OCI_ENDPOINT"].present?
     :oracle_cloud
   elsif ENV["R2_ENDPOINT"].present?
     :cloudflare_r2

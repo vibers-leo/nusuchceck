@@ -48,6 +48,10 @@ kill_timeout = "5s"
     path = "/up"
     protocol = "http"
 
+[[mounts]]
+  source = "storage_data"
+  destination = "/mnt/storage"
+
 [[vm]]
   cpu_kind = "shared"
   cpus = 1
