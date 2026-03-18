@@ -51,6 +51,7 @@ kill_timeout = "5s"
 [[mounts]]
   source = "storage_data"
   destination = "/mnt/storage"
+  processes = ["app"]
 
 [[vm]]
   cpu_kind = "shared"
