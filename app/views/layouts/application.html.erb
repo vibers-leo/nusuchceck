@@ -112,98 +112,17 @@
               <% if current_user.customer? %>
                 <%= link_to "홈", customers_dashboard_path, class: (controller_path == 'customers/dashboard' ? nav_link_active : nav_link) %>
                 <%= link_to "내 체크", customers_requests_path, class: (controller_path == 'customers/requests' ? nav_link_active : nav_link) %>
-                <%= link_to "전문가", customers_masters_path, class: (controller_path == 'customers/masters' ? nav_link_active : nav_link) %>
                 <%= link_to "채팅", chats_path, class: (controller_name == 'chats' || controller_name == 'messages' ? nav_link_active : nav_link) %>
-
-                <!-- 더보기 드롭다운 -->
-                <div class="relative group">
-                  <button class="<%= nav_link %> flex items-center gap-1">
-                    더보기
-                    <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                  </button>
-                  <div class="absolute left-0 top-full mt-1 w-44 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                    <%= link_to customers_insurance_claims_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
-                      <span>📋</span> 보험청구
-                    <% end %>
-                    <%= link_to customers_payments_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
-                      <span>💳</span> 결제 내역
-                    <% end %>
-                    <div class="border-t border-gray-100 my-1"></div>
-                    <%= link_to how_it_works_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
-                      <span>💡</span> 서비스 소개
-                    <% end %>
-                    <%= link_to reviews_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
-                      <span>⭐</span> 리뷰/후기
-                    <% end %>
-                    <%= link_to faq_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
-                      <span>💬</span> FAQ
-                    <% end %>
-                    <%= link_to events_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
-                      <span>🎁</span> 이벤트
-                    <% end %>
-                  </div>
-                </div>
-
+                <%= link_to "커뮤니티", community_path, class: (controller_name == 'posts' ? nav_link_active : nav_link) %>
               <% elsif current_user.master? %>
                 <%= link_to "홈", expert_dashboard_path, class: (controller_name == 'dashboard' ? nav_link_active : nav_link) %>
                 <%= link_to "오더 피드", open_orders_masters_requests_path, class: (action_name == 'open_orders' ? nav_link_active : nav_link) %>
                 <%= link_to "내 요청", masters_requests_path, class: (controller_path == 'masters/requests' && action_name != 'open_orders' ? nav_link_active : nav_link) %>
                 <%= link_to "채팅", chats_path, class: (controller_name == 'chats' || controller_name == 'messages' ? nav_link_active : nav_link) %>
-
-                <!-- 더보기 드롭다운 -->
-                <div class="relative group">
-                  <button class="<%= nav_link %> flex items-center gap-1">
-                    더보기
-                    <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                  </button>
-                  <div class="absolute left-0 top-full mt-1 w-44 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                    <%= link_to expert_settlements_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
-                      <span>💰</span> 정산 내역
-                    <% end %>
-                    <%= link_to masters_insurance_claims_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
-                      <span>📋</span> 보험청구
-                    <% end %>
-                    <%= link_to masters_profile_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors" do %>
-                      <span>👤</span> 내 프로필
-                    <% end %>
-                  </div>
-                </div>
-
               <% elsif current_user.admin? %>
                 <%= link_to "대시보드", admin_root_path, class: (controller_name == 'dashboard' ? nav_link_active : nav_link) %>
                 <%= link_to "체크관리", admin_requests_path, class: (controller_name == 'requests' ? nav_link_active : nav_link) %>
                 <%= link_to "마스터관리", admin_masters_path, class: (controller_name == 'masters' ? nav_link_active : nav_link) %>
-
-                <!-- 더보기 드롭다운 -->
-                <div class="relative group">
-                  <button class="<%= nav_link %> flex items-center gap-1">
-                    더보기
-                    <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                  </button>
-                  <div class="absolute left-0 top-full mt-1 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                    <%= link_to admin_feedbacks_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors" do %>
-                      <span>💬</span> 피드백
-                    <% end %>
-                    <%= link_to admin_surveys_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors" do %>
-                      <span>📊</span> 설문
-                    <% end %>
-                    <%= link_to admin_insurance_claims_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors" do %>
-                      <span>📋</span> 보험청구
-                    <% end %>
-                    <%= link_to admin_payment_audit_logs_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors" do %>
-                      <span>💳</span> 결제로그
-                    <% end %>
-                    <%= link_to admin_escrow_transactions_path, class: "flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors" do %>
-                      <span>🔒</span> 에스크로
-                    <% end %>
-                  </div>
-                </div>
               <% end %>
             </div>
           <% else %>
@@ -312,140 +231,67 @@
 
         <div class="px-3 py-3 pb-8">
           <% if current_user.customer? %>
-            <%# ── 고객 메뉴 ── %>
-            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider px-3 pt-3 pb-1">메인</p>
-            <%= link_to customers_dashboard_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl transition-colors #{controller_path == 'customers/dashboard' ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
-              <i class="fa-solid fa-house w-5 text-center text-base"></i>
-              <span class="font-medium">홈</span>
+            <%# 하단 탭에 없는 보조 메뉴만 표시 (홈/커뮤니티/채팅/마이는 하단 탭에 있음) %>
+            <%= link_to customers_requests_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl transition-colors #{controller_path == 'customers/requests' ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
+              <i class="fa-solid fa-droplet w-5 text-center"></i>
+              <span class="font-medium">내 체크 목록</span>
             <% end %>
-            <%= link_to customers_requests_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl transition-colors #{controller_path == 'customers/requests' ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
-              <i class="fa-solid fa-droplet w-5 text-center text-base"></i>
-              <span class="font-medium">내 체크</span>
-            <% end %>
-            <%= link_to chats_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl transition-colors #{(controller_name == 'chats' || controller_name == 'messages') ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
-              <i class="fa-solid fa-comment-dots w-5 text-center text-base"></i>
-              <span class="font-medium">채팅</span>
-              <% if unread_chat_count > 0 %>
-                <span class="ml-auto text-xs font-bold bg-red-500 text-white px-1.5 py-0.5 rounded-full"><%= unread_chat_count > 9 ? "9+" : unread_chat_count %></span>
-              <% end %>
-            <% end %>
-            <%= link_to customers_masters_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl transition-colors #{controller_path == 'customers/masters' ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
-              <i class="fa-solid fa-user-tie w-5 text-center text-base"></i>
+            <%= link_to customers_masters_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl transition-colors #{controller_path == 'customers/masters' ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
+              <i class="fa-solid fa-user-tie w-5 text-center"></i>
               <span class="font-medium">전문가 찾기</span>
             <% end %>
-
             <div class="border-t border-gray-100 my-2"></div>
-            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider px-3 pb-1">내 활동</p>
-            <%= link_to customers_insurance_claims_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-file-shield w-5 text-center text-base"></i>
+            <%= link_to customers_insurance_claims_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
+              <i class="fa-solid fa-file-shield w-5 text-center"></i>
               <span class="font-medium">보험청구</span>
             <% end %>
-            <%= link_to customers_payments_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-credit-card w-5 text-center text-base"></i>
+            <%= link_to customers_payments_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
+              <i class="fa-solid fa-credit-card w-5 text-center"></i>
               <span class="font-medium">결제 내역</span>
             <% end %>
-            <%= link_to customers_profile_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl transition-colors #{controller_path == 'customers/profiles' ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
-              <i class="fa-solid fa-user w-5 text-center text-base"></i>
-              <span class="font-medium">내 프로필</span>
-            <% end %>
-
             <div class="border-t border-gray-100 my-2"></div>
-            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider px-3 pb-1">서비스</p>
-            <%= link_to about_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-circle-info w-5 text-center text-base"></i>
-              <span class="font-medium">서비스 소개</span>
-            <% end %>
-            <%= link_to reviews_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-star w-5 text-center text-base"></i>
-              <span class="font-medium">리뷰/후기</span>
-            <% end %>
-            <%= link_to faq_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-circle-question w-5 text-center text-base"></i>
+            <%= link_to faq_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
+              <i class="fa-solid fa-circle-question w-5 text-center"></i>
               <span class="font-medium">FAQ</span>
-            <% end %>
-            <%= link_to events_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-gift w-5 text-center text-base"></i>
-              <span class="font-medium">이벤트</span>
             <% end %>
 
           <% elsif current_user.master? %>
-            <%# ── 전문가 메뉴 ── %>
-            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider px-3 pt-3 pb-1">메인</p>
-            <%= link_to expert_dashboard_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl transition-colors #{controller_name == 'dashboard' ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
-              <i class="fa-solid fa-house w-5 text-center text-base"></i>
-              <span class="font-medium">홈</span>
+            <%# 하단 탭에 없는 보조 메뉴만 (홈/오더피드/채팅/마이는 하단 탭에 있음) %>
+            <%= link_to masters_requests_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl transition-colors #{(controller_path == 'masters/requests' && action_name != 'open_orders') ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
+              <i class="fa-solid fa-clipboard-list w-5 text-center"></i>
+              <span class="font-medium">내 요청 목록</span>
             <% end %>
-            <%= link_to open_orders_masters_requests_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl transition-colors #{action_name == 'open_orders' ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
-              <i class="fa-solid fa-box-open w-5 text-center text-base"></i>
-              <span class="font-medium">오더 피드</span>
-              <% open_count_nav = Request.open_orders.count rescue 0 %>
-              <% if open_count_nav > 0 %>
-                <span class="ml-auto text-xs font-bold bg-primary-500 text-white px-1.5 py-0.5 rounded-full"><%= open_count_nav > 9 ? "9+" : open_count_nav %></span>
-              <% end %>
-            <% end %>
-            <%= link_to masters_requests_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl transition-colors #{(controller_path == 'masters/requests' && action_name != 'open_orders') ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
-              <i class="fa-solid fa-clipboard-list w-5 text-center text-base"></i>
-              <span class="font-medium">내 요청</span>
-            <% end %>
-            <%= link_to chats_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl transition-colors #{(controller_name == 'chats' || controller_name == 'messages') ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
-              <i class="fa-solid fa-comment-dots w-5 text-center text-base"></i>
-              <span class="font-medium">채팅</span>
-              <% if unread_chat_count > 0 %>
-                <span class="ml-auto text-xs font-bold bg-red-500 text-white px-1.5 py-0.5 rounded-full"><%= unread_chat_count > 9 ? "9+" : unread_chat_count %></span>
-              <% end %>
-            <% end %>
-
             <div class="border-t border-gray-100 my-2"></div>
-            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider px-3 pb-1">관리</p>
-            <%= link_to expert_settlements_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-money-bill-wave w-5 text-center text-base"></i>
+            <%= link_to expert_settlements_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
+              <i class="fa-solid fa-money-bill-wave w-5 text-center"></i>
               <span class="font-medium">정산 내역</span>
             <% end %>
-            <%= link_to masters_insurance_claims_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-file-shield w-5 text-center text-base"></i>
+            <%= link_to masters_insurance_claims_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
+              <i class="fa-solid fa-file-shield w-5 text-center"></i>
               <span class="font-medium">보험청구</span>
-            <% end %>
-            <%= link_to masters_profile_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl transition-colors #{controller_name == 'profiles' ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
-              <i class="fa-solid fa-user w-5 text-center text-base"></i>
-              <span class="font-medium">내 프로필</span>
             <% end %>
 
           <% elsif current_user.admin? %>
-            <%# ── 관리자 메뉴 ── %>
-            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider px-3 pt-3 pb-1">대시보드</p>
-            <%= link_to admin_root_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl transition-colors #{controller_name == 'dashboard' ? 'bg-violet-50 text-violet-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
-              <i class="fa-solid fa-chart-line w-5 text-center text-base"></i>
-              <span class="font-medium">대시보드</span>
-            <% end %>
-
-            <div class="border-t border-gray-100 my-2"></div>
-            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider px-3 pb-1">관리</p>
-            <%= link_to admin_requests_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-droplet w-5 text-center text-base"></i>
-              <span class="font-medium">체크 관리</span>
-            <% end %>
-            <%= link_to admin_masters_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-users w-5 text-center text-base"></i>
-              <span class="font-medium">마스터 관리</span>
-            <% end %>
-            <%= link_to admin_feedbacks_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-comments w-5 text-center text-base"></i>
+            <%# 하단 탭에 없는 보조 메뉴만 (대시보드/체크/마스터/마이는 하단 탭에 있음) %>
+            <%= link_to admin_feedbacks_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
+              <i class="fa-solid fa-comments w-5 text-center"></i>
               <span class="font-medium">피드백</span>
             <% end %>
-            <%= link_to admin_surveys_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-chart-bar w-5 text-center text-base"></i>
+            <%= link_to admin_surveys_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
+              <i class="fa-solid fa-chart-bar w-5 text-center"></i>
               <span class="font-medium">설문</span>
             <% end %>
-            <%= link_to admin_insurance_claims_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-file-shield w-5 text-center text-base"></i>
+            <div class="border-t border-gray-100 my-2"></div>
+            <%= link_to admin_insurance_claims_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
+              <i class="fa-solid fa-file-shield w-5 text-center"></i>
               <span class="font-medium">보험청구</span>
             <% end %>
-            <%= link_to admin_payment_audit_logs_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-credit-card w-5 text-center text-base"></i>
+            <%= link_to admin_payment_audit_logs_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
+              <i class="fa-solid fa-credit-card w-5 text-center"></i>
               <span class="font-medium">결제 로그</span>
             <% end %>
-            <%= link_to admin_escrow_transactions_path, class: "flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
-              <i class="fa-solid fa-lock w-5 text-center text-base"></i>
+            <%= link_to admin_escrow_transactions_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
+              <i class="fa-solid fa-lock w-5 text-center"></i>
               <span class="font-medium">에스크로</span>
             <% end %>
           <% end %>
