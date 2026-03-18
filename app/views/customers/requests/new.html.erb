@@ -1,3 +1,10 @@
+<% if params[:mode].blank? %>
+  <%# ── 랜딩: 사전진단 / 전문가 진단 요청 선택 ── %>
+  <%= render "landing" %>
+<% elsif params[:mode] == 'expert' %>
+  <%# ── 전문가 진단 요청 (영상 중심 5-스텝 마법사) ── %>
+  <%= render "expert_wizard", f_request: @request %>
+<% else %>
 <div class="min-h-screen bg-white" data-controller="check-wizard analytics" data-check-wizard-total-steps-value="7" data-analytics-category-value="Request Form">
   <!-- 상단 헤더 (Toss 스타일) -->
   <div class="bg-white sticky top-0 z-20">
@@ -257,6 +264,7 @@
              id="video-drop-zone"
              role="button"
              tabindex="0"
+             data-file-counter-target="dropZone"
              aria-label="영상 파일 업로드: 촬영하거나 기존 영상을 선택하세요. 10초 이상 권장, 최대 2GB까지 업로드 가능"
              aria-describedby="video-upload-help">
           <%= f.file_field :videos,
@@ -638,3 +646,4 @@
     </div>
   </div>
 </div>
+<% end %>
