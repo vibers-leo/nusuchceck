@@ -11,6 +11,10 @@ class SystemMessageService
     new(request).send_matching_in_progress_message
   end
 
+  def self.send_expert_request_prompt(request)
+    new(request).send_expert_request_prompt
+  end
+
   def self.send_master_assigned_message(request, master)
     new(request).send_master_assigned_message(master)
   end
@@ -66,6 +70,16 @@ class SystemMessageService
     create_system_message(
       "📋 견적서가 도착했어요!\n\n" \
       "상세 내용을 확인하시고 진행 여부를 결정해 주세요."
+    )
+  end
+
+  def send_expert_request_prompt
+    create_system_message(
+      "📋 잠깐, 기다리는 동안 사전진단을 해보세요!\n\n" \
+      "증상, 건물 정보, 상황을 미리 입력해두면:\n" \
+      "• 전문가가 배정됐을 때 훨씬 빠르게 진행돼요\n" \
+      "• 더 정확한 견적을 받을 수 있어요\n\n" \
+      "위쪽 파란색 배너의 [시작 →] 버튼을 눌러주세요!"
     )
   end
 

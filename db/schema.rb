@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_18_000001) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_19_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -212,6 +212,14 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_18_000001) do
     t.text "specialty_types", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "insurance_verified", default: false, null: false
+    t.datetime "insurance_verified_at"
+    t.date "insurance_valid_until"
+    t.string "insurance_insurer_name"
+    t.jsonb "insurance_ocr_data", default: {}
+    t.boolean "insurance_pending_review", default: false, null: false
+    t.index ["insurance_valid_until"], name: "index_master_profiles_on_insurance_valid_until"
+    t.index ["insurance_verified"], name: "index_master_profiles_on_insurance_verified"
     t.index ["specialty_types"], name: "index_master_profiles_on_specialty_types", using: :gin
     t.index ["user_id"], name: "index_master_profiles_on_user_id", unique: true
   end

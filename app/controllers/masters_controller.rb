@@ -21,5 +21,10 @@ class MastersController < ApplicationController
     @avg_rating   = @master.average_rating
     @review_count = @master.reviews.count
     @completed_count = @master.assigned_requests.where(status: "closed").count
+
+    # 현재 고객과 이 전문가 간의 기존 채팅 요청 (채팅 버튼용)
+    if current_user&.customer?
+      @request_with_master = current_user.requests.where(master: @master).first
+    end
   end
 end

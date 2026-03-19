@@ -114,6 +114,44 @@
   </div>
 </section>
 
+<!-- 활동 중인 전문가 미리보기 -->
+<% masters_preview = Master.joins(:master_profile).where(master_profiles: { verified: true }).includes(:master_profile).limit(3) %>
+<% if masters_preview.any? %>
+<section class="bg-white border-t border-gray-100 py-6">
+  <div class="max-w-lg mx-auto md:max-w-4xl px-4 md:px-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-base font-bold text-gray-900">활동 중인 전문가</h2>
+      <%= link_to masters_path, class: "text-sm text-primary-600 font-semibold" do %>전체보기 →<% end %>
+    </div>
+    <div class="space-y-2.5">
+      <% masters_preview.each do |master| %>
+        <%
+          m_completed = master.assigned_requests.where(status: 'closed').count rescue 0
+          m_tc = [m_completed * 3, 100].min
+          m_tt = (36.5 + m_tc * 0.6).round(1)
+        %>
+        <%= link_to master_path(master), class: "flex items-center gap-3 p-3.5 bg-white rounded-2xl border border-gray-100 hover:border-primary-200 hover:shadow-sm transition-all block" do %>
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
+            <%= master.name&.first %>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="font-semibold text-gray-900 text-sm"><%= master.name %></span>
+              <span class="text-xs px-2 py-0.5 bg-primary-100 text-primary-700 rounded-full font-semibold">인증</span>
+            </div>
+            <p class="text-xs text-gray-400 truncate mb-0.5"><%= master.master_profile&.specialty_types_list&.first(2)&.join(' · ').presence || '누수 전문' %></p>
+            <p class="text-xs text-primary-600 font-semibold">신뢰도 <%= m_tt %>°C</p>
+          </div>
+          <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>
+<% end %>
+
 <!-- 왜 누수체크? - 간결한 장점 리스트 -->
 <section class="bg-gray-50 py-10 md:py-14" data-controller="scroll-reveal">
   <div class="max-w-lg mx-auto md:max-w-3xl px-4 md:px-6">

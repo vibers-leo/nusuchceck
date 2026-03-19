@@ -41,4 +41,11 @@ class PagesController < ApplicationController
   def events
     # 이벤트/쿠폰 페이지
   end
+
+  def community
+    # 커뮤니티 페이지 (누수 관련 게시글 + 리뷰)
+    @reviews = Review.includes(:customer, :master, :request)
+                    .order(created_at: :desc)
+                    .limit(6)
+  end
 end

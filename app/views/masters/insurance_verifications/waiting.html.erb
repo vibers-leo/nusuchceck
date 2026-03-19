@@ -1,0 +1,148 @@
+<% content_for :title, "인증 대기 중" %>
+
+<div class="max-w-lg mx-auto pb-24 px-4">
+  <%= render "shared/page_header",
+      title: "인증 대기 중",
+      back_path: masters_insurance_verification_path,
+      back_text: "돌아가기" %>
+
+  <div class="bg-white rounded-3xl border border-gray-100 p-8 text-center">
+    <!-- 애니메이션 스피너 -->
+    <div class="relative mx-auto w-24 h-24 mb-6">
+      <div class="absolute inset-0 rounded-full border-4 border-primary-100"></div>
+      <div class="absolute inset-0 rounded-full border-4 border-primary-500 border-t-transparent animate-spin"></div>
+      <div class="absolute inset-0 flex items-center justify-center">
+        <span class="text-3xl">📱</span>
+      </div>
+    </div>
+
+    <h2 class="text-lg font-bold text-gray-900 mb-2">휴대폰 인증을 완료해주세요</h2>
+    <p class="text-sm text-gray-500 mb-1">
+      <span id="auth-method-label"><%= session[:codef_login_type]&.upcase || "PASS" %></span> 앱에서 인증 요청을 확인해주세요
+    </p>
+    <p class="text-xs text-gray-400 mb-8">인증 완료 후 자동으로 다음 단계로 이동해요</p>
+
+    <!-- 상태 메시지 -->
+    <div id="status-message" class="flex items-center justify-center gap-2 py-3 px-4 bg-primary-50 rounded-2xl mb-6">
+      <div class="w-2 h-2 rounded-full bg-primary-400 animate-pulse"></div>
+      <span class="text-sm text-primary-700 font-medium">인증 대기 중...</span>
+    </div>
+
+    <!-- 타임아웃 안내 -->
+    <p class="text-xs text-gray-400 mb-6">
+      인증 요청은 <span id="countdown" class="font-semibold text-gray-600">3:00</span> 후 만료돼요
+    </p>
+
+    <!-- 취소 버튼 -->
+    <a href="<%= masters_insurance_verification_path %>"
+       class="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-600 transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+      인증 취소
+    </a>
+  </div>
+
+  <!-- 도움말 -->
+  <div class="mt-4 p-4 bg-gray-50 rounded-2xl">
+    <p class="text-xs font-semibold text-gray-600 mb-2">인증이 오지 않나요?</p>
+    <ul class="text-xs text-gray-500 space-y-1">
+      <li>• PASS / 카카오 / 네이버 앱이 설치되어 있는지 확인해주세요</li>
+      <li>• 알림 권한이 허용되어 있는지 확인해주세요</li>
+      <li>• 휴대폰 번호와 통신사가 정확한지 확인해주세요</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+(function() {
+  const pollUrl = "<%= poll_masters_insurance_verification_path(format: :json) %>";
+  const statusEl = document.getElementById('status-message');
+  const countdownEl = document.getElementById('countdown');
+
+  let pollInterval;
+  let countdownInterval;
+  let secondsLeft = 180; // 3분
+  let pollCount = 0;
+  const maxPolls = 90; // 최대 90회 (3분, 2초 간격)
+
+  // 카운트다운
+  countdownInterval = setInterval(function() {
+    secondsLeft--;
+    if (secondsLeft <= 0) {
+      clearInterval(countdownInterval);
+      clearInterval(pollInterval);
+      handleTimeout();
+      return;
+    }
+    const m = Math.floor(secondsLeft / 60);
+    const s = secondsLeft % 60;
+    countdownEl.textContent = m + ':' + String(s).padStart(2, '0');
+  }, 1000);
+
+  // 폴링
+  function poll() {
+    pollCount++;
+    if (pollCount > maxPolls) {
+      clearInterval(pollInterval);
+      handleTimeout();
+      return;
+    }
+
+    fetch(pollUrl, {
+      headers: {
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.done) {
+        clearInterval(pollInterval);
+        clearInterval(countdownInterval);
+
+        statusEl.innerHTML = '<svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span class="text-sm text-green-700 font-medium">인증 완료! 이동 중...</span>';
+        statusEl.className = statusEl.className.replace('bg-primary-50', 'bg-green-50');
+
+        setTimeout(function() {
+          window.location.href = data.redirect_url || "<%= masters_profile_path %>";
+        }, 800);
+
+      } else if (data.error) {
+        clearInterval(pollInterval);
+        clearInterval(countdownInterval);
+        handleError(data.message || '인증에 실패했어요');
+      } else {
+        // 아직 대기 중
+        if (data.message) {
+          statusEl.querySelector('span').textContent = data.message;
+        }
+      }
+    })
+    .catch(function() {
+      // 네트워크 오류는 무시하고 계속 폴링
+    });
+  }
+
+  pollInterval = setInterval(poll, 2000);
+  poll(); // 즉시 첫 번째 폴링
+
+  function handleTimeout() {
+    statusEl.innerHTML = '<svg class="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="text-sm text-yellow-700 font-medium">인증 요청이 만료됐어요</span>';
+    statusEl.className = 'flex items-center justify-center gap-2 py-3 px-4 bg-yellow-50 rounded-2xl mb-6';
+
+    setTimeout(function() {
+      window.location.href = "<%= masters_insurance_verification_path %>";
+    }, 2000);
+  }
+
+  function handleError(msg) {
+    statusEl.innerHTML = '<svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="text-sm text-red-600 font-medium">' + msg + '</span>';
+    statusEl.className = 'flex items-center justify-center gap-2 py-3 px-4 bg-red-50 rounded-2xl mb-6';
+
+    setTimeout(function() {
+      window.location.href = "<%= masters_insurance_verification_path %>";
+    }, 3000);
+  }
+})();
+</script>

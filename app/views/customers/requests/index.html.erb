@@ -1,57 +1,167 @@
-<%# 당근마켓 스타일 체크 목록 - 리스트 뷰 %>
+<%# 고객 - 내 체크 목록 (역할 맞춤 재설계) %>
+
+<%
+  current_status = params.dig(:q, :status_eq).to_s
+  current_symptom = params.dig(:q, :symptom_type_eq).to_s
+  has_filter = current_status.present? || current_symptom.present?
+
+  status_label = {
+    "reported"                => "접수됨",
+    "assigned"                => "전문가 배정",
+    "visiting"                => "방문 중",
+    "detecting"               => "탐지 중",
+    "no_leak_found"           => "누수 미확인",
+    "estimate_pending"        => "견적 대기",
+    "estimate_submitted"      => "견적 확인",
+    "construction_agreed"     => "공사 합의",
+    "escrow_deposited"        => "결제 완료",
+    "constructing"            => "공사 중",
+    "construction_completed"  => "완료 확인",
+    "closed"                  => "종료",
+    "cancelled"               => "취소"
+  }
+
+  next_action = ->(req) {
+    case req.status
+    when "reported"               then "전문가 매칭 중이에요"
+    when "assigned"               then "전문가가 일정을 잡고 있어요"
+    when "visiting"               then "전문가 방문 예정이에요"
+    when "detecting"              then "누수 탐지가 진행 중이에요"
+    when "no_leak_found"          then "탐지 결과를 확인해주세요"
+    when "estimate_pending"       then "견적을 기다리는 중이에요"
+    when "estimate_submitted"     then "견적이 도착했어요 → 확인해주세요"
+    when "construction_agreed"    then "공사 일정이 확정됐어요"
+    when "escrow_deposited"       then "결제 완료 · 공사 시작 예정이에요"
+    when "constructing"           then "공사가 진행 중이에요"
+    when "construction_completed" then "공사가 끝났어요 → 완료 확인해주세요"
+    else nil
+    end
+  }
+%>
 
 <!-- 헤더 -->
-<div class="mb-5">
-  <h1 class="text-xl font-bold text-gray-900">내 체크</h1>
-  <p class="text-sm text-gray-500 mt-0.5">전문가 매칭부터 수리 완료까지 한눈에</p>
-</div>
-
-<!-- 필터 -->
-<div class="bg-white rounded-2xl border border-gray-100 p-4 mb-4">
-  <%= search_form_for @q, url: customers_requests_path, html: { method: :get, class: "flex flex-col sm:flex-row gap-3" } do |f| %>
-    <div class="flex-1">
-      <%= f.select :status_eq,
-            options_for_select([
-              ["전체 상태", ""],
-              ["접수됨", "reported"],
-              ["마스터 배정", "assigned"],
-              ["방문 중", "visiting"],
-              ["탐지 중", "detecting"],
-              ["견적 대기", "estimate_pending"],
-              ["견적 제출", "estimate_submitted"],
-              ["공사 합의", "construction_agreed"],
-              ["공사 진행", "constructing"],
-              ["공사 완료", "construction_completed"],
-              ["종료", "closed"],
-              ["취소", "cancelled"]
-            ], params.dig(:q, :status_eq)),
-            {}, class: input_classes(:select) %>
-    </div>
-    <div class="flex-1">
-      <%= f.select :symptom_type_eq,
-            options_for_select([
-              ["전체 증상", ""],
-              ["벽면 누수", "wall_leak"],
-              ["천장 누수", "ceiling_leak"],
-              ["바닥 누수", "floor_leak"],
-              ["배관 누수", "pipe_leak"],
-              ["화장실 누수", "toilet_leak"],
-              ["외부 누수", "outdoor_leak"]
-            ], params.dig(:q, :symptom_type_eq)),
-            {}, class: input_classes(:select) %>
-    </div>
-    <div class="flex gap-2">
-      <%= f.submit "검색", class: btn_classes(:primary, :md) %>
-      <%= link_to "초기화", customers_requests_path, class: btn_classes(:secondary, :md) %>
-    </div>
+<div class="mb-5 flex items-center justify-between">
+  <div>
+    <h1 class="text-xl font-bold text-gray-900">내 체크</h1>
+    <p class="text-sm text-gray-500 mt-0.5">의뢰하신 누수 체크 현황이에요</p>
+  </div>
+  <%= link_to new_customers_request_path,
+        class: "flex items-center gap-1.5 px-4 py-2 bg-primary-600 text-white text-sm font-bold rounded-xl hover:bg-primary-700 transition-colors shadow-sm" do %>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+    </svg>
+    새 체크
   <% end %>
 </div>
 
-<!-- 리스트 뷰 -->
+<!-- ── 진행 중인 체크 하이라이트 (필터 없을 때만) ── -->
+<% if @active_requests.any? && !has_filter %>
+  <div class="mb-6">
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-sm font-bold text-gray-800">지금 진행 중</span>
+      <span class="text-xs font-semibold text-primary-600 bg-primary-50 px-2.5 py-0.5 rounded-full"><%= @active_requests.count %>건</span>
+    </div>
+
+    <div class="space-y-3">
+      <% @active_requests.each do |req| %>
+        <%= link_to customers_request_path(req) do %>
+          <div class="bg-gradient-to-br from-primary-50 to-blue-50 border border-primary-100 rounded-2xl p-4 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <%= render "shared/status_badge", status: req.status %>
+                <span class="text-xs text-gray-400">#<%= req.id %></span>
+              </div>
+              <span class="text-xs text-gray-400"><%= req.created_at.strftime("%m.%d") %></span>
+            </div>
+
+            <p class="font-bold text-gray-900 text-[15px] mb-1"><%= symptom_label(req.symptom_type) %></p>
+            <p class="text-sm text-gray-500 truncate mb-3"><%= req.address %></p>
+
+            <% hint = next_action.call(req) %>
+            <% if hint %>
+              <div class="flex items-center gap-2 py-2.5 px-3 bg-white/70 rounded-xl">
+                <div class="w-1.5 h-1.5 rounded-full bg-primary-400 animate-pulse flex-shrink-0"></div>
+                <span class="text-xs font-semibold text-primary-700"><%= hint %></span>
+                <svg class="w-3.5 h-3.5 text-primary-400 ml-auto flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- 구분선 -->
+  <div class="flex items-center gap-3 mb-5">
+    <div class="flex-1 h-px bg-gray-100"></div>
+    <span class="text-xs text-gray-400 font-medium">전체 목록</span>
+    <div class="flex-1 h-px bg-gray-100"></div>
+  </div>
+<% end %>
+
+<!-- ── 필터 버튼 (드롭다운 없이 나열) ── -->
+<div class="space-y-3 mb-5">
+
+  <!-- 상태 필터 -->
+  <div>
+    <p class="text-xs font-semibold text-gray-400 mb-2">상태</p>
+    <div class="flex gap-2 flex-wrap">
+      <% [
+        ["전체", ""],
+        ["접수됨", "reported"],
+        ["진행중", "visiting"],
+        ["탐지중", "detecting"],
+        ["견적 확인", "estimate_submitted"],
+        ["공사중", "constructing"],
+        ["완료 확인", "construction_completed"],
+        ["종료", "closed"],
+        ["취소", "cancelled"]
+      ].each do |label, value| %>
+        <%
+          is_active = current_status == value || (value.empty? && current_status.empty?)
+          href = customers_requests_path(q: { status_eq: value.presence, symptom_type_eq: current_symptom.presence }.compact)
+        %>
+        <%= link_to label, href,
+              class: "flex-none px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors #{
+                is_active ? 'bg-primary-500 text-white shadow-sm' : 'bg-white border border-gray-200 text-gray-600 hover:border-primary-300 hover:text-primary-600'
+              }" %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- 증상 필터 -->
+  <div>
+    <p class="text-xs font-semibold text-gray-400 mb-2">증상</p>
+    <div class="flex gap-2 flex-wrap">
+      <% [
+        ["전체", ""],
+        ["벽면 💧", "wall_leak"],
+        ["천장 💧", "ceiling_leak"],
+        ["바닥 💧", "floor_leak"],
+        ["배관 🔧", "pipe_leak"],
+        ["화장실 🚽", "toilet_leak"],
+        ["외부 🏠", "outdoor_leak"]
+      ].each do |label, value| %>
+        <%
+          is_active = current_symptom == value || (value.empty? && current_symptom.empty?)
+          href = customers_requests_path(q: { status_eq: current_status.presence, symptom_type_eq: value.presence }.compact)
+        %>
+        <%= link_to label, href,
+              class: "flex-none px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors #{
+                is_active ? 'bg-primary-500 text-white shadow-sm' : 'bg-white border border-gray-200 text-gray-600 hover:border-primary-300 hover:text-primary-600'
+              }" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- ── 리스트 ── -->
 <% if @requests.any? %>
-  <div class="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-100">
+  <div class="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-50">
     <% @requests.each do |request| %>
-      <%= link_to customers_request_path(request), class: "block list-item-touch" do %>
+      <%= link_to customers_request_path(request), class: "block hover:bg-gray-50 transition-colors" do %>
         <div class="px-4 py-4">
           <div class="flex items-start justify-between">
             <div class="flex-1 min-w-0">
@@ -59,22 +169,27 @@
                 <%= render "shared/status_badge", status: request.status %>
                 <span class="text-xs text-gray-400">#<%= request.id %></span>
               </div>
-              <h3 class="text-[15px] font-semibold text-gray-900">
+
+              <h3 class="text-[15px] font-semibold text-gray-900 mb-1">
                 <%= symptom_label(request.symptom_type) %>
               </h3>
-              <div class="flex items-center gap-3 mt-1.5 text-sm text-gray-500">
-                <span class="flex items-center">
-                  <svg class="w-3.5 h-3.5 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                  </svg>
-                  <%= truncate(request.address, length: 20) %>
-                </span>
-                <span class="text-gray-300">|</span>
-                <span><%= l(request.created_at, format: :short) rescue request.created_at.strftime("%m/%d %H:%M") %></span>
+
+              <div class="flex items-center gap-2 text-xs text-gray-400">
+                <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span class="truncate"><%= truncate(request.address, length: 24) %></span>
+                <span class="text-gray-200 flex-shrink-0">·</span>
+                <span class="flex-shrink-0"><%= request.created_at.strftime("%m.%d") %></span>
               </div>
+
+              <% hint = next_action.call(request) %>
+              <% if hint && !%w[closed cancelled].include?(request.status) %>
+                <p class="mt-1.5 text-xs text-primary-500 font-medium"><%= hint %></p>
+              <% end %>
             </div>
-            <svg class="w-5 h-5 text-gray-300 flex-shrink-0 ml-2 mt-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+            <svg class="w-4 h-4 text-gray-300 flex-shrink-0 ml-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>
           </div>
@@ -83,38 +198,34 @@
     <% end %>
   </div>
 
-  <!-- 페이지네이션 -->
   <div class="mt-6">
     <%= paginate @requests %>
   </div>
+
 <% else %>
   <%= render "shared/empty_state",
         icon: "water",
-        title: "아직 체크 내역이 없어요",
-        description: "누수로 고민이시라면 지금 바로 체크하세요",
-        cta_text: "체크 접수하기",
-        cta_path: new_customers_request_path %>
+        title: has_filter ? "해당 조건의 체크가 없어요" : "아직 체크 내역이 없어요",
+        description: has_filter ? "다른 필터를 선택해보세요" : "누수로 고민이시라면 지금 바로 체크하세요",
+        cta_text: has_filter ? "전체 보기" : "체크 접수하기",
+        cta_path: has_filter ? customers_requests_path : new_customers_request_path %>
 
-  <!-- 증상 안내 -->
-  <div class="mt-6 bg-primary-50 rounded-2xl p-5">
-    <h3 class="text-sm font-bold text-gray-900 mb-3">이런 증상이 있다면 바로 체크하세요</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-700">
-      <div class="flex items-center gap-2">
-        <div class="w-5 h-5 bg-primary-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0">&#10003;</div>
-        <span>벽이나 천장에 물방울이 맺혀있어요</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <div class="w-5 h-5 bg-primary-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0">&#10003;</div>
-        <span>벽지가 들뜨거나 변색되었어요</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <div class="w-5 h-5 bg-primary-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0">&#10003;</div>
-        <span>곰팡이 냄새가 나요</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <div class="w-5 h-5 bg-primary-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0">&#10003;</div>
-        <span>수도 요금이 갑자기 많이 나왔어요</span>
+  <% unless has_filter %>
+    <div class="mt-6 bg-primary-50 rounded-2xl p-5">
+      <h3 class="text-sm font-bold text-gray-900 mb-3">이런 증상이 있다면 바로 체크하세요</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-700">
+        <% [
+          "벽이나 천장에 물방울이 맺혀있어요",
+          "벽지가 들뜨거나 변색되었어요",
+          "곰팡이 냄새가 나요",
+          "수도 요금이 갑자기 많이 나왔어요"
+        ].each do |item| %>
+          <div class="flex items-center gap-2">
+            <div class="w-5 h-5 bg-primary-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0">✓</div>
+            <span><%= item %></span>
+          </div>
+        <% end %>
       </div>
     </div>
-  </div>
+  <% end %>
 <% end %>

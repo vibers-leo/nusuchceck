@@ -54,6 +54,9 @@ gem "aws-sdk-s3", require: false
 # AI (Claude Vision API)
 gem "anthropic"
 
+# CODEF API (금융 데이터 연동 - 보험 조회 등)
+gem "easycodefrb"
+
 group :development, :test do
   gem "debug", platforms: %i[mri windows]
   gem "rspec-rails"

@@ -10,6 +10,9 @@ class Masters::RequestsController < ApplicationController
     @q = current_user.assigned_requests.ransack(params[:q])
     @requests = @q.result.recent.page(params[:page])
     @open_count = Request.open_orders.count
+    @needs_action_count = current_user.assigned_requests
+                                      .where(status: %w[detecting estimate_pending])
+                                      .count
   end
 
   def open_orders

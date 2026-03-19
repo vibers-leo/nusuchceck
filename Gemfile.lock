@@ -144,6 +144,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.6.2)
     drb (2.2.3)
+    easycodefrb (1.0.3)
     erb (6.0.1)
     error_highlight (0.7.1)
     erubi (1.13.1)
@@ -412,6 +413,7 @@ DEPENDENCIES
   database_cleaner-active_record
   debug
   devise
+  easycodefrb
   error_highlight (>= 0.4.0)
   factory_bot_rails
   faker
@@ -484,6 +486,7 @@ CHECKSUMS
   devise (5.0.0) sha256=3ff37d39ccedf5d7dbe5971214d81fdf7a89b32d7071857f6585a0f7863f056b
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
+  easycodefrb (1.0.3) sha256=7b0e28373246f196209a4abede998ee6ba73aa26c9f1dd8f5abe5900174d9aeb
   erb (6.0.1) sha256=28ecdd99c5472aebd5674d6061e3c6b0a45c049578b071e5a52c2a7f13c197e5
   error_highlight (0.7.1) sha256=1fcdb7330e56982c33e85f57000fec9c4397ece93bf59b73a51e517dff693781
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9

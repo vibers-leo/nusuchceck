@@ -10,6 +10,36 @@ class MasterProfile < ApplicationRecord
 
   scope :verified, -> { where(verified: true) }
   scope :unverified, -> { where(verified: false) }
+  scope :insurance_verified, -> { where(insurance_verified: true).where("insurance_valid_until IS NULL OR insurance_valid_until >= ?", Date.current) }
+  scope :insurance_pending, -> { where(insurance_pending_review: true) }
+
+  has_one_attached :insurance_certificate
+
+  def insurance_active?
+    insurance_verified? && (insurance_valid_until.nil? || insurance_valid_until >= Date.current)
+  end
+
+  def insurance_expiring_soon?
+    insurance_active? && insurance_valid_until.present? && insurance_valid_until <= 30.days.from_now
+  end
+
+  def approve_insurance!(ocr_data = {})
+    update!(
+      insurance_verified: true,
+      insurance_verified_at: Time.current,
+      insurance_pending_review: false,
+      insurance_insurer_name: ocr_data[:insurer_name],
+      insurance_valid_until: ocr_data[:valid_until]
+    )
+  end
+
+  def reject_insurance!
+    update!(
+      insurance_verified: false,
+      insurance_pending_review: false,
+      insurance_ocr_data: {}
+    )
+  end
 
   def verify!
     update_columns(verified: true, verified_at: Time.current)

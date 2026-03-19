@@ -117,7 +117,7 @@
               <% elsif current_user.master? %>
                 <%= link_to "홈", expert_dashboard_path, class: (controller_name == 'dashboard' ? nav_link_active : nav_link) %>
                 <%= link_to "오더 피드", open_orders_masters_requests_path, class: (action_name == 'open_orders' ? nav_link_active : nav_link) %>
-                <%= link_to "내 요청", masters_requests_path, class: (controller_path == 'masters/requests' && action_name != 'open_orders' ? nav_link_active : nav_link) %>
+                <%= link_to "내 작업", masters_requests_path, class: (controller_path == 'masters/requests' && action_name != 'open_orders' ? nav_link_active : nav_link) %>
                 <%= link_to "채팅", chats_path, class: (controller_name == 'chats' || controller_name == 'messages' ? nav_link_active : nav_link) %>
               <% elsif current_user.admin? %>
                 <%= link_to "대시보드", admin_root_path, class: (controller_name == 'dashboard' ? nav_link_active : nav_link) %>
@@ -259,7 +259,7 @@
             <%# 하단 탭에 없는 보조 메뉴만 (홈/오더피드/채팅/마이는 하단 탭에 있음) %>
             <%= link_to masters_requests_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl transition-colors #{(controller_path == 'masters/requests' && action_name != 'open_orders') ? 'bg-primary-50 text-primary-600' : 'text-gray-700 hover:bg-gray-50'}" do %>
               <i class="fa-solid fa-clipboard-list w-5 text-center"></i>
-              <span class="font-medium">내 요청 목록</span>
+              <span class="font-medium">내 작업 목록</span>
             <% end %>
             <div class="border-t border-gray-100 my-2"></div>
             <%= link_to expert_settlements_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>

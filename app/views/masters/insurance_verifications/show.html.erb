@@ -1,0 +1,163 @@
+<% content_for :title, "배상책임보험 인증" %>
+
+<div class="max-w-lg mx-auto pb-24 px-4">
+  <%= render "shared/page_header",
+      title: "배상책임보험 인증",
+      back_path: edit_masters_profile_path,
+      back_text: "프로필로 돌아가기" %>
+
+  <!-- 현재 상태 -->
+  <% if @profile.insurance_active? %>
+    <div class="flex items-center gap-3 p-4 bg-green-50 rounded-2xl border border-green-100 mb-4">
+      <svg class="w-6 h-6 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+      </svg>
+      <div>
+        <p class="text-sm font-bold text-green-800">인증 완료</p>
+        <p class="text-xs text-green-600">
+          <%= @profile.insurance_insurer_name %>
+          <% if @profile.insurance_valid_until %>
+            · 만기 <%= @profile.insurance_valid_until.strftime("%Y.%m.%d") %>
+          <% end %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- 방법 1: CODEF 자동 조회 -->
+  <div class="bg-white rounded-2xl border border-gray-100 p-5 mb-4">
+    <div class="flex items-center gap-2 mb-4">
+      <div class="w-8 h-8 rounded-xl bg-primary-600 flex items-center justify-center flex-shrink-0">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+      </div>
+      <div>
+        <h2 class="text-sm font-bold text-gray-900">자동 조회 <span class="text-xs font-normal text-primary-600 ml-1">권장</span></h2>
+        <p class="text-xs text-gray-500">PASS 앱 인증 한 번으로 모든 보험사 자동 조회</p>
+      </div>
+    </div>
+
+    <% if CodefConfig.configured? %>
+      <%= form_with url: request_auth_masters_insurance_verification_path, method: :post, local: true, class: "space-y-3" do |f| %>
+
+        <!-- 인증 방법 선택 -->
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-2">인증 방법</label>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="flex flex-col items-center gap-1 p-2.5 rounded-xl border-2 border-primary-500 bg-primary-50 cursor-pointer">
+              <%= radio_button_tag :login_type, "pass", true, class: "sr-only" %>
+              <span class="text-lg">📱</span>
+              <span class="text-xs font-bold text-primary-700">PASS</span>
+            </label>
+            <label class="flex flex-col items-center gap-1 p-2.5 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-primary-300">
+              <%= radio_button_tag :login_type, "kakao", false, class: "sr-only" %>
+              <span class="text-lg">💛</span>
+              <span class="text-xs font-semibold text-gray-600">카카오</span>
+            </label>
+            <label class="flex flex-col items-center gap-1 p-2.5 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-primary-300">
+              <%= radio_button_tag :login_type, "naver", false, class: "sr-only" %>
+              <span class="text-lg">🟢</span>
+              <span class="text-xs font-semibold text-gray-600">네이버</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 이름 -->
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">이름</label>
+          <%= text_field_tag :name, current_user.name, placeholder: "홍길동",
+                class: "w-full px-3 py-2.5 text-sm rounded-xl border border-gray-200 focus:outline-none focus:border-primary-400 focus:ring-1 focus:ring-primary-400" %>
+        </div>
+
+        <!-- 생년월일 -->
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">생년월일 8자리</label>
+          <%= text_field_tag :birth_date, nil, placeholder: "19901231",
+                maxlength: 8, inputmode: "numeric",
+                class: "w-full px-3 py-2.5 text-sm rounded-xl border border-gray-200 focus:outline-none focus:border-primary-400 focus:ring-1 focus:ring-primary-400" %>
+        </div>
+
+        <!-- 전화번호 + 통신사 -->
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">휴대폰 번호</label>
+            <%= text_field_tag :phone, nil, placeholder: "01012345678",
+                  maxlength: 11, inputmode: "numeric",
+                  class: "w-full px-3 py-2.5 text-sm rounded-xl border border-gray-200 focus:outline-none focus:border-primary-400 focus:ring-1 focus:ring-primary-400" %>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">통신사</label>
+            <%= select_tag :telecom,
+                  options_for_select([["SKT", "SKT"], ["KT", "KT"], ["LGU+", "LGU"], ["SKT 알뜰폰", "SKT알뜰폰"], ["KT 알뜰폰", "KT알뜰폰"], ["LGU 알뜰폰", "LGU알뜰폰"]]),
+                  class: "w-full px-3 py-2.5 text-sm rounded-xl border border-gray-200 focus:outline-none focus:border-primary-400 bg-white" %>
+          </div>
+        </div>
+
+        <p class="text-xs text-gray-400">
+          입력 정보는 인증 후 즉시 삭제되며 저장하지 않아요
+        </p>
+
+        <%= f.submit "PASS 앱으로 인증 요청",
+              class: "w-full py-3.5 rounded-2xl bg-primary-600 text-white text-sm font-bold hover:bg-primary-700 transition-colors cursor-pointer" %>
+      <% end %>
+    <% else %>
+      <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
+        <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <p class="text-sm text-gray-500">자동 조회 서비스 준비 중이에요. 아래 증명서 업로드를 이용해주세요.</p>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- 방법 2: 증명서 업로드 (OCR) -->
+  <div class="bg-white rounded-2xl border border-gray-100 p-5">
+    <div class="flex items-center gap-2 mb-4">
+      <div class="w-8 h-8 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0">
+        <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+      </div>
+      <div>
+        <h2 class="text-sm font-bold text-gray-900">증명서 직접 업로드</h2>
+        <p class="text-xs text-gray-500">보험가입증명서 이미지/PDF를 업로드하면 OCR로 자동 인식</p>
+      </div>
+    </div>
+
+    <%= form_with url: upload_insurance_masters_profile_path, method: :post, multipart: true do |uf| %>
+      <div class="border-2 border-dashed border-gray-200 rounded-xl p-4 text-center mb-3">
+        <%= uf.file_field :insurance_certificate, accept: "image/*,.pdf",
+              class: "hidden", id: "cert_file" %>
+        <label for="cert_file" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-50 text-gray-600 text-sm font-semibold rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+          </svg>
+          파일 선택
+        </label>
+        <p id="cert_file_name" class="text-xs text-primary-600 font-semibold mt-2 hidden"></p>
+      </div>
+      <%= uf.submit "업로드 및 인증 요청",
+            class: "w-full py-3 rounded-xl bg-gray-700 text-white text-sm font-bold hover:bg-gray-800 transition-colors cursor-pointer" %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  document.getElementById('cert_file')?.addEventListener('change', function() {
+    const el = document.getElementById('cert_file_name')
+    if (this.files[0] && el) { el.textContent = this.files[0].name; el.classList.remove('hidden') }
+  })
+
+  // 라디오 버튼 선택 시 카드 스타일 변경
+  document.querySelectorAll('input[name="login_type"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      document.querySelectorAll('input[name="login_type"]').forEach(r => {
+        r.closest('label').className = r.closest('label').className
+          .replace('border-primary-500 bg-primary-50', 'border-gray-200')
+      })
+      this.closest('label').className = this.closest('label').className
+        .replace('border-gray-200', 'border-primary-500 bg-primary-50')
+    })
+  })
+</script>

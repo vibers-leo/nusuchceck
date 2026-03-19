@@ -115,7 +115,16 @@ Rails.application.routes.draw do
       resources :estimates, only: [:new, :create, :edit, :update]
       resources :insurance_claims, only: [:new, :create], controller: "insurance_claims"
     end
-    resource :profile, only: [:show, :edit, :update], controller: "profiles"
+    resource :profile, only: [:show, :edit, :update], controller: "profiles" do
+      post :upload_insurance, on: :member
+    end
+
+    # 보험 자동 조회 (CODEF API 간편인증)
+    resource :insurance_verification, only: [:show], controller: "insurance_verifications" do
+      post :request_auth, on: :member
+      get  :waiting,      on: :member
+      get  :poll,         on: :member
+    end
 
     resources :insurance_claims, only: [:index, :show, :edit, :update] do
       member do
@@ -152,6 +161,8 @@ Rails.application.routes.draw do
       member do
         post :verify
         post :reject
+        post :approve_insurance
+        post :reject_insurance
       end
     end
     resources :escrow_transactions, only: [:index, :show] do

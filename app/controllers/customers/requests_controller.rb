@@ -8,6 +8,9 @@ class Customers::RequestsController < ApplicationController
   ]
 
   def index
+    @active_requests = current_user.requests
+                                   .where.not(status: %w[closed cancelled])
+                                   .recent.limit(3)
     @q = current_user.requests.ransack(params[:q])
     @requests = @q.result.recent.page(params[:page])
   end

@@ -13,7 +13,7 @@
 <div class="max-w-lg mx-auto pb-24">
 
   <!-- ① 프로필 카드 -->
-  <div class="bg-gradient-to-br from-green-600 to-emerald-700 rounded-3xl mb-4 p-6 text-white shadow-xl">
+  <div class="bg-gradient-to-br from-primary-600 to-primary-800 rounded-3xl mb-4 p-6 text-white shadow-xl">
     <div class="flex items-center gap-4">
       <div class="w-[72px] h-[72px] rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center text-3xl font-bold border-2 border-white/30 flex-shrink-0">
         <%= current_user.name&.first || "전" %>
@@ -66,6 +66,23 @@
         <p class="text-[11px] text-gray-500 mt-0.5">평점없음</p>
       <% end %>
     </div>
+  </div>
+
+  <!-- 신뢰도 온도 바 -->
+  <%
+    trust_score = [completed_count * 3, 100].min
+    trust_temp  = (36.5 + trust_score * 0.6).round(1)
+  %>
+  <div class="bg-white rounded-2xl border border-gray-100 p-4 mb-4 shadow-sm">
+    <div class="flex justify-between items-center mb-2">
+      <span class="text-sm font-bold text-gray-700">나의 신뢰도 온도</span>
+      <span class="text-base font-bold text-primary-600"><%= trust_temp %>°C</span>
+    </div>
+    <div class="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+      <div class="h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full transition-all"
+           style="width: <%= [trust_score, 8].max %>%"></div>
+    </div>
+    <p class="text-xs text-gray-400 mt-1.5">완료 <%= completed_count %>건 기반으로 산출돼요</p>
   </div>
 
   <!-- ③ 전문가 정보 -->

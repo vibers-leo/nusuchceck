@@ -5,10 +5,10 @@
 
 /* ===== CSS Custom Properties (Design Tokens) ===== */
 :root {
-  --color-brand: #14d4c0;       /* primary-500 (bright mint) */
-  --color-brand-dark: #0eb8a4;  /* primary-600 */
-  --color-brand-light: #ccfbf7; /* primary-100 */
-  --color-brand-50: #f0fffe;    /* primary-50 */
+  --color-brand: #3b82f6;       /* primary-500 (bright blue) */
+  --color-brand-dark: #2563eb;  /* primary-600 */
+  --color-brand-light: #dbeafe; /* primary-100 */
+  --color-brand-50: #eff6ff;    /* primary-50 */
   --color-accent: #f97316;      /* carrot orange (secondary) */
   --radius-sm: 0.375rem;   /* 6px */
   --radius-md: 0.5rem;     /* 8px */
@@ -23,7 +23,7 @@
 /* ===== Turbo Progress Bar ===== */
 .turbo-progress-bar {
   height: 3px;
-  background: linear-gradient(90deg, var(--color-brand), #2dd4bf);
+  background: linear-gradient(90deg, var(--color-brand), #60a5fa);
 }
 
 /* ===== Turbo Frame Loading Dots (차분한 로딩) ===== */
