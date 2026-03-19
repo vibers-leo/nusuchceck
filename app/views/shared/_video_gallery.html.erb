@@ -1,0 +1,86 @@
+<%#
+  Usage:
+    render "shared/video_gallery", videos: @request.videos, title: "첨부 영상"
+
+  Params:
+    videos  — ActiveStorage::Attached::Many (already .attached? checked by caller)
+    title   — section heading string (default: "첨부 영상")
+    compact — boolean, true = smaller grid (2-col), false = full (default: false)
+%>
+<% title   ||= "첨부 영상" %>
+<% compact ||= false %>
+
+<div data-controller="video-player">
+
+  <%# ── Thumbnail Grid ── %>
+  <div class="<%= compact ? 'grid grid-cols-2 gap-2' : 'grid grid-cols-2 sm:grid-cols-3 gap-2' %>">
+    <% videos.each_with_index do |video, idx| %>
+      <div class="relative aspect-video rounded-xl overflow-hidden bg-gray-900 cursor-pointer group select-none"
+           data-action="click->video-player#open"
+           data-video-url="<%= url_for(video) %>">
+
+        <%# ── Thumbnail (Active Storage video preview via FFmpeg) ── %>
+        <% begin %>
+          <%= image_tag video.preview(resize_to_limit: [640, 360]).processed,
+                class: "w-full h-full object-cover transition-transform duration-300 group-hover:scale-105",
+                loading: "lazy",
+                alt: "영상 #{idx + 1}" %>
+        <% rescue => e %>
+          <%# 미처리 썸네일 — 영상 아이콘 플레이스홀더 %>
+          <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 gap-2">
+            <svg class="w-10 h-10 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M15 10l4.553-2.069A1 1 0 0121 8.867v6.266a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+            <span class="text-[10px] text-gray-500 font-medium">영상 <%= idx + 1 %></span>
+          </div>
+        <% end %>
+
+        <%# ── 재생 버튼 오버레이 ── %>
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div class="w-12 h-12 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center shadow-xl
+                      transition-all duration-200 group-hover:scale-110 group-hover:bg-black/75">
+            <svg class="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+            </svg>
+          </div>
+        </div>
+
+        <%# ── 영상 레이블 ── %>
+        <div class="absolute bottom-1.5 right-1.5 bg-black/70 text-white text-[10px] px-1.5 py-0.5 rounded-md font-medium backdrop-blur-sm">
+          📹 영상 <%= idx + 1 %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%# ── 전체화면 영상 플레이어 모달 ── %>
+  <div data-video-player-target="modal"
+       class="hidden fixed inset-0 z-[9999] bg-black/95 backdrop-blur-sm items-center justify-center p-4"
+       data-action="click->video-player#backdrop">
+    <div class="relative w-full max-w-3xl">
+
+      <%# 닫기 버튼 %>
+      <button type="button"
+              data-action="click->video-player#close"
+              class="absolute -top-12 right-0 w-10 h-10 flex items-center justify-center text-white/80 hover:text-white transition-colors rounded-full hover:bg-white/10">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <%# 영상 플레이어 %>
+      <video data-video-player-target="video"
+             controls
+             playsinline
+             preload="metadata"
+             class="w-full max-h-[80vh] rounded-2xl bg-black shadow-2xl outline-none">
+        이 브라우저에서는 영상을 재생할 수 없습니다.
+      </video>
+
+      <%# 하단 힌트 %>
+      <p class="text-center text-white/40 text-xs mt-3">ESC 또는 화면 밖 클릭으로 닫기</p>
+    </div>
+  </div>
+
+</div>

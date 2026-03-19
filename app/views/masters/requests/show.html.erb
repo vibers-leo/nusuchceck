@@ -81,16 +81,29 @@
         </div>
 
         <!-- 사진/영상 -->
-        <% if @request.photos.attached? %>
-          <div class="bg-white rounded-2xl border border-gray-100 p-5">
-            <h3 class="text-sm font-semibold text-gray-700 mb-3">첨부 자료</h3>
-            <div class="grid grid-cols-3 gap-2">
-              <% @request.photos.each do |photo| %>
-                <div class="aspect-square rounded-xl overflow-hidden bg-gray-100">
-                  <%= image_tag photo, class: "w-full h-full object-cover" rescue nil %>
+        <% if @request.videos.attached? || @request.photos.attached? %>
+          <div class="bg-white rounded-2xl border border-gray-100 p-5 space-y-4">
+            <% if @request.videos.attached? %>
+              <div>
+                <h3 class="text-sm font-semibold text-gray-700 mb-3">
+                  첨부 영상
+                  <span class="text-xs font-normal text-gray-400 ml-1"><%= @request.videos.count %>개</span>
+                </h3>
+                <%= render "shared/video_gallery", videos: @request.videos, compact: true %>
+              </div>
+            <% end %>
+            <% if @request.photos.attached? %>
+              <div>
+                <h3 class="text-sm font-semibold text-gray-700 mb-3">첨부 사진</h3>
+                <div class="grid grid-cols-3 gap-2">
+                  <% @request.photos.each do |photo| %>
+                    <div class="aspect-square rounded-xl overflow-hidden bg-gray-100">
+                      <%= image_tag photo, class: "w-full h-full object-cover" rescue nil %>
+                    </div>
+                  <% end %>
                 </div>
-              <% end %>
-            </div>
+              </div>
+            <% end %>
           </div>
         <% end %>
 
@@ -209,6 +222,15 @@
             </div>
           </dl>
 
+          <% if @request.videos.attached? %>
+            <div class="mt-6">
+              <h3 class="text-sm font-medium text-gray-500 mb-3">
+                첨부 영상
+                <span class="text-xs font-normal text-gray-400 ml-1"><%= @request.videos.count %>개</span>
+              </h3>
+              <%= render "shared/video_gallery", videos: @request.videos %>
+            </div>
+          <% end %>
           <% if @request.photos.attached? %>
             <div class="mt-6">
               <h3 class="text-sm font-medium text-gray-500 mb-3">첨부 사진</h3>

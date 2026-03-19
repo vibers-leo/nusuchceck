@@ -63,6 +63,13 @@
               <% end %>
             </div>
           <% end %>
+
+          <!-- 첨부 영상 -->
+          <% if message.respond_to?(:videos) && message.videos.attached? %>
+            <div class="mt-2">
+              <%= render "shared/video_gallery", videos: message.videos, compact: true %>
+            </div>
+          <% end %>
         </div>
 
         <!-- 시간 + 읽음 표시 -->

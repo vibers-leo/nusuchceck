@@ -176,6 +176,17 @@
   <% end %>
 </div>
 
+<!-- 첨부 영상 -->
+<% if @request.videos.attached? %>
+  <div class="bg-white rounded-2xl border border-gray-100 p-4 mb-4">
+    <h2 class="text-sm font-bold text-gray-500 mb-3">
+      첨부 영상
+      <span class="text-xs font-normal text-gray-400 ml-1"><%= @request.videos.count %>개</span>
+    </h2>
+    <%= render "shared/video_gallery", videos: @request.videos %>
+  </div>
+<% end %>
+
 <!-- 첨부 사진 -->
 <% if @request.photos.attached? %>
   <div class="bg-white rounded-2xl border border-gray-100 p-4 mb-4">
