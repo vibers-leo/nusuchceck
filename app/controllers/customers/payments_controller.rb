@@ -30,8 +30,10 @@ class Customers::PaymentsController < ApplicationController
     end
 
     # 통계
-    @total_amount = current_user.escrow_transactions.where(status: 'completed').sum(:amount)
-    @pending_amount = current_user.escrow_transactions.where(status: 'pending').sum(:amount)
+    all_txns = current_user.escrow_transactions
+    @total_amount   = all_txns.where(status: %w[deposited held released settled]).sum(:amount)
+    @pending_amount = all_txns.where(status: 'pending').sum(:amount)
+    @refunded_amount = all_txns.where(status: 'refunded').sum(:amount)
   end
 
   # GET /customers/payments/checkout
