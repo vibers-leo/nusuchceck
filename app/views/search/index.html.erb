@@ -42,13 +42,21 @@
           <h2 class="text-sm font-bold text-gray-500 mb-2 px-1">전문가</h2>
           <div class="bg-white rounded-2xl border border-gray-100 shadow-sm divide-y divide-gray-50 overflow-hidden">
             <% @masters.each do |master| %>
+              <% profile = master.master_profile %>
               <%= link_to master_path(master), class: "flex items-center gap-3 p-4 hover:bg-gray-50 transition-colors" do %>
                 <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold flex-shrink-0">
                   <%= master.name&.first %>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <p class="font-semibold text-gray-900 text-sm"><%= master.name %></p>
-                  <p class="text-xs text-gray-400 truncate"><%= master.master_profile&.introduction&.truncate(50) || "누수 전문가" %></p>
+                  <div class="flex items-center gap-2">
+                    <p class="font-semibold text-gray-900 text-sm"><%= master.name %></p>
+                    <% if profile&.verified? %>
+                      <span class="text-[10px] bg-primary-50 text-primary-600 px-1.5 py-0.5 rounded-full font-medium flex-shrink-0">인증</span>
+                    <% end %>
+                  </div>
+                  <p class="text-xs text-gray-400 truncate mt-0.5">
+                    <%= profile&.bio&.truncate(40) || "누수 전문가" %>
+                  </p>
                 </div>
                 <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
