@@ -109,11 +109,6 @@ export default class extends Controller {
 
     this.selections[field] = value
     this.enableNextButton()
-
-    // 버튼 선택 스텝은 짧은 딜레이 후 자동 전진
-    setTimeout(() => {
-      this.next({ preventDefault: () => {} })
-    }, 400)
   }
 
   // 키보드 네비게이션 처리
@@ -292,10 +287,13 @@ export default class extends Controller {
       // 건너뛰기 + 다음
       if (this.hasSkipNextGroupTarget) this.skipNextGroupTarget.classList.remove("hidden")
     } else if (stepType === "button") {
-      // 버튼 선택 스텝: "다음" 비활성 상태로 표시 (선택하면 자동 전진)
+      // 버튼 선택 스텝: 카드 클릭 후 "다음" 버튼이 나타남
+      // 처음 진입 시 nextBtn은 숨겨짐(위에서 처리됨), 카드 선택 시 enableNextButton()으로 표시됨
       if (this.hasNextBtnTarget) {
-        this.nextBtnTarget.classList.remove("hidden")
-        this.disableNextButton()
+        this.nextBtnTarget.classList.add("hidden")
+        this.nextBtnTarget.disabled = true
+        this.nextBtnTarget.classList.add("bg-gray-200", "text-gray-400", "cursor-not-allowed")
+        this.nextBtnTarget.classList.remove("bg-primary-600", "text-white", "hover:bg-primary-700")
       }
     } else {
       // 일반 폼 스텝
@@ -310,7 +308,7 @@ export default class extends Controller {
   enableNextButton() {
     if (this.hasNextBtnTarget) {
       this.nextBtnTarget.disabled = false
-      this.nextBtnTarget.classList.remove("bg-gray-200", "text-gray-400", "cursor-not-allowed")
+      this.nextBtnTarget.classList.remove("hidden", "bg-gray-200", "text-gray-400", "cursor-not-allowed")
       this.nextBtnTarget.classList.add("bg-primary-600", "text-white", "hover:bg-primary-700")
     }
   }
