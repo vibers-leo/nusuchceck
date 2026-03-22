@@ -8,7 +8,7 @@
   <%# ── AI 사전점검 (토스 스타일 5-스텝 마법사) ── %>
   <%= render "diagnosis_wizard", f_request: @request %>
 <% else %>
-<div class="min-h-screen bg-white" data-controller="check-wizard analytics" data-check-wizard-total-steps-value="7" data-analytics-category-value="Request Form">
+<div class="min-h-screen bg-white" data-controller="check-wizard analytics button-loading" data-check-wizard-total-steps-value="7" data-analytics-category-value="Request Form">
   <!-- 상단 헤더 (Toss 스타일) -->
   <div class="bg-white sticky top-0 z-20">
     <div class="max-w-lg mx-auto px-4">
@@ -41,7 +41,7 @@
   <%= form_with(model: @request, url: customers_requests_path,
                 html: { multipart: true, id: "check-form" },
                 data: {
-                  controller: "button-loading upload-progress",
+                  controller: "upload-progress",
                   action: "submit->button-loading#submit submit->upload-progress#handleSubmit",
                   upload_progress_target: "form",
                   upload_progress_redirect_url_value: customers_requests_path,
@@ -469,47 +469,7 @@
     <!-- 하단 고정 버튼 + 탭바 높이 여백 -->
     <div class="h-36 md:h-20"></div>
 
-    <!-- 하단 고정 버튼 (Toss 스타일 그라디언트) -->
-    <div class="fixed bottom-16 md:bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-30 pb-safe shadow-2xl">
-      <div class="max-w-lg mx-auto px-5 py-4">
-        <!-- 다음 버튼 -->
-        <button type="button"
-                data-check-wizard-target="nextBtn"
-                data-action="click->check-wizard#next"
-                class="w-full py-5 rounded-2xl font-bold text-lg transition-all duration-200 bg-gray-200 text-gray-400 cursor-not-allowed shadow-md"
-                disabled>
-          다음 →
-        </button>
-
-        <!-- 건너뛰기 + 다음 (선택사항 스텝용) -->
-        <div data-check-wizard-target="skipNextGroup" class="hidden space-y-2">
-          <button type="button"
-                  data-action="click->check-wizard#next"
-                  class="w-full py-5 rounded-2xl font-bold text-lg bg-gradient-to-r from-primary-600 to-purple-600 text-white hover:from-primary-700 hover:to-purple-700 transition-all shadow-xl hover:shadow-2xl">
-            다음 →
-          </button>
-          <button type="button"
-                  data-action="click->check-wizard#skip"
-                  class="w-full py-3 rounded-xl font-medium text-[15px] text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition">
-            건너뛰기
-          </button>
-        </div>
-
-        <!-- 제출 버튼 -->
-        <button type="submit"
-                data-check-wizard-target="submitBtn"
-                data-button-loading-target="button"
-                data-button-loading-loading-text-value="영상 업로드 중... 잠시만 기다려주세요"
-                class="hidden w-full py-5 rounded-2xl font-bold text-lg bg-gradient-to-r from-primary-600 to-purple-700 text-white hover:from-primary-700 hover:to-purple-800 transition-all shadow-xl hover:shadow-2xl text-center">
-          <span data-button-loading-target="spinner" class="btn-spinner hidden"></span>
-          <span data-button-loading-target="text">전문가에게 요청하기</span>
-        </button>
-      </div>
-    </div>
-
-  <% end %>
-
-  <!-- 업로드 진행률 모달 -->
+    <!-- 업로드 진행률 모달 (form 안에 있어야 upload-progress controller가 접근 가능) -->
   <div data-upload-progress-target="progressModal"
        class="hidden fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
     <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl">
@@ -646,6 +606,47 @@
       <p class="text-xs text-gray-400 text-center mt-4">
         💡 50MB 이상 영상은 자동으로 압축돼요
       </p>
+    </div>
+  </div>
+
+  <% end %>
+
+  <!-- 하단 고정 버튼 (form 밖, check-wizard root 안 → targets 직접 접근 가능) -->
+  <div class="fixed bottom-16 md:bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-30 pb-safe shadow-2xl">
+    <div class="max-w-lg mx-auto px-5 py-4">
+      <!-- 다음 버튼 -->
+      <button type="button"
+              data-check-wizard-target="nextBtn"
+              data-action="click->check-wizard#next"
+              class="w-full py-5 rounded-2xl font-bold text-lg transition-all duration-200 bg-gray-200 text-gray-400 cursor-not-allowed shadow-md"
+              disabled>
+        다음 →
+      </button>
+
+      <!-- 건너뛰기 + 다음 (선택사항 스텝용) -->
+      <div data-check-wizard-target="skipNextGroup" class="hidden space-y-2">
+        <button type="button"
+                data-action="click->check-wizard#next"
+                class="w-full py-5 rounded-2xl font-bold text-lg bg-gradient-to-r from-primary-600 to-purple-600 text-white hover:from-primary-700 hover:to-purple-700 transition-all shadow-xl hover:shadow-2xl">
+          다음 →
+        </button>
+        <button type="button"
+                data-action="click->check-wizard#skip"
+                class="w-full py-3 rounded-xl font-medium text-[15px] text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition">
+          건너뛰기
+        </button>
+      </div>
+
+      <!-- 제출 버튼 (form="check-form"으로 form과 연결) -->
+      <button type="submit"
+              form="check-form"
+              data-check-wizard-target="submitBtn"
+              data-button-loading-target="button"
+              data-button-loading-loading-text-value="영상 업로드 중... 잠시만 기다려주세요"
+              class="hidden w-full py-5 rounded-2xl font-bold text-lg bg-gradient-to-r from-primary-600 to-purple-700 text-white hover:from-primary-700 hover:to-purple-800 transition-all shadow-xl hover:shadow-2xl text-center">
+        <span data-button-loading-target="spinner" class="btn-spinner hidden"></span>
+        <span data-button-loading-target="text">전문가에게 요청하기</span>
+      </button>
     </div>
   </div>
 </div>

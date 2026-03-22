@@ -28,6 +28,7 @@ import ButtonSelectController from "controllers/button_select_controller"
 import UserMenuController from "controllers/user_menu_controller"
 import EmojiPickerController from "controllers/emoji_picker_controller"
 import VideoPlayerController from "controllers/video_player_controller"
+import ChatWizardController from "controllers/chat_wizard_controller"
 
 application.register("estimate-items", EstimateItemsController)
 application.register("dismissible", DismissibleController)
@@ -58,3 +59,4 @@ application.register("button-select", ButtonSelectController)
 application.register("user-menu", UserMenuController)
 application.register("emoji-picker", EmojiPickerController)
 application.register("video-player", VideoPlayerController)
+application.register("chat-wizard", ChatWizardController)

@@ -57,13 +57,20 @@ export default class extends Controller {
     event.preventDefault()
     const button = event.currentTarget
     const group = button.closest("[data-field]")
-    if (!group) return
+    if (!group) {
+      console.error("[check-wizard] selectOption: [data-field] ancestor not found", button)
+      return
+    }
     const field = group.dataset.field
     const value = button.dataset.value
     const gradient = button.dataset.gradient  // 토스 스타일 그라디언트 색상
 
-    // === 1. Ripple 효과 생성 (토스 스타일) ===
-    this.createRipple(event, button, gradient)
+    // === 1. Ripple 효과 생성 (에러가 나도 이후 로직 실행 보장) ===
+    try {
+      this.createRipple(event, button, gradient)
+    } catch(e) {
+      console.warn("[check-wizard] ripple error:", e)
+    }
 
     // === 2. 햅틱 피드백 시뮬레이션 (진동 효과) ===
     if (navigator.vibrate) {
@@ -90,16 +97,20 @@ export default class extends Controller {
       check.classList.remove("hidden")
     }
 
-    // === 5. Scale + Bounce 애니메이션 (토스 스타일) ===
-    button.animate([
-      { transform: 'scale(1)' },
-      { transform: 'scale(1.05)' },
-      { transform: 'scale(0.98)' },
-      { transform: 'scale(1.05)' }
-    ], {
-      duration: 400,
-      easing: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'
-    })
+    // === 5. Scale + Bounce 애니메이션 (에러가 나도 이후 로직 실행 보장) ===
+    try {
+      button.animate([
+        { transform: 'scale(1)' },
+        { transform: 'scale(1.05)' },
+        { transform: 'scale(0.98)' },
+        { transform: 'scale(1.05)' }
+      ], {
+        duration: 400,
+        easing: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+      })
+    } catch(e) {
+      console.warn("[check-wizard] animate error:", e)
+    }
 
     // === 6. Hidden field에 값 설정 ===
     this.hiddenFieldTargets.forEach(input => {
