@@ -307,14 +307,14 @@ export default class extends Controller {
     if (this.hasNextBtnTarget) {
       this.nextBtnTarget.disabled = false
       this.nextBtnTarget.classList.remove("hidden", "bg-gray-100", "bg-gray-200", "text-gray-300", "text-gray-400", "cursor-not-allowed")
-      this.nextBtnTarget.classList.add("bg-primary-600", "text-white", "hover:bg-primary-700", "shadow-xl")
+      this.nextBtnTarget.classList.add("bg-primary-500", "text-white", "hover:bg-primary-600", "shadow-xl")
     }
   }
 
   disableNextButton() {
     if (this.hasNextBtnTarget) {
       this.nextBtnTarget.disabled = true
-      this.nextBtnTarget.classList.remove("hidden", "bg-primary-600", "text-white", "hover:bg-primary-700", "shadow-xl")
+      this.nextBtnTarget.classList.remove("hidden", "bg-primary-500", "text-white", "hover:bg-primary-600", "shadow-xl")
       this.nextBtnTarget.classList.add("bg-gray-100", "text-gray-300", "cursor-not-allowed")
     }
   }
