@@ -288,13 +288,10 @@ export default class extends Controller {
       // 건너뛰기 + 다음
       if (this.hasSkipNextGroupTarget) this.skipNextGroupTarget.classList.remove("hidden")
     } else if (stepType === "button") {
-      // 버튼 선택 스텝: 카드 클릭 후 "다음" 버튼이 나타남
-      // 처음 진입 시 nextBtn은 숨겨짐(위에서 처리됨), 카드 선택 시 enableNextButton()으로 표시됨
+      // 버튼 선택 스텝: 카드 선택 전에는 비활성화, 선택 후 enableNextButton()으로 활성화
       if (this.hasNextBtnTarget) {
-        this.nextBtnTarget.classList.add("hidden")
-        this.nextBtnTarget.disabled = true
-        this.nextBtnTarget.classList.add("bg-gray-200", "text-gray-400", "cursor-not-allowed")
-        this.nextBtnTarget.classList.remove("bg-primary-600", "text-white", "hover:bg-primary-700")
+        this.nextBtnTarget.classList.remove("hidden")
+        this.disableNextButton()
       }
     } else {
       // 일반 폼 스텝
@@ -309,16 +306,16 @@ export default class extends Controller {
   enableNextButton() {
     if (this.hasNextBtnTarget) {
       this.nextBtnTarget.disabled = false
-      this.nextBtnTarget.classList.remove("hidden", "bg-gray-200", "text-gray-400", "cursor-not-allowed")
-      this.nextBtnTarget.classList.add("bg-primary-600", "text-white", "hover:bg-primary-700")
+      this.nextBtnTarget.classList.remove("hidden", "bg-gray-100", "bg-gray-200", "text-gray-300", "text-gray-400", "cursor-not-allowed")
+      this.nextBtnTarget.classList.add("bg-primary-600", "text-white", "hover:bg-primary-700", "shadow-xl")
     }
   }
 
   disableNextButton() {
     if (this.hasNextBtnTarget) {
       this.nextBtnTarget.disabled = true
-      this.nextBtnTarget.classList.add("bg-gray-200", "text-gray-400", "cursor-not-allowed")
-      this.nextBtnTarget.classList.remove("bg-primary-600", "text-white", "hover:bg-primary-700")
+      this.nextBtnTarget.classList.remove("hidden", "bg-primary-600", "text-white", "hover:bg-primary-700", "shadow-xl")
+      this.nextBtnTarget.classList.add("bg-gray-100", "text-gray-300", "cursor-not-allowed")
     }
   }
 
