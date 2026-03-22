@@ -46,8 +46,11 @@ export default class extends Controller {
       }
     })
 
+    // 드롭존 내 어디든 클릭 시 파일 선택기 열기 (삭제 버튼 제외)
     dropZone.addEventListener('click', (e) => {
-      if (e.target === dropZone) this.videoInputTarget.click()
+      if (!e.target.closest('button')) {
+        this.videoInputTarget.click()
+      }
     })
   }
 
@@ -69,17 +72,23 @@ export default class extends Controller {
   }
 
   handleDrop(e) {
-    const videoFiles = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('video/'))
-    if (videoFiles.length === 0) {
-      alert('영상 파일만 업로드할 수 있어요 (MP4, MOV, WebM 등)')
+    const input = this.videoInputTarget
+    const acceptsImages = input.accept && input.accept.includes('image/')
+    const validFiles = Array.from(e.dataTransfer.files).filter(f => {
+      if (f.type.startsWith('video/')) return true
+      if (acceptsImages && f.type.startsWith('image/')) return true
+      return false
+    })
+    if (validFiles.length === 0) {
+      alert(acceptsImages ? '이미지 또는 영상 파일을 올려주세요' : '영상 파일만 업로드할 수 있어요 (MP4, MOV, WebM 등)')
       return
     }
-    if (videoFiles.length > this.videoMaxValue) {
-      alert(`최대 ${this.videoMaxValue}개의 영상만 업로드할 수 있어요`)
+    if (validFiles.length > this.videoMaxValue) {
+      alert(`최대 ${this.videoMaxValue}개까지 업로드할 수 있어요`)
       return
     }
     const dt = new DataTransfer()
-    videoFiles.forEach(f => dt.items.add(f))
+    validFiles.forEach(f => dt.items.add(f))
     this.videoInputTarget.files = dt.files
     this.uploadedViaDragDrop = true
     this.updateVideoCounts()
@@ -91,12 +100,23 @@ export default class extends Controller {
 
     const count = this.videoInputTarget.files.length
     if (count > 0) {
+      const files = Array.from(this.videoInputTarget.files)
+      const videoCount = files.filter(f => f.type.startsWith('video/')).length
+      const imageCount = files.filter(f => f.type.startsWith('image/')).length
+      let label
+      if (videoCount > 0 && imageCount > 0) {
+        label = `영상 ${videoCount}개, 사진 ${imageCount}개 선택됨`
+      } else if (videoCount > 0) {
+        label = `${videoCount}개 영상 선택됨`
+      } else {
+        label = `${imageCount}개 사진 선택됨`
+      }
       this.videoCountTarget.innerHTML = `
         <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 text-primary-700 rounded-full">
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
           </svg>
-          <span class="font-bold">${count}개 영상 선택됨</span>
+          <span class="font-bold">${label}</span>
         </div>
       `
       this.showVideoPreviewsWithProgress()
@@ -189,27 +209,47 @@ export default class extends Controller {
   }
 
   _replaceWithPreview(card, file, index) {
-    const videoUrl = URL.createObjectURL(file)
-    this._objectUrls.push(videoUrl)
+    const fileUrl = URL.createObjectURL(file)
+    this._objectUrls.push(fileUrl)
 
-    const preview = document.createElement('div')
-    preview.className = 'bg-white rounded-2xl p-4 border-2 border-primary-100 shadow-sm'
-    preview.innerHTML = `
-      <div class="flex items-start gap-3">
-        <div class="flex-shrink-0 relative w-36 h-22 rounded-xl overflow-hidden bg-gray-900" style="height: 90px">
-          <video src="${videoUrl}"
-            class="w-full h-full object-cover"
-            preload="metadata" muted playsinline>
-          </video>
+    const isVideo = file.type.startsWith('video/')
+    const isImage = file.type.startsWith('image/')
+    const typeLabel = isVideo ? '영상' : isImage ? '사진' : '파일'
+    const typeBadgeColor = isVideo ? 'bg-purple-100 text-purple-700' : 'bg-green-100 text-green-700'
+
+    let thumbHtml
+    if (isVideo) {
+      thumbHtml = `
+        <div class="flex-shrink-0 relative rounded-xl overflow-hidden bg-gray-900" style="width:108px;height:80px">
+          <video src="${fileUrl}" class="w-full h-full object-cover" preload="metadata" muted playsinline></video>
           <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div class="w-9 h-9 bg-black bg-opacity-50 rounded-full flex items-center justify-center">
-              <svg class="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 20 20">
+            <div class="w-8 h-8 bg-black bg-opacity-50 rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 text-white ml-0.5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
               </svg>
             </div>
           </div>
-        </div>
-        <div class="flex-1 min-w-0 pt-0.5">
+        </div>`
+    } else if (isImage) {
+      thumbHtml = `
+        <div class="flex-shrink-0 relative rounded-xl overflow-hidden bg-gray-100" style="width:108px;height:80px">
+          <img src="${fileUrl}" class="w-full h-full object-cover" alt="${file.name}"/>
+        </div>`
+    } else {
+      thumbHtml = `
+        <div class="flex-shrink-0 w-16 h-16 rounded-xl bg-gray-100 flex items-center justify-center">
+          <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>`
+    }
+
+    const preview = document.createElement('div')
+    preview.className = 'bg-white rounded-2xl p-3 border-2 border-primary-100 shadow-sm'
+    preview.innerHTML = `
+      <div class="flex items-center gap-3">
+        ${thumbHtml}
+        <div class="flex-1 min-w-0">
           <div class="flex items-center gap-1 mb-1">
             <svg class="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
@@ -218,12 +258,12 @@ export default class extends Controller {
           </div>
           <p class="font-semibold text-gray-900 text-sm truncate">${file.name}</p>
           <p class="text-xs text-gray-400 mt-0.5">${this._formatSize(file.size)}</p>
-          <span class="inline-block mt-1.5 px-2 py-0.5 bg-primary-100 text-primary-700 text-xs font-bold rounded-full">영상</span>
+          <span class="inline-block mt-1.5 px-2 py-0.5 ${typeBadgeColor} text-xs font-bold rounded-full">${typeLabel}</span>
         </div>
         <button type="button"
-          class="flex-shrink-0 w-8 h-8 rounded-full bg-red-50 hover:bg-red-100 transition flex items-center justify-center mt-0.5"
-          onclick="this.closest('[data-controller]').dispatchEvent(new CustomEvent('remove-video', { detail: { index: ${index} }, bubbles: true }))"
-          aria-label="영상 제거">
+          class="flex-shrink-0 w-8 h-8 rounded-full bg-red-50 hover:bg-red-100 transition flex items-center justify-center"
+          onclick="this.closest('[data-controller~=file-counter]').dispatchEvent(new CustomEvent('remove-video', { detail: { index: ${index} }, bubbles: true }))"
+          aria-label="제거">
           <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
           </svg>

@@ -304,24 +304,30 @@ export default class extends Controller {
   }
 
   enableNextButton() {
-    if (this.hasNextBtnTarget) {
-      this.nextBtnTarget.disabled = false
-      this.nextBtnTarget.classList.remove("hidden", "bg-gray-100", "bg-gray-200", "text-gray-300", "text-gray-400", "cursor-not-allowed")
-      this.nextBtnTarget.style.backgroundColor = "#3b82f6"
-      this.nextBtnTarget.style.color = "#ffffff"
-      this.nextBtnTarget.style.boxShadow = "0 20px 25px -5px rgba(0,0,0,0.1),0 8px 10px -6px rgba(0,0,0,0.1)"
-      this.nextBtnTarget.style.cursor = "pointer"
+    const btn = this.hasNextBtnTarget
+      ? this.nextBtnTarget
+      : this.element.querySelector('[data-check-wizard-target="nextBtn"]')
+    if (btn) {
+      btn.disabled = false
+      btn.classList.remove("hidden", "bg-gray-100", "bg-gray-200", "text-gray-300", "text-gray-400", "cursor-not-allowed")
+      btn.style.backgroundColor = "#3b82f6"
+      btn.style.color = "#ffffff"
+      btn.style.boxShadow = "0 20px 25px -5px rgba(0,0,0,0.1),0 8px 10px -6px rgba(0,0,0,0.1)"
+      btn.style.cursor = "pointer"
     }
   }
 
   disableNextButton() {
-    if (this.hasNextBtnTarget) {
-      this.nextBtnTarget.disabled = true
-      this.nextBtnTarget.classList.remove("hidden", "bg-primary-500", "text-white", "hover:bg-primary-600", "shadow-xl")
-      this.nextBtnTarget.style.backgroundColor = "#f3f4f6"
-      this.nextBtnTarget.style.color = "#d1d5db"
-      this.nextBtnTarget.style.boxShadow = "none"
-      this.nextBtnTarget.style.cursor = "not-allowed"
+    const btn = this.hasNextBtnTarget
+      ? this.nextBtnTarget
+      : this.element.querySelector('[data-check-wizard-target="nextBtn"]')
+    if (btn) {
+      btn.disabled = true
+      btn.classList.remove("hidden", "bg-primary-500", "text-white", "hover:bg-primary-600", "shadow-xl")
+      btn.style.backgroundColor = "#f3f4f6"
+      btn.style.color = "#d1d5db"
+      btn.style.boxShadow = "none"
+      btn.style.cursor = "not-allowed"
     }
   }
 
