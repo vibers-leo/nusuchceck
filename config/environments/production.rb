@@ -26,14 +26,14 @@ Rails.application.configure do
   config.hosts = [
     "nusucheck.com",
     "www.nusucheck.com",
-    "expert.nusucheck.com",
-    "app.nusucheck.com",
-    "nusucheck.fly.dev",
-    /.*\.nusucheck\.com/,  # 모든 서브도메인 허용
-    /\A[\d.]+\z/,          # Fly.io 헬스체크용 내부 IP 허용 (172.x.x.x)
-    /\A[\d.]+:\d+\z/,      # IP:port 형식 허용 (172.x.x.x:3000)
-    /\A[0-9a-f:]+\z/       # IPv6 허용
-  ]
+    "nusucheck.vibers.co.kr",  # NCP 프로덕션 도메인
+    ENV["APP_DOMAIN"],          # .env로 동적 설정
+    /.*\.nusucheck\.com/,
+    /.*\.vibers\.co\.kr/,
+    /\A[\d.]+\z/,              # IP 헬스체크 허용
+    /\A[\d.]+:\d+\z/,          # IP:port 허용
+    /\A[0-9a-f:]+\z/           # IPv6 허용
+  ].compact
 
   # Action Mailer
   config.action_mailer.perform_caching = false
