@@ -45,8 +45,9 @@ export default class extends Controller {
         // 주소 필드에 값 설정
         if (this.hasAddressTarget) {
           this.addressTarget.value = fullAddress
-          // 입력 이벤트 발생시켜 validation 트리거
+          // 입력 이벤트 발생시켜 validation 트리거 (readonly 필드 호환)
           this.addressTarget.dispatchEvent(new Event('input', { bubbles: true }))
+          this.addressTarget.dispatchEvent(new Event('change', { bubbles: true }))
         }
 
         // 우편번호 필드가 있으면 설정

@@ -229,8 +229,8 @@
                 class: "w-full px-4 py-4 bg-gray-50 rounded-2xl border-2 border-gray-200 focus:border-primary-500 focus:bg-white focus:outline-none text-base font-medium transition-all",
                 data: {
                   address_search_target: "address",
-                  check_wizard_target: "requiredField",
-                  action: "input->check-wizard#validateStep"
+                  check_wizard_target: "requiredInput",
+                  action: "input->check-wizard#validateStep change->check-wizard#validateStep"
                 },
                 autocomplete: "off",
                 required: true,

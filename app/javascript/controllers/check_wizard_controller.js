@@ -307,10 +307,14 @@ export default class extends Controller {
       // 건너뛰기 + 다음
       if (skipGroup) skipGroup.classList.remove("hidden")
     } else if (stepType === "button") {
-      // 버튼 선택 스텝: 카드 선택 전에는 비활성화, 선택 후 enableNextButton()으로 활성화
+      // 버튼 선택 스텝: 이미 선택된 값이 있으면 활성화, 없으면 비활성화
       if (nextBtn) {
         nextBtn.classList.remove("hidden")
-        this.disableNextButton()
+        if (this._hasSelectionForCurrentStep()) {
+          this.enableNextButton()
+        } else {
+          this.disableNextButton()
+        }
       }
     } else {
       // 일반 폼 스텝
@@ -320,6 +324,18 @@ export default class extends Controller {
         this.checkFormValidity()
       }
     }
+  }
+
+  // 현재 버튼 스텝에 이미 선택된 값이 있는지 확인
+  _hasSelectionForCurrentStep() {
+    const currentStepEl = this.stepTargets[this.currentStepValue - 1]
+    if (!currentStepEl) return false
+
+    const group = currentStepEl.querySelector("[data-field]")
+    if (!group) return false
+
+    const field = group.dataset.field
+    return !!this.selections[field]
   }
 
   _findNextBtn() {
@@ -333,26 +349,32 @@ export default class extends Controller {
 
   enableNextButton() {
     const btn = this._findNextBtn()
-    if (btn) {
-      btn.disabled = false
-      btn.classList.remove("hidden", "bg-gray-100", "bg-gray-200", "text-gray-300", "text-gray-400", "cursor-not-allowed")
-      btn.style.setProperty('background-color', '#3b82f6', 'important')
-      btn.style.setProperty('color', '#ffffff', 'important')
-      btn.style.setProperty('box-shadow', '0 20px 25px -5px rgba(0,0,0,0.1),0 8px 10px -6px rgba(0,0,0,0.1)', 'important')
-      btn.style.setProperty('cursor', 'pointer', 'important')
-    }
+    if (!btn) return
+
+    btn.disabled = false
+    // 비활성 클래스 제거
+    btn.classList.remove("bg-gray-100", "bg-gray-200", "text-gray-300", "text-gray-400", "cursor-not-allowed")
+    // 활성 스타일 적용 (인라인 !important로 Tailwind 오버라이드)
+    btn.style.setProperty('background-color', '#3b82f6', 'important')
+    btn.style.setProperty('color', '#ffffff', 'important')
+    btn.style.setProperty('box-shadow', '0 20px 25px -5px rgba(0,0,0,0.1),0 8px 10px -6px rgba(0,0,0,0.1)', 'important')
+    btn.style.setProperty('cursor', 'pointer', 'important')
+    btn.style.setProperty('pointer-events', 'auto', 'important')
   }
 
   disableNextButton() {
     const btn = this._findNextBtn()
-    if (btn) {
-      btn.disabled = true
-      btn.classList.remove("hidden", "bg-primary-500", "text-white", "hover:bg-primary-600", "shadow-xl")
-      btn.style.setProperty('background-color', '#f3f4f6', 'important')
-      btn.style.setProperty('color', '#d1d5db', 'important')
-      btn.style.setProperty('box-shadow', 'none', 'important')
-      btn.style.setProperty('cursor', 'not-allowed', 'important')
-    }
+    if (!btn) return
+
+    btn.disabled = true
+    // 활성 클래스 제거
+    btn.classList.remove("bg-primary-500", "text-white", "hover:bg-primary-600", "shadow-xl")
+    // 비활성 스타일 적용
+    btn.style.setProperty('background-color', '#f3f4f6', 'important')
+    btn.style.setProperty('color', '#d1d5db', 'important')
+    btn.style.setProperty('box-shadow', 'none', 'important')
+    btn.style.setProperty('cursor', 'not-allowed', 'important')
+    btn.style.setProperty('pointer-events', 'auto', 'important')
   }
 
   checkFormValidity() {
