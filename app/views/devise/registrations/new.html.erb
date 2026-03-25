@@ -64,16 +64,29 @@
         </div>
       </div>
 
-      <% if respond_to?(:user_kakao_omniauth_authorize_path) %>
-        <%= button_to user_kakao_omniauth_authorize_path, method: :post, data: { turbo: false },
-              class: "mt-4 w-full h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-colors cursor-pointer",
-              style: "background-color: #FEE500; color: #191919;" do %>
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M9 0.6C4.03 0.6 0 3.713 0 7.55C0 9.944 1.558 12.065 3.93 13.325L2.933 16.93C2.845 17.246 3.213 17.496 3.486 17.31L7.873 14.39C8.242 14.43 8.617 14.45 9 14.45C13.97 14.45 18 11.337 18 7.55C18 3.713 13.97 0.6 9 0.6Z" fill="#191919"/>
-          </svg>
-          카카오로 3초만에 시작
+      <div class="space-y-2.5 mt-4">
+        <% if respond_to?(:user_kakao_omniauth_authorize_path) %>
+          <%= button_to user_kakao_omniauth_authorize_path, method: :post, data: { turbo: false },
+                class: "w-full h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-colors cursor-pointer",
+                style: "background-color: #FEE500; color: #191919;" do %>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M9 0.6C4.03 0.6 0 3.713 0 7.55C0 9.944 1.558 12.065 3.93 13.325L2.933 16.93C2.845 17.246 3.213 17.496 3.486 17.31L7.873 14.39C8.242 14.43 8.617 14.45 9 14.45C13.97 14.45 18 11.337 18 7.55C18 3.713 13.97 0.6 9 0.6Z" fill="#191919"/>
+            </svg>
+            카카오로 시작
+          <% end %>
         <% end %>
-      <% end %>
+
+        <% if respond_to?(:user_naver_omniauth_authorize_path) %>
+          <%= button_to user_naver_omniauth_authorize_path, method: :post, data: { turbo: false },
+                class: "w-full h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-colors cursor-pointer",
+                style: "background-color: #03C75A; color: #FFFFFF;" do %>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+              <path d="M13.5 10.6L6.2 0H0v20h6.5V9.4L13.8 20H20V0h-6.5v10.6z" fill="#FFFFFF"/>
+            </svg>
+            네이버로 시작
+          <% end %>
+        <% end %>
+      </div>
     </div>
 
     <!-- 하단 링크 -->

@@ -13,7 +13,7 @@ class User < ApplicationRecord
   # Devise 모듈 (게스트 지원을 위해 :validatable 제거)
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable,
-         :omniauthable, omniauth_providers: [:kakao]
+         :omniauthable, omniauth_providers: [:kakao, :naver]
 
   # Associations
   has_many :posts, dependent: :destroy

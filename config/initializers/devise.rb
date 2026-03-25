@@ -53,6 +53,48 @@ module OmniAuth
         full_host + callback_path
       end
     end
+
+    class Naver < OmniAuth::Strategies::OAuth2
+      option :name, "naver"
+      option :client_options, {
+        site: "https://nid.naver.com",
+        authorize_url: "/oauth2.0/authorize",
+        token_url: "/oauth2.0/token",
+        auth_scheme: :request_body
+      }
+
+      uid { raw_info.dig("response", "id") }
+
+      info do
+        response = raw_info.fetch("response", {})
+        {
+          name: response["name"] || response["nickname"],
+          email: response["email"],
+          image: response["profile_image"],
+          nickname: response["nickname"]
+        }
+      end
+
+      extra do
+        { raw_info: raw_info }
+      end
+
+      def client
+        ::OAuth2::Client.new(
+          ENV['NAVER_CLIENT_ID'],
+          ENV['NAVER_CLIENT_SECRET'],
+          deep_symbolize(options.client_options)
+        )
+      end
+
+      def raw_info
+        @raw_info ||= access_token.get("https://openapi.naver.com/v1/nid/me").parsed
+      end
+
+      def callback_url
+        full_host + callback_path
+      end
+    end
   end
 end
 
@@ -88,11 +130,14 @@ Devise.setup do |config|
       ENV['KAKAO_CLIENT_ID'],
       ENV.fetch('KAKAO_CLIENT_SECRET', ''),
       strategy_class: OmniAuth::Strategies::Kakao,
-      client_options: {
-        site: "https://kauth.kakao.com",
-        authorize_url: "/oauth/authorize",
-        token_url: "/oauth/token"
-      },
       scope: "profile_nickname,account_email"
+  end
+
+  # OmniAuth 설정 (네이버 로그인)
+  if ENV['NAVER_CLIENT_ID'].present?
+    config.omniauth :naver,
+      ENV['NAVER_CLIENT_ID'],
+      ENV['NAVER_CLIENT_SECRET'],
+      strategy_class: OmniAuth::Strategies::Naver
   end
 end
