@@ -70,10 +70,16 @@ class Masters::RequestsController < ApplicationController
         @request.claim!(master: current_user)
         @application.update!(status: :selected)
       end
-      SystemMessageService.send_master_assigned_message(@request, current_user) rescue => e
+      begin
+        SystemMessageService.send_master_assigned_message(@request, current_user)
+      rescue => e
         Rails.logger.error "[Masters::Requests#claim] SystemMessage 실패: #{e.message}"
-      NotificationService.notify_request_assigned(@request) rescue => e
+      end
+      begin
+        NotificationService.notify_request_assigned(@request)
+      rescue => e
         Rails.logger.error "[Masters::Requests#claim] Notification 실패: #{e.message}"
+      end
       redirect_to masters_request_path(@request), notice: "오더가 배정됐어요! 방문 일정을 잡아주세요."
     else
       error_msg = @application.errors.full_messages.first || "신청 중 오류가 발생했습니다."
