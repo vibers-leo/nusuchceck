@@ -26,8 +26,11 @@ Devise.setup do |config|
 
   # OmniAuth 설정 (카카오 로그인)
   if ENV['KAKAO_CLIENT_ID'].present?
+    require_relative "../../lib/omniauth/strategies/kakao"
     config.omniauth :kakao,
       ENV['KAKAO_CLIENT_ID'],
-      scope: 'profile_nickname,account_email'
+      ENV.fetch('KAKAO_CLIENT_SECRET', ''),
+      scope: 'profile_nickname,account_email',
+      strategy_class: OmniAuth::Strategies::Kakao
   end
 end

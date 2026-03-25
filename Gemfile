@@ -18,8 +18,8 @@ gem "streamio-ffmpeg"
 
 # Authentication & Authorization
 gem "devise"
-# 카카오 로그인
-gem "omniauth-kakao"
+# 카카오 로그인 (OAuth2 기반 커스텀 전략)
+gem "omniauth-oauth2", "~> 1.8"
 gem "omniauth-rails_csrf_protection"
 gem "pundit"
 
