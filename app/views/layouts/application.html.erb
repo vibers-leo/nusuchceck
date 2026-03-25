@@ -123,7 +123,9 @@
               <% elsif current_user.admin? %>
                 <%= link_to "관리자", admin_root_path, class: (controller_path.start_with?('admin') ? nav_link_active : nav_link) %>
                 <%= link_to "고객체험", customers_dashboard_path, class: (controller_path.start_with?('customers') ? nav_link_active : nav_link) %>
-                <%= link_to "전문가체험", masters_requests_path, class: (controller_path.start_with?('masters') ? nav_link_active : nav_link) rescue nil %>
+                <% if respond_to?(:masters_requests_path) %>
+                  <%= link_to "전문가체험", masters_requests_path, class: (controller_path.start_with?('masters') ? nav_link_active : nav_link) %>
+                <% end %>
                 <%= link_to "채팅", chats_path, class: (controller_name == 'chats' || controller_name == 'messages' ? nav_link_active : nav_link) %>
                 <%= link_to "커뮤니티", community_path, class: (controller_name == 'posts' ? nav_link_active : nav_link) %>
               <% end %>

@@ -125,7 +125,7 @@ class NotificationService
     notify(
       recipient: escrow_transaction.master,
       action: "payment_released",
-      message: "대금 #{ActionController::Base.helpers.number_to_currency(escrow_transaction.master_amount, unit: '₩', precision: 0)}이 지급되었어요",
+      message: "대금 #{ActionController::Base.helpers.number_to_currency(escrow_transaction.master_payout, unit: '₩', precision: 0)}이 지급되었어요",
       actor: nil,
       notifiable: escrow_transaction
     )

@@ -79,19 +79,15 @@ class MatchingService
     end
 
     # 실시간 알림 전송
-    notification_title = priority ? "🔥 우선 매칭 기회!" : "새로운 누수 체크 요청"
     notification_message = build_notification_message(priority)
 
     Notification.create!(
-      user: master,
-      title: notification_title,
-      message: notification_message,
-      link: Rails.application.routes.url_helpers.masters_request_path(@request),
-      notification_type: :new_request
+      recipient: master,
+      actor: @request.customer,
+      notifiable: @request,
+      action: "new_request",
+      message: notification_message
     )
-
-    # 이메일 알림 (선택적)
-    # RequestMailerJob.perform_later("new_request_to_master", @request.id, master.id)
   rescue => e
     Rails.logger.error "Failed to send notification to master #{master.id}: #{e.message}"
   end
