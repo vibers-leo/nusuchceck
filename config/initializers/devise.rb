@@ -187,7 +187,7 @@ Devise.setup do |config|
       ENV['GOOGLE_CLIENT_ID'],
       ENV['GOOGLE_CLIENT_SECRET'],
       strategy_class: OmniAuth::Strategies::Google,
-      scope: "email,profile",
+      scope: "email profile",
       provider_ignores_state: true
   end
 end
