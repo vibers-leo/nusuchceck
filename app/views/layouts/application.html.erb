@@ -359,8 +359,8 @@
   <% end %>
 
 
-  <!-- 고객/전문가용 하단 탭 네비게이션 (모바일) — 풀스크린 레이아웃에서는 숨김 -->
-  <% if user_signed_in? && !content_for?(:full_screen_layout) %>
+  <!-- 고객/전문가용 하단 탭 네비게이션 (모바일) -->
+  <% if user_signed_in? %>
     <% unless hotwire_native_app? %>
       <% if current_user.customer? %>
         <!-- 고객용 하단 탭 (5탭: 홈/커뮤니티/누수체크/채팅/마이페이지) -->
@@ -528,8 +528,14 @@
     <% end %>
   <% end %>
 
-  <!-- Footer (네이티브 앱 / 풀스크린에서는 숨김) -->
-  <% unless hotwire_native_app? || content_for?(:full_screen_layout) %>
+  <!-- Footer -->
+  <% unless hotwire_native_app? %>
+  <% if content_for?(:full_screen_layout) %>
+    <!-- 풀스크린: 미니 푸터 (1줄) -->
+    <footer class="hidden md:block bg-gray-800 text-center py-2">
+      <p class="text-xs text-gray-500">© <%= Date.current.year %> 누수체크</p>
+    </footer>
+  <% else %>
   <% show_footer_mobile = controller_name.in?(%w[dashboard profiles]) || (controller_name == 'pages' && action_name == 'home') %>
   <footer class="bg-gray-800 text-gray-300 mt-auto <%= show_footer_mobile ? '' : 'hidden md:block' %>">
 
@@ -590,7 +596,8 @@
     </div>
 
   </footer>
-  <% end %>
+  <% end %> <%# if/else full_screen_layout %>
+  <% end %> <%# unless hotwire_native_app %>
 
   <script>
     // ── 햄버거 메뉴 ──

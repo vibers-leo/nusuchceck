@@ -2,7 +2,7 @@
 <% content_for :full_screen_layout, true %>
 <% content_for :title, "채팅" %>
 
-<div class="flex flex-col bg-white" style="height: 100vh;"
+<div class="flex flex-col bg-white" style="height: calc(100vh - 4rem);"
      data-controller="chat"
      data-chat-request-id-value="<%= @request.id %>"
      data-chat-current-user-id-value="<%= current_user.id %>">
