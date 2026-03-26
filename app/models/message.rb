@@ -148,11 +148,17 @@ class Message < ApplicationRecord
   private
 
   def broadcast_message
-    Turbo::StreamsChannel.broadcast_append_to(
+    # ActionCable JSON으로 직접 broadcast — JS에서 sender_id로 내 메시지/상대 메시지 구분
+    ActionCable.server.broadcast(
       "chat_#{request_id}",
-      target: "messages",
-      partial: "messages/message",
-      locals: { message: self, current_user: sender }
+      {
+        type: "new_message",
+        id: id,
+        content: content,
+        sender_name: sender_name,
+        sender_id: sender_id,
+        created_at: created_at.strftime("%H:%M")
+      }
     )
   end
 end

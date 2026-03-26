@@ -111,7 +111,6 @@
   <div class="flex-1 overflow-y-auto px-4 py-4 space-y-1 bg-gray-50"
        data-chat-target="messagesContainer"
        id="messages">
-    <%= turbo_stream_from "chat_#{@request.id}" %>
     <%= render @messages %>
     <div class="hidden justify-start mb-1.5" data-chat-target="typingIndicator">
       <div class="flex items-end gap-2">
