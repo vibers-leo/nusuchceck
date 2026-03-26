@@ -43,10 +43,13 @@ export default class extends Controller {
             return
           }
           // 내가 보낸 메시지는 Turbo Stream이 이미 추가했으므로 중복 방지
-          if (data.sender_id && data.sender_id === this.currentUserIdValue) {
+          if (data.sender_id && parseInt(data.sender_id) === parseInt(this.currentUserIdValue)) {
+            this.scrollToBottom()
             return
           }
-          this.appendMessage(data)
+          if (data.type === "new_message") {
+            this.appendMessage(data)
+          }
         }
       }
     )
