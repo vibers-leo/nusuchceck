@@ -76,6 +76,7 @@ class ChatChannel < ApplicationCable::Channel
 
   def can_access_chat?(request)
     return false unless current_user
+    return true if current_user.admin?
     current_user.id == request.customer_id || current_user.id == request.master_id
   end
 

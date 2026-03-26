@@ -148,20 +148,11 @@ class Message < ApplicationRecord
   private
 
   def broadcast_message
-    ActionCable.server.broadcast(
+    Turbo::StreamsChannel.broadcast_append_to(
       "chat_#{request_id}",
-      {
-        id: id,
-        content: content,
-        sender_name: sender_name,
-        sender_id: sender_id,
-        sent_by_customer: sent_by_customer?,
-        created_at: created_at.strftime("%H:%M"),
-        html: ApplicationController.renderer.render(
-          partial: "messages/message",
-          locals: { message: self, current_user: sender }
-        )
-      }
+      target: "messages",
+      partial: "messages/message",
+      locals: { message: self, current_user: sender }
     )
   end
 end
