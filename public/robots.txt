@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /customers/
+Disallow: /masters/
+Disallow: /users/
+
+Sitemap: https://nusucheck.com/sitemap.xml

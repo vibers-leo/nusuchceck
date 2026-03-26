@@ -237,7 +237,7 @@ Rails.application.routes.draw do
   resources :surveys, only: [:new, :create]
 
   # Static pages
-  root "pages#coming_soon"
+  root "pages#home"
   get "about", to: "pages#about"
   get "pricing", to: "pages#pricing"
   get "how-it-works", to: "pages#how_it_works", as: :how_it_works

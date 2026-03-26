@@ -27,7 +27,11 @@ class Customers::TossPaymentsController < ApplicationController
 
     @order_id   = "NUSU-#{@request.id}-#{@escrow_type}-#{SecureRandom.hex(6)}"
     @order_name = ESCROW_TYPE_LABELS[@escrow_type]
-    @toss_client_key = ENV.fetch("TOSS_CLIENT_KEY", "test_ck_placeholder")
+    @toss_client_key = ENV["TOSS_CLIENT_KEY"]
+    unless @toss_client_key.present?
+      redirect_to customers_request_path(@request), alert: "결제 서비스가 준비 중입니다."
+      return
+    end
 
     @success_url = customers_toss_payments_success_url(
       request_id:  @request.id,
