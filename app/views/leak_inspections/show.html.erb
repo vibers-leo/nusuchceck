@@ -183,12 +183,12 @@
               <h3 class="text-2xl font-bold mb-2">전문가를 만나보세요</h3>
               <p class="text-primary-100 mb-6">검증된 누수 전문가가 정확한 진단과 해결책을 제공해드려요</p>
               <% if user_signed_in? && current_user.is_a?(Customer) %>
-                <%= link_to new_customers_request_path, class: "inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg" do %>
-                  <span>정식 누수 체크하기</span>
+                <%= link_to new_customers_request_path(from_inspection: @inspection.id), class: "inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg" do %>
+                  <span>전문가에게 체크 요청하기</span>
                   <span>→</span>
                 <% end %>
               <% else %>
-                <%= link_to new_user_registration_path, class: "inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg" do %>
+                <%= link_to new_user_registration_path(redirect_to: new_customers_request_path(from_inspection: @inspection.id)), class: "inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg" do %>
                   <span>회원가입하고 체크하기</span>
                   <span>→</span>
                 <% end %>

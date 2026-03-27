@@ -221,6 +221,50 @@
     <% end %>
   </div>
 
+  <!-- ⑥ 계정 관리 -->
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm mb-4">
+    <div class="px-5 py-3.5 border-b border-gray-50">
+      <h3 class="text-sm font-bold text-gray-900">계정 관리</h3>
+    </div>
+
+    <!-- 비밀번호 변경 -->
+    <% unless @customer.provider.present? %>
+      <%= link_to edit_user_registration_path, class: "flex items-center justify-between px-5 py-3.5 hover:bg-gray-50 transition" do %>
+        <span class="text-sm text-gray-700 flex items-center gap-2">
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+          비밀번호 변경
+        </span>
+        <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      <% end %>
+    <% end %>
+
+    <!-- 로그아웃 -->
+    <%= button_to destroy_user_session_path, method: :delete, class: "w-full flex items-center justify-between px-5 py-3.5 hover:bg-gray-50 transition border-t border-gray-50" do %>
+      <span class="text-sm text-gray-700 flex items-center gap-2">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+        </svg>
+        로그아웃
+      </span>
+    <% end %>
+
+    <!-- 회원 탈퇴 -->
+    <%= button_to user_registration_path, method: :delete,
+          form: { data: { turbo_confirm: "정말 탈퇴하시겠어요?\n\n• 모든 데이터가 삭제됩니다\n• 진행 중인 체크가 있으면 탈퇴할 수 없어요\n• 이 작업은 되돌릴 수 없어요" } },
+          class: "w-full flex items-center justify-between px-5 py-3.5 hover:bg-red-50 transition border-t border-gray-50" do %>
+      <span class="text-sm text-red-400 flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+        </svg>
+        회원 탈퇴
+      </span>
+    <% end %>
+  </div>
+
   <p class="text-center text-xs text-gray-300 pb-2">누수체크 v1.0</p>
 
 </div>
