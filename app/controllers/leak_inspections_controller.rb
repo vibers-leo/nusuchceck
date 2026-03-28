@@ -27,8 +27,12 @@ class LeakInspectionsController < ApplicationController
       # Request 생성 (채팅방 연결)
       @request = create_request_from_inspection(@inspection)
 
-      # 채팅방으로 리디렉션 (게스트도 접근 가능)
-      redirect_to customers_request_path(@request), notice: "누수 체크가 접수되었습니다!"
+      # 게스트 유저는 CustomerAccessible 인증에 차단되므로 leak_inspection show로 리디렉트
+      if session[:guest_user_id].present?
+        redirect_to leak_inspection_path(@inspection), notice: "누수 체크가 접수되었습니다!"
+      else
+        redirect_to customers_request_path(@request), notice: "누수 체크가 접수되었습니다!"
+      end
     else
       render :new, status: :unprocessable_entity
     end

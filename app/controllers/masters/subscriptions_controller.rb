@@ -60,8 +60,9 @@ class Masters::SubscriptionsController < ApplicationController
 
   private
 
+  # MasterAccessible concern과 동일한 패턴 사용
   def ensure_master!
-    unless current_user.is_a?(Master)
+    unless current_user.can_access_master?
       redirect_to root_path, alert: "전문가만 접근할 수 있습니다."
     end
   end
