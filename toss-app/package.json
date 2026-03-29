@@ -1,0 +1,31 @@
+{
+  "name": "nusucheck-toss",
+  "version": "1.0.0",
+  "main": "src/App.tsx",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "start": "npx granite start",
+    "build": "npx granite build"
+  },
+  "keywords": ["toss", "apps-in-toss", "nusucheck", "leak-inspection"],
+  "author": "Vibers (계발자들)",
+  "license": "ISC",
+  "description": "누수체크 — 토스 미니앱 (앱인토스). AI 누수 점검 + 전문가 매칭",
+  "dependencies": {
+    "@apps-in-toss/framework": "^2.1.1",
+    "@react-navigation/bottom-tabs": "^7.15.9",
+    "@react-navigation/native": "^7.2.2",
+    "@react-navigation/native-stack": "^7.14.10",
+    "@toss/tds-react-native": "^2.0.2",
+    "react": "^19.2.4",
+    "react-native": "^0.84.1",
+    "react-native-safe-area-context": "^5.7.0",
+    "react-native-screens": "^4.24.0",
+    "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-native": "^0.72.8",
+    "typescript": "^6.0.2"
+  }
+}
