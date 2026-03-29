@@ -1,5 +1,5 @@
 // ExpertsScreen.tsx — 전문가 목록 화면
-// 검증된 누수 전문가 목록 + 상세 정보
+// 카드형 (프로필 + 평점 별점 + 전문 분야 뱃지 + 리뷰 수)
 
 import React, { useEffect, useCallback } from 'react';
 import { View, StyleSheet, ScrollView, RefreshControl, TouchableOpacity } from 'react-native';
@@ -19,6 +19,19 @@ export default function ExpertsScreen() {
     loadData();
   }, [loadData]);
 
+  // 별점 렌더링 (★☆)
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const hasHalf = rating - fullStars >= 0.5;
+    let stars = '';
+    for (let i = 0; i < 5; i++) {
+      if (i < fullStars) stars += '★';
+      else if (i === fullStars && hasHalf) stars += '★';
+      else stars += '☆';
+    }
+    return stars;
+  };
+
   // 전문가 카드 렌더링
   const renderExpertCard = (expert: Expert) => (
     <TouchableOpacity
@@ -29,12 +42,10 @@ export default function ExpertsScreen() {
         // TODO: 전문가 상세 페이지 이동
       }}
     >
-      {/* 프로필 영역 */}
+      {/* 상단: 프로필 영역 */}
       <View style={styles.profileRow}>
         <View style={styles.avatarCircle}>
-          <Txt typography="t4" color={COLORS.white}>
-            👷
-          </Txt>
+          <Txt typography="t3" color={COLORS.white}>👷</Txt>
         </View>
         <View style={styles.profileInfo}>
           <View style={styles.nameRow}>
@@ -43,8 +54,8 @@ export default function ExpertsScreen() {
             </Txt>
             {expert.isVerified && (
               <View style={styles.verifiedBadge}>
-                <Txt typography="t7" color={COLORS.primary}>
-                  인증됨
+                <Txt typography="t7" color={COLORS.primary} fontWeight="bold">
+                  ✓ 인증
                 </Txt>
               </View>
             )}
@@ -55,24 +66,42 @@ export default function ExpertsScreen() {
         </View>
       </View>
 
-      {/* 평점/리뷰 */}
-      <View style={styles.ratingRow}>
-        <Txt typography="t6" color={COLORS.yellow}>
-          ★ {expert.rating.toFixed(1)}
-        </Txt>
-        <Txt typography="t7" color={COLORS.gray500}>
-          리뷰 {expert.reviewCount}건
-        </Txt>
-        <Txt typography="t7" color={COLORS.gray400}>
-          · 평균 응답 {expert.responseTime}
-        </Txt>
+      {/* 중간: 평점 + 리뷰 */}
+      <View style={styles.ratingCard}>
+        <View style={styles.ratingStars}>
+          <Txt typography="t5" color={COLORS.yellow}>
+            {renderStars(expert.rating)}
+          </Txt>
+          <Txt typography="t5" fontWeight="bold" color={COLORS.gray900}>
+            {expert.rating.toFixed(1)}
+          </Txt>
+        </View>
+        <View style={styles.ratingMeta}>
+          <View style={styles.metaItem}>
+            <Txt typography="t7" color={COLORS.gray500}>
+              리뷰
+            </Txt>
+            <Txt typography="t7" fontWeight="bold" color={COLORS.gray800}>
+              {expert.reviewCount}건
+            </Txt>
+          </View>
+          <View style={styles.metaDivider} />
+          <View style={styles.metaItem}>
+            <Txt typography="t7" color={COLORS.gray500}>
+              평균 응답
+            </Txt>
+            <Txt typography="t7" fontWeight="bold" color={COLORS.gray800}>
+              {expert.responseTime}
+            </Txt>
+          </View>
+        </View>
       </View>
 
-      {/* 전문 분야 */}
+      {/* 전문 분야 뱃지 */}
       <View style={styles.specialtyRow}>
         {expert.specialties.map((specialty, index) => (
-          <View key={index} style={styles.specialtyChip}>
-            <Txt typography="t7" color={COLORS.primary}>
+          <View key={index} style={styles.specialtyBadge}>
+            <Txt typography="t7" color={COLORS.primary} fontWeight="bold">
               {specialty}
             </Txt>
           </View>
@@ -87,7 +116,7 @@ export default function ExpertsScreen() {
           // TODO: 견적 요청 화면으로 이동
         }}
       >
-        <Txt typography="t6" fontWeight="bold" color={COLORS.primary}>
+        <Txt typography="t6" fontWeight="bold" color={COLORS.white}>
           견적 요청하기
         </Txt>
       </TouchableOpacity>
@@ -97,6 +126,7 @@ export default function ExpertsScreen() {
   return (
     <ScrollView
       style={styles.container}
+      showsVerticalScrollIndicator={false}
       refreshControl={
         <RefreshControl refreshing={isExpertsLoading} onRefresh={loadData} />
       }
@@ -106,6 +136,7 @@ export default function ExpertsScreen() {
         <Txt typography="t3" fontWeight="bold" color={COLORS.gray900}>
           전문가 찾기
         </Txt>
+        <View style={styles.spacer4} />
         <Txt typography="t6" color={COLORS.gray500}>
           검증된 누수 전문가에게 견적을 받아보세요
         </Txt>
@@ -113,9 +144,17 @@ export default function ExpertsScreen() {
 
       {/* 안내 배너 */}
       <View style={styles.infoBanner}>
-        <Txt typography="t7" color={COLORS.primary}>
-          🔒 모든 전문가는 보험 가입 + 자격증 검증을 완료했어요
-        </Txt>
+        <View style={styles.bannerIconCircle}>
+          <Txt typography="t6">🔒</Txt>
+        </View>
+        <View style={styles.bannerText}>
+          <Txt typography="t7" fontWeight="bold" color={COLORS.primary}>
+            안전 보장
+          </Txt>
+          <Txt typography="t7" color={COLORS.gray600}>
+            모든 전문가는 보험 가입 + 자격증 검증 완료
+          </Txt>
+        </View>
       </View>
 
       {/* 전문가 목록 */}
@@ -130,13 +169,12 @@ export default function ExpertsScreen() {
           </View>
         ) : (
           <View style={styles.emptyState}>
-            <Txt typography="t5" color={COLORS.gray400}>
-              👷
-            </Txt>
-            <View style={styles.spacer8} />
-            <Txt typography="t6" color={COLORS.gray400}>
+            <Txt typography="t3">👷</Txt>
+            <View style={styles.spacer12} />
+            <Txt typography="t5" fontWeight="bold" color={COLORS.gray500}>
               등록된 전문가가 없어요
             </Txt>
+            <View style={styles.spacer4} />
             <Txt typography="t7" color={COLORS.gray400}>
               잠시 후 다시 확인해주세요
             </Txt>
@@ -153,51 +191,83 @@ export default function ExpertsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.gray50,
   },
   header: {
     paddingHorizontal: 20,
     paddingTop: 24,
-    paddingBottom: 8,
-    gap: 4,
+    paddingBottom: 16,
+    backgroundColor: COLORS.white,
   },
+  spacer4: {
+    height: 4,
+  },
+  spacer12: {
+    height: 12,
+  },
+
+  // 안내 배너
   infoBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginHorizontal: 20,
     marginTop: 12,
     backgroundColor: COLORS.primaryLight,
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
+    borderRadius: 12,
+    padding: 14,
+    gap: 12,
   },
+  bannerIconCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 12,
+    backgroundColor: COLORS.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bannerText: {
+    flex: 1,
+    gap: 2,
+  },
+
+  // 전문가 목록
   listSection: {
     paddingHorizontal: 20,
     paddingTop: 16,
   },
+
+  // 전문가 카드
   expertCard: {
     backgroundColor: COLORS.white,
     borderRadius: 16,
-    borderWidth: 1,
-    borderColor: COLORS.gray200,
-    padding: 16,
+    padding: 20,
     marginBottom: 12,
-    gap: 12,
+    gap: 16,
+    // 그림자
+    shadowColor: COLORS.black,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    elevation: 2,
   },
+
+  // 프로필 영역
   profileRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: 14,
   },
   avatarCircle: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 52,
+    height: 52,
+    borderRadius: 16,
     backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
   profileInfo: {
     flex: 1,
-    gap: 2,
+    gap: 4,
   },
   nameRow: {
     flexDirection: 'row',
@@ -207,41 +277,65 @@ const styles = StyleSheet.create({
   verifiedBadge: {
     backgroundColor: COLORS.primaryLight,
     paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 4,
+    paddingVertical: 3,
+    borderRadius: 6,
   },
-  ratingRow: {
+
+  // 평점 카드
+  ratingCard: {
+    backgroundColor: COLORS.gray50,
+    borderRadius: 12,
+    padding: 16,
+    gap: 12,
+  },
+  ratingStars: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
   },
+  ratingMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  metaItem: {
+    flex: 1,
+    alignItems: 'center',
+    gap: 2,
+  },
+  metaDivider: {
+    width: 1,
+    height: 20,
+    backgroundColor: COLORS.gray200,
+  },
+
+  // 전문 분야 뱃지
   specialtyRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 6,
+    gap: 8,
   },
-  specialtyChip: {
-    backgroundColor: COLORS.gray50,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: COLORS.gray200,
-  },
-  requestButton: {
+  specialtyBadge: {
     backgroundColor: COLORS.primaryLight,
-    borderRadius: 10,
-    paddingVertical: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+  },
+
+  // 견적 요청 버튼
+  requestButton: {
+    backgroundColor: COLORS.primary,
+    borderRadius: 12,
+    paddingVertical: 14,
     alignItems: 'center',
   },
-  spacer8: {
-    height: 8,
-  },
+
+  // 빈 상태
   emptyState: {
     paddingVertical: 60,
     alignItems: 'center',
     gap: 4,
   },
+
   bottomSpacer: {
     height: 40,
   },

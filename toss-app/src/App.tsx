@@ -163,6 +163,6 @@ export default function App() {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.gray50,
   },
 });

@@ -1,5 +1,5 @@
 // IntroScreen.tsx — 서비스 소개 (토스 로그인 전)
-// AI 누수 점검 강조 + 시작하기 버튼
+// AI 누수 점검 히어로 + 특징 카드 + 시작하기 CTA
 
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
@@ -22,7 +22,6 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
     setIsLoading(true);
     try {
       // TODO: 실제 토스 프로필 API 연동 후 교체
-      // 현재는 테스트용 더미 데이터로 로그인
       const success = await loginWithToss('toss_user_001', '토스유저');
       if (success) {
         navigation.replace('Main');
@@ -51,7 +50,7 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
           <Txt typography="t2" fontWeight="bold" color={COLORS.gray900} textAlign="center">
             누수체크
           </Txt>
-          <View style={styles.spacer16} />
+          <View style={styles.spacer12} />
           <Txt typography="t5" color={COLORS.gray600} textAlign="center">
             AI로 빠르게, 전문가에게 정확하게
           </Txt>
@@ -62,34 +61,45 @@ export default function IntroScreen({ navigation }: IntroScreenProps) {
           </Txt>
         </View>
 
-        {/* 특징 카드 */}
+        {/* 특징 카드 3개 — 가로 배치 */}
         <View style={styles.featureArea}>
-          <View style={styles.featureCard}>
-            <Txt typography="t6" color={COLORS.primary}>
-              🤖 AI 빠른 점검
-            </Txt>
-            <View style={styles.spacer4} />
-            <Txt typography="t7" color={COLORS.gray500}>
-              사진 한 장으로 누수 상태를 즉시 분석
-            </Txt>
-          </View>
-          <View style={styles.featureCard}>
-            <Txt typography="t6" color={COLORS.primary}>
-              👷 검증된 전문가
-            </Txt>
-            <View style={styles.spacer4} />
-            <Txt typography="t7" color={COLORS.gray500}>
-              보험 가입된 전문가만 활동
-            </Txt>
-          </View>
-          <View style={styles.featureCard}>
-            <Txt typography="t6" color={COLORS.primary}>
-              🔒 안전한 결제
-            </Txt>
-            <View style={styles.spacer4} />
-            <Txt typography="t7" color={COLORS.gray500}>
-              에스크로로 공사 완료 후 결제
-            </Txt>
+          <View style={styles.featureRow}>
+            <View style={styles.featureCard}>
+              <View style={styles.featureIconCircle}>
+                <Txt typography="t5">🤖</Txt>
+              </View>
+              <View style={styles.spacer8} />
+              <Txt typography="t7" color={COLORS.gray800} fontWeight="bold" textAlign="center">
+                AI 빠른 점검
+              </Txt>
+              <Txt typography="t7" color={COLORS.gray500} textAlign="center">
+                사진으로 즉시 분석
+              </Txt>
+            </View>
+            <View style={styles.featureCard}>
+              <View style={styles.featureIconCircle}>
+                <Txt typography="t5">👷</Txt>
+              </View>
+              <View style={styles.spacer8} />
+              <Txt typography="t7" color={COLORS.gray800} fontWeight="bold" textAlign="center">
+                검증된 전문가
+              </Txt>
+              <Txt typography="t7" color={COLORS.gray500} textAlign="center">
+                보험 가입 완료
+              </Txt>
+            </View>
+            <View style={styles.featureCard}>
+              <View style={styles.featureIconCircle}>
+                <Txt typography="t5">🔒</Txt>
+              </View>
+              <View style={styles.spacer8} />
+              <Txt typography="t7" color={COLORS.gray800} fontWeight="bold" textAlign="center">
+                안전한 결제
+              </Txt>
+              <Txt typography="t7" color={COLORS.gray500} textAlign="center">
+                에스크로 결제
+              </Txt>
+            </View>
           </View>
         </View>
 
@@ -117,45 +127,63 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: 24,
+    paddingHorizontal: 20,
     justifyContent: 'center',
   },
   logoArea: {
     alignItems: 'center',
-    marginBottom: 32,
+    marginBottom: 24,
   },
   iconCircle: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 88,
+    height: 88,
+    borderRadius: 44,
     backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
+    // 그림자 효과
+    shadowColor: COLORS.primary,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+    elevation: 8,
   },
   textArea: {
     alignItems: 'center',
     marginBottom: 32,
   },
-  spacer16: {
-    height: 16,
+  spacer12: {
+    height: 12,
   },
   spacer8: {
     height: 8,
   },
-  spacer4: {
-    height: 4,
-  },
+  // 특징 카드 영역
   featureArea: {
-    gap: 12,
     marginBottom: 40,
   },
+  featureRow: {
+    flexDirection: 'row',
+    gap: 12,
+  },
   featureCard: {
-    backgroundColor: COLORS.gray50,
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    flex: 1,
+    backgroundColor: COLORS.white,
+    borderRadius: 16,
+    padding: 16,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: COLORS.gray100,
+  },
+  featureIconCircle: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: COLORS.primaryLight,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonArea: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 4,
   },
 });
