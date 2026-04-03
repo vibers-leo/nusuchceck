@@ -273,8 +273,8 @@
               <%= f.text_field :incident_address, required: true,
                     placeholder: "주소를 검색해주세요",
                     readonly: true,
-                    data: { address_search_target: "address" },
-                    class: "flex-1 text-base border-0 border-b-2 border-gray-200 focus:border-primary-500 focus:outline-none py-3 px-0 placeholder-gray-300 transition-colors bg-transparent" %>
+                    data: { address_search_target: "address", action: "click->address-search#open" },
+                    class: "flex-1 text-base border-0 border-b-2 border-gray-200 focus:border-primary-500 focus:outline-none py-3 px-0 placeholder-gray-300 transition-colors bg-transparent cursor-pointer" %>
               <button type="button"
                       data-action="click->address-search#open"
                       class="px-4 py-2 rounded-xl text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 transition-all whitespace-nowrap mb-0.5">
@@ -488,7 +488,7 @@
                 data-button-loading-loading-text-value="저장하는 중..."
                 class="hidden w-full h-14 rounded-2xl bg-primary-500 text-white font-bold text-base hover:bg-primary-600 active:scale-[0.98] transition-all">
           <span data-button-loading-target="spinner" class="btn-spinner hidden"></span>
-          <span data-button-loading-target="text">저장하기</span>
+          <span data-button-loading-target="text">작성완료</span>
         </button>
       </div>
     </div>
