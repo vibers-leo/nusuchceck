@@ -401,17 +401,13 @@
               <span class="text-[10px] font-medium text-primary-600 mt-0.5">진단/접수</span>
             <% end %>
 
-            <!-- 채팅 -->
-            <%= link_to chats_path, class: "flex flex-col items-center justify-center gap-0.5 relative transition-colors #{controller_name == 'chats' || controller_name == 'messages' ? 'text-primary-600' : 'text-gray-400'}" do %>
-              <div class="relative">
-                <svg class="w-5 h-5" fill="<%= (controller_name == 'chats' || controller_name == 'messages') ? 'currentColor' : 'none' %>" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                </svg>
-                <% if unread_chat_count > 0 %>
-                  <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center"><%= unread_chat_count > 9 ? "9+" : unread_chat_count %></span>
-                <% end %>
-              </div>
-              <span class="text-[10px] font-medium">채팅</span>
+            <!-- 내체크 -->
+            <% my_check_active = controller_path == 'customers/requests' %>
+            <%= link_to customers_requests_path, class: "flex flex-col items-center justify-center gap-0.5 transition-colors #{my_check_active ? 'text-primary-600' : 'text-gray-400'}" do %>
+              <svg class="w-5 h-5" fill="<%= my_check_active ? 'currentColor' : 'none' %>" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+              </svg>
+              <span class="text-[10px] font-medium">내체크</span>
             <% end %>
 
             <!-- 마이페이지 -->
