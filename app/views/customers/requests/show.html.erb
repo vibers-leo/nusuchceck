@@ -326,40 +326,59 @@
 
 <!-- 하단 고정 액션 영역 -->
 <div class="fixed bottom-16 md:bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 pb-safe z-30">
+  <% toss_ready = ENV["TOSS_CLIENT_KEY"].present? %>
   <div class="max-w-screen-sm mx-auto">
     <%# 출장비 결제 %>
     <% if @request.assigned? && @request.trip_escrow.nil? && @request.trip_fee.to_d > 0 %>
-      <%= link_to checkout_customers_toss_payments_path(
-            request_id:  @request.id,
-            escrow_type: "trip",
-            amount:      @request.trip_fee.to_i
-          ),
-          class: "block w-full #{btn_classes(:primary, :lg)} text-center" do %>
-        출장비 결제 · <%= number_to_currency(@request.trip_fee, unit: "", precision: 0) %>원
+      <% if toss_ready %>
+        <%= link_to checkout_customers_toss_payments_path(
+              request_id:  @request.id,
+              escrow_type: "trip",
+              amount:      @request.trip_fee.to_i
+            ),
+            class: "block w-full #{btn_classes(:primary, :lg)} text-center" do %>
+          출장비 결제 · <%= number_to_currency(@request.trip_fee, unit: "", precision: 0) %>원
+        <% end %>
+      <% else %>
+        <div class="w-full py-3 px-4 bg-gray-100 rounded-xl text-center text-sm text-gray-500">
+          💳 출장비 결제 준비 중 · <%= number_to_currency(@request.trip_fee, unit: "", precision: 0) %>원
+        </div>
       <% end %>
 
     <%# 탐지비 결제 %>
     <% elsif @request.detecting? && @request.detection_escrow.nil? && @request.detection_fee.to_d > 0 %>
-      <%= link_to checkout_customers_toss_payments_path(
-            request_id:  @request.id,
-            escrow_type: "detection",
-            amount:      @request.detection_fee.to_i
-          ),
-          class: "block w-full #{btn_classes(:primary, :lg)} text-center" do %>
-        탐지비 결제 · <%= number_to_currency(@request.detection_fee, unit: "", precision: 0) %>원
+      <% if toss_ready %>
+        <%= link_to checkout_customers_toss_payments_path(
+              request_id:  @request.id,
+              escrow_type: "detection",
+              amount:      @request.detection_fee.to_i
+            ),
+            class: "block w-full #{btn_classes(:primary, :lg)} text-center" do %>
+          탐지비 결제 · <%= number_to_currency(@request.detection_fee, unit: "", precision: 0) %>원
+        <% end %>
+      <% else %>
+        <div class="w-full py-3 px-4 bg-gray-100 rounded-xl text-center text-sm text-gray-500">
+          💳 탐지비 결제 준비 중 · <%= number_to_currency(@request.detection_fee, unit: "", precision: 0) %>원
+        </div>
       <% end %>
 
     <%# 공사비 에스크로 결제 %>
     <% elsif @request.construction_agreed? %>
       <% construction_amount = @request.accepted_estimate&.total_amount.to_d %>
       <% if construction_amount > 0 %>
-        <%= link_to checkout_customers_toss_payments_path(
-              request_id:  @request.id,
-              escrow_type: "construction",
-              amount:      construction_amount.to_i
-            ),
-            class: "block w-full #{btn_classes(:success, :lg)} text-center" do %>
-          공사비 결제 · <%= number_to_currency(construction_amount, unit: "", precision: 0) %>원
+        <% if toss_ready %>
+          <%= link_to checkout_customers_toss_payments_path(
+                request_id:  @request.id,
+                escrow_type: "construction",
+                amount:      construction_amount.to_i
+              ),
+              class: "block w-full #{btn_classes(:success, :lg)} text-center" do %>
+            공사비 결제 · <%= number_to_currency(construction_amount, unit: "", precision: 0) %>원
+          <% end %>
+        <% else %>
+          <div class="w-full py-3 px-4 bg-gray-100 rounded-xl text-center text-sm text-gray-500">
+            💳 공사비 결제 준비 중 · <%= number_to_currency(construction_amount, unit: "", precision: 0) %>원
+          </div>
         <% end %>
       <% end %>
 
