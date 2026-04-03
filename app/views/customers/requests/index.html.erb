@@ -57,59 +57,44 @@
 
 <!-- ── 리스트 ── -->
 <% if @requests.any? %>
-  <div class="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-50">
+  <div class="space-y-3">
     <% @requests.each do |request| %>
       <% thumb_photo = request.photos.first %>
       <% thumb_video = request.videos.first %>
-      <%= link_to customers_request_path(request), class: "block hover:bg-gray-50 transition-colors" do %>
-        <div class="px-4 py-4">
-          <div class="flex items-start gap-3">
-            <%# 썸네일 %>
-            <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
-              <% if thumb_photo.present? %>
-                <%= image_tag thumb_photo.variant(resize_to_fill: [128, 128]), class: "w-full h-full object-cover" %>
-              <% elsif thumb_video.present? %>
-                <div class="relative w-full h-full">
-                  <video src="<%= url_for(thumb_video) %>" class="w-full h-full object-cover" muted preload="metadata" style="pointer-events:none"></video>
-                  <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="w-6 h-6 bg-black/40 rounded-full flex items-center justify-center">
-                      <svg class="w-3 h-3 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    </div>
-                  </div>
-                </div>
-              <% else %>
-                <div class="w-full h-full flex items-center justify-center">
-                  <svg class="w-7 h-7 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
-                  </svg>
-                </div>
-              <% end %>
-            </div>
-
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 mb-1">
-                <%= render "shared/status_badge", status: request.status %>
-                <span class="text-xs text-gray-400">#<%= request.id %></span>
-              </div>
-              <h3 class="text-[15px] font-semibold text-gray-900 mb-1"><%= symptom_label(request.symptom_type) %></h3>
-              <div class="flex items-center gap-2 text-xs text-gray-400">
-                <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+      <%= link_to customers_request_path(request), class: "block bg-white rounded-2xl p-4 hover:shadow-lg transition-all border-2 border-gray-100 hover:border-primary-200" do %>
+        <div class="flex items-start gap-4">
+          <%# 썸네일 %>
+          <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
+            <% if thumb_photo.present? %>
+              <%= image_tag thumb_photo.variant(resize_to_fill: [160, 160]), class: "w-full h-full object-cover" %>
+            <% elsif thumb_video.present? %>
+              <video src="<%= url_for(thumb_video) %>" class="w-full h-full object-cover" muted preload="metadata" style="pointer-events:none"></video>
+            <% else %>
+              <div class="w-full h-full flex items-center justify-center">
+                <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
                 </svg>
-                <span class="truncate"><%= truncate(request.address, length: 20) %></span>
-                <span class="text-gray-200 flex-shrink-0">·</span>
-                <span class="flex-shrink-0"><%= request.created_at.strftime("%m.%d") %></span>
               </div>
-              <% hint = next_action.call(request) %>
-              <% if hint && !%w[closed cancelled].include?(request.status) %>
-                <p class="mt-1 text-xs text-primary-500 font-medium"><%= hint %></p>
-              <% end %>
-            </div>
+            <% end %>
+          </div>
 
-            <svg class="w-4 h-4 text-gray-300 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-2">
+              <%= render "shared/status_badge", status: request.status %>
+              <span class="text-xs text-gray-400"><%= time_ago_in_words(request.created_at) %> 전</span>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1 text-base"><%= symptom_label(request.symptom_type) %></h3>
+            <div class="flex items-center gap-1.5 text-xs text-gray-500">
+              <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              <span class="truncate"><%= request.address %></span>
+            </div>
+            <% hint = next_action.call(request) %>
+            <% if hint && !%w[closed cancelled].include?(request.status) %>
+              <p class="mt-1.5 text-xs text-primary-500 font-medium"><%= hint %></p>
+            <% end %>
           </div>
         </div>
       <% end %>
