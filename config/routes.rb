@@ -237,6 +237,9 @@ Rails.application.routes.draw do
   get "reviews", to: "pages#reviews", as: :reviews
   get "faq", to: "pages#faq", as: :faq
   get "events", to: "pages#events", as: :events
+  # /checks → customers/requests 리다이렉트 (잘못된 링크 방어)
+  get "checks", to: redirect("/customers/requests")
+
   # 커뮤니티 (하단 탭 링크 유지 + CRUD)
   get "community", to: "posts#index", as: :community
   resources :posts, except: [:index] do
