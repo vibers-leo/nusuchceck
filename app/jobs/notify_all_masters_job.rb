@@ -1,5 +1,5 @@
 class NotifyAllMastersJob < ApplicationJob
-  queue_as :default
+  queue_as :notifications
 
   def perform(request_id)
     request = Request.find_by(id: request_id)

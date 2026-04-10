@@ -94,7 +94,7 @@ class MatchingService
 
   # 알림 메시지 생성
   def build_notification_message(priority)
-    distance = calculate_distance_km(@request.latitude, @request.longitude, nil, nil)  # 실제 거리 계산 필요
+    # 거리 정보는 개별 마스터 알림 시점에 계산하므로 여기서는 생략
 
     message = if priority
       "⭐ 프리미엄 회원 우선 매칭!\n\n"
@@ -113,12 +113,8 @@ class MatchingService
     message
   end
 
-  # 거리 계산 (임시 - Geocoder gem 사용 시 자동 계산)
   def calculate_distance_km(lat1, lon1, lat2, lon2)
-    return 0 if lat1.nil? || lon1.nil? || lat2.nil? || lon2.nil?
-
-    # Haversine formula or use Geocoder::Calculations.distance_between
-    # 임시로 0 반환
-    0
+    return nil if [lat1, lon1, lat2, lon2].any?(&:nil?)
+    Geocoder::Calculations.distance_between([lat1, lon1], [lat2, lon2], units: :km).round(1)
   end
 end

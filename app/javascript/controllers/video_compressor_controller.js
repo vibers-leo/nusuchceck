@@ -23,11 +23,6 @@ export default class extends Controller {
   connect() {
     this.compressing = false
     this.shouldCompress = false
-
-    // 파일 선택 이벤트 리스너
-    if (this.hasInputTarget) {
-      this.inputTarget.addEventListener("change", this.handleFileChange.bind(this))
-    }
   }
 
   disconnect() {
@@ -242,12 +237,14 @@ export default class extends Controller {
 
         } catch (error) {
           console.error("Video processing error:", error)
+          if (video.src) URL.revokeObjectURL(video.src)
           reject(error)
         }
       }
 
       video.onerror = (error) => {
         console.error("Video loading error:", error)
+        if (video.src) URL.revokeObjectURL(video.src)
         reject(error)
       }
 

@@ -134,18 +134,19 @@ class EscrowService
     raise EscrowError, "에스크로 입금 실패: #{e.message}"
   end
 
-  # MVP: PG사 결제 시뮬레이션
+  # MVP: PG사 결제 시뮬레이션 (실제 PG 연동 전까지 사용)
   def simulate_pg_payment(escrow)
-    { success: true, transaction_id: "PG_#{SecureRandom.hex(10)}", amount: escrow.amount }
+    Rails.logger.warn "[EscrowService] ⚠️ 시뮬레이션 결제 사용 중 (실제 PG 미연동) | escrow_id=#{escrow.id} amount=#{escrow.amount}"
+    { success: true, transaction_id: "SIM_#{SecureRandom.hex(10)}", amount: escrow.amount }
   end
 
   def simulate_pg_settlement(escrow)
-    Rails.logger.info "[EscrowService] 정산: 마스터 #{escrow.master_id}에게 #{escrow.master_payout}원"
+    Rails.logger.warn "[EscrowService] ⚠️ 시뮬레이션 정산 | master_id=#{escrow.master_id} payout=#{escrow.master_payout}"
     true
   end
 
   def simulate_pg_refund(escrow)
-    Rails.logger.info "[EscrowService] 환불: 고객 #{escrow.customer_id}에게 #{escrow.amount}원"
+    Rails.logger.warn "[EscrowService] ⚠️ 시뮬레이션 환불 | customer_id=#{escrow.customer_id} amount=#{escrow.amount}"
     true
   end
 end

@@ -21,8 +21,9 @@ jobs:
             cd /root/projects/nusucheck
 
             echo "▶ git pull..."
-            git stash
+            git stash || true
             git pull origin main
+            git stash pop || true
 
             echo "▶ docker compose rebuild & restart..."
             docker compose up -d --build

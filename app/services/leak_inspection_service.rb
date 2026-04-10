@@ -1,7 +1,7 @@
 class LeakInspectionService
   class AnalysisError < StandardError; end
 
-  CLAUDE_MODEL = "claude-sonnet-4-20250514"
+  CLAUDE_MODEL = ENV.fetch("CLAUDE_MODEL", "claude-sonnet-4-20250514")
 
   attr_reader :inspection
 

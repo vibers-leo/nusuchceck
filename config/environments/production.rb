@@ -5,7 +5,7 @@ Rails.application.configure do
   config.eager_load = true
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
-  config.cache_store = :memory_store
+  config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0") }
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
   config.assets.compile = false
   # 스토리지 우선순위: NCP > OCI > R2 > 로컬 디스크
@@ -19,7 +19,7 @@ Rails.application.configure do
     :local
   end
   config.force_ssl = true
-  # /up 헬스체크는 SSL 리디렉션에서 제외 (Fly.io 내부 HTTP 체크용)
+  # /up 헬스체크는 SSL 리디렉션에서 제외 (Docker 내부 HTTP 체크용)
   config.ssl_options = { redirect: { exclude: -> request { request.path == "/up" } } }
   config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   config.log_tags = [:request_id]
@@ -29,15 +29,13 @@ Rails.application.configure do
   config.hosts = [
     "nusucheck.com",
     "www.nusucheck.com",
-    "nusucheck.vibers.co.kr",  # NCP 프로덕션 도메인
-    ENV["APP_DOMAIN"],          # .env로 동적 설정
+    "nusucheck.vibers.co.kr",
+    ENV["APP_DOMAIN"],
     /.*\.nusucheck\.com/,
     /.*\.vibers\.co\.kr/,
-    "localhost",                # Docker 내부 헬스체크
-    /\A[\d.]+\z/,              # IP 헬스체크 허용
-    /\A[\d.]+:\d+\z/,          # IP:port 허용
-    /\A[0-9a-f:]+\z/           # IPv6 허용
   ].compact
+  # Docker 내부 헬스체크(/up)는 Host 검증 제외
+  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   # Action Mailer
   config.action_mailer.perform_caching = false

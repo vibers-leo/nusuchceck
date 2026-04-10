@@ -1,7 +1,7 @@
 # 체크 관련 이메일 발송 Job
 # 실패 시 자동 재시도 (3회, 지수 백오프)
 class RequestMailerJob < ApplicationJob
-  queue_as :default
+  queue_as :mailers
 
   # 재시도 전략: 실패 시 exponentially_longer 대기 (2^n초)
   # 예: 1차 실패 → 2초 대기, 2차 실패 → 4초 대기, 3차 실패 → 8초 대기
