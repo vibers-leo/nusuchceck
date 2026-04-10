@@ -20,7 +20,7 @@ Rails.application.configure do
   end
   config.force_ssl = true
   # /up 헬스체크는 SSL 리디렉션에서 제외 (Docker 내부 HTTP 체크용)
-  config.ssl_options = { redirect: { exclude: -> request { request.path == "/up" } } }
+  config.ssl_options = { redirect: { exclude: -> request { request.path == "/up" || request.path == "/cable" } } }
   config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   config.log_tags = [:request_id]
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
@@ -51,6 +51,15 @@ Rails.application.configure do
     authentication:       "plain",
     enable_starttls_auto: true
   }
+
+  # ActionCable WebSocket 허용 origin
+  config.action_cable.allowed_request_origins = [
+    "https://nusucheck.com",
+    "https://www.nusucheck.com",
+    "https://nusucheck.vibers.co.kr",
+    /https:\/\/.*\.nusucheck\.com/,
+    /https:\/\/.*\.vibers\.co\.kr/,
+  ]
 
   config.i18n.fallbacks = true
   config.active_support.report_deprecations = false
