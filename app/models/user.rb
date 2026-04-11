@@ -18,6 +18,8 @@ class User < ApplicationRecord
   # Associations
   has_many :posts, dependent: :destroy
   has_many :notifications, as: :recipient, dependent: :destroy
+  has_many :disputes_as_complainant, class_name: "Dispute", foreign_key: :complainant_id, dependent: :destroy
+  has_many :disputes_as_respondent, class_name: "Dispute", foreign_key: :respondent_id, dependent: :nullify
   has_many :user_coupons, dependent: :destroy
   has_many :coupons, through: :user_coupons
 

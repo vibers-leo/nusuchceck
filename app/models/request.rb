@@ -10,6 +10,7 @@ class Request < ApplicationRecord
   has_one :review, dependent: :destroy
   has_many :insurance_claims, dependent: :nullify
   has_many :messages, class_name: "::Message", dependent: :destroy
+  has_many :disputes, dependent: :destroy
   has_many_attached :photos
   has_many_attached :videos
 

@@ -8,6 +8,8 @@ class Master < User
   has_many :reviews, foreign_key: :master_id, dependent: :destroy, inverse_of: :master
   has_many :escrow_transactions, foreign_key: :master_id, dependent: :restrict_with_error, inverse_of: :master
   has_many :prepared_insurance_claims, class_name: "InsuranceClaim", foreign_key: :prepared_by_master_id, dependent: :nullify
+  has_many :zone_claims, foreign_key: :master_id, dependent: :destroy
+  has_many :service_zones, through: :zone_claims
 
   accepts_nested_attributes_for :master_profile
 

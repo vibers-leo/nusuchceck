@@ -1,0 +1,25 @@
+<div class="max-w-2xl mx-auto px-4 py-6">
+  <h1 class="text-xl font-bold text-gray-900 mb-6">분쟁 내역</h1>
+
+  <% if @disputes.any? %>
+    <div class="space-y-3">
+      <% @disputes.each do |dispute| %>
+        <%= link_to masters_dispute_path(dispute), class: "block bg-white border border-gray-200 rounded-2xl p-4 hover:shadow-md transition" do %>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-medium px-2 py-0.5 rounded-full
+              <%= dispute.overdue? ? 'bg-red-100 text-red-600' : 'bg-yellow-100 text-yellow-700' %>">
+              <%= dispute.overdue? ? '⚠️ 답변 기한 초과' : '답변 필요' %>
+            </span>
+            <span class="text-xs text-gray-400"><%= dispute.created_at.strftime("%m/%d") %></span>
+          </div>
+          <p class="text-sm font-semibold text-gray-900"><%= dispute.category_label %></p>
+          <p class="text-xs text-gray-500 mt-1">고객: <%= dispute.complainant.name %></p>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-16">
+      <p class="text-gray-400 text-sm">분쟁 내역이 없어요 👍</p>
+    </div>
+  <% end %>
+</div>

@@ -679,4 +679,8 @@ end
 end
 
 puts "   ✓ 쿠폰 #{Coupon.count}개 생성 완료"
+
+# ===== 서비스 구역 데이터 =====
+puts "\n📍 서비스 구역 데이터 생성 중..."
+load Rails.root.join("db/seeds/service_zones.rb")
 puts ""

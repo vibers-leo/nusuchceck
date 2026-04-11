@@ -1,0 +1,51 @@
+<div class="max-w-5xl mx-auto px-4 py-6">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-xl font-bold text-gray-900">구역 관리</h1>
+    <%= link_to "구역 추가", new_admin_service_zone_path, class: "bg-primary-500 text-white px-4 py-2 rounded-xl text-sm font-semibold" %>
+  </div>
+
+  <!-- 통계 -->
+  <div class="grid grid-cols-4 gap-3 mb-6">
+    <div class="bg-white border rounded-xl p-3 text-center">
+      <p class="text-2xl font-bold"><%= @stats[:total_zones] %></p>
+      <p class="text-xs text-gray-400">구역</p>
+    </div>
+    <div class="bg-white border rounded-xl p-3 text-center">
+      <p class="text-2xl font-bold"><%= @stats[:total_slots] %></p>
+      <p class="text-xs text-gray-400">총 슬롯</p>
+    </div>
+    <div class="bg-primary-50 border border-primary-200 rounded-xl p-3 text-center">
+      <p class="text-2xl font-bold text-primary-600"><%= @stats[:claimed_slots] %></p>
+      <p class="text-xs text-primary-600">선점됨</p>
+    </div>
+    <div class="bg-green-50 border border-green-200 rounded-xl p-3 text-center">
+      <p class="text-2xl font-bold text-green-600"><%= @stats[:total_slots] - @stats[:claimed_slots] %></p>
+      <p class="text-xs text-green-600">잔여</p>
+    </div>
+  </div>
+
+  <!-- 구역 목록 -->
+  <% current_region = nil %>
+  <% @zones.each do |zone| %>
+    <% if zone.region != current_region %>
+      <% current_region = zone.region %>
+      <h2 class="text-sm font-bold text-gray-700 mt-6 mb-2"><%= current_region %></h2>
+    <% end %>
+    <div class="bg-white border rounded-xl p-4 mb-2 flex items-center justify-between">
+      <div class="flex-1">
+        <div class="flex items-center gap-2">
+          <p class="text-sm font-semibold"><%= zone.name %></p>
+          <% unless zone.active? %>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-400">비활성</span>
+          <% end %>
+        </div>
+        <p class="text-xs text-gray-400"><%= zone.districts_text %></p>
+      </div>
+      <div class="flex items-center gap-4 text-xs">
+        <span class="text-gray-500">인구 <%= number_to_human(zone.population) %></span>
+        <span class="font-semibold <%= zone.full? ? 'text-red-500' : 'text-green-600' %>"><%= zone.claimed_slots_count %>/<%= zone.max_slots %></span>
+        <%= link_to "수정", edit_admin_service_zone_path(zone), class: "text-primary-500 hover:underline" %>
+      </div>
+    </div>
+  <% end %>
+</div>

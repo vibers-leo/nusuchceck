@@ -1,0 +1,76 @@
+<div class="max-w-2xl mx-auto px-4 py-6">
+  <h1 class="text-xl font-bold text-gray-900 mb-2">구역 선점</h1>
+  <p class="text-sm text-gray-500 mb-6">내 서비스 구역을 선점하세요. 최대 3개 구역까지 선택할 수 있어요.</p>
+
+  <!-- 내 선점 구역 -->
+  <% if @my_claims.any? %>
+    <div class="bg-primary-50 border border-primary-200 rounded-2xl p-4 mb-6">
+      <h2 class="text-sm font-bold text-primary-800 mb-3">🏷️ 내 구역 (<%= @my_claims.size %>/3)</h2>
+      <div class="space-y-2">
+        <% @my_claims.each do |claim| %>
+          <div class="flex items-center justify-between bg-white rounded-xl px-4 py-3">
+            <div>
+              <p class="text-sm font-semibold text-gray-900"><%= claim.service_zone.display_name %></p>
+              <p class="text-xs text-gray-400"><%= claim.service_zone.districts_text %></p>
+            </div>
+            <%= link_to masters_zone_claim_path(claim), method: :delete, data: { confirm: "정말 해제할까요?" }, class: "text-xs text-red-400 hover:text-red-600" do %>
+              해제
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- 지역 탭 -->
+  <div class="flex gap-2 mb-4 overflow-x-auto">
+    <% @regions.each do |region| %>
+      <%= link_to region, masters_zone_claims_path(region: region), class: "px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap #{region == @selected_region ? 'bg-primary-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}" %>
+    <% end %>
+  </div>
+
+  <!-- 구역 목록 -->
+  <div class="space-y-2">
+    <% @zones.each do |zone| %>
+      <div class="bg-white border border-gray-200 rounded-2xl p-4 flex items-center justify-between">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <p class="text-sm font-semibold text-gray-900"><%= zone.name %></p>
+            <% if zone.full? %>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-red-100 text-red-600">마감</span>
+            <% end %>
+          </div>
+          <p class="text-xs text-gray-400 mt-0.5"><%= zone.districts_text %></p>
+          <div class="flex items-center gap-3 mt-2">
+            <span class="text-xs text-gray-500">👥 인구 <%= number_to_human(zone.population, units: { thousand: "천", million: "만" }) %></span>
+            <span class="text-xs font-medium <%= zone.full? ? 'text-red-500' : 'text-green-600' %>">
+              잔여 <%= zone.available_slots %>/<%= zone.max_slots %>
+            </span>
+          </div>
+        </div>
+        <% already_claimed = @my_claims.any? { |c| c.service_zone_id == zone.id } %>
+        <% if already_claimed %>
+          <span class="text-xs text-primary-500 font-semibold">선점 중</span>
+        <% elsif zone.full? %>
+          <button disabled class="bg-gray-100 text-gray-400 text-xs px-4 py-2 rounded-xl cursor-not-allowed">마감</button>
+        <% elsif @my_claims.size >= 3 %>
+          <button disabled class="bg-gray-100 text-gray-400 text-xs px-4 py-2 rounded-xl cursor-not-allowed">최대 3개</button>
+        <% else %>
+          <%= link_to masters_zone_claims_path(service_zone_id: zone.id), method: :post, class: "bg-primary-500 text-white text-xs px-4 py-2 rounded-xl hover:bg-primary-600 font-semibold transition" do %>
+            선점하기
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- 안내 -->
+  <div class="bg-gray-50 rounded-xl p-4 mt-6">
+    <p class="text-xs text-gray-500 font-semibold mb-1">구역 선점 안내</p>
+    <ul class="text-xs text-gray-400 space-y-1">
+      <li>• 월 99,000원 구독료에 구역 선점이 포함돼요</li>
+      <li>• 선점한 구역의 고객 요청이 우선 매칭돼요</li>
+      <li>• 구독 해지 시 구역 선점이 자동 해제돼요</li>
+    </ul>
+  </div>
+</div>

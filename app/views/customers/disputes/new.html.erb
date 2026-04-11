@@ -1,0 +1,46 @@
+<div class="max-w-lg mx-auto px-4 py-6">
+  <h1 class="text-xl font-bold text-gray-900 mb-2">분쟁 접수</h1>
+  <p class="text-sm text-gray-500 mb-6">문제가 있으면 알려주세요. 48시간 이내에 전문가 답변을 받아볼 수 있어요.</p>
+
+  <%= form_with(model: @dispute, url: customers_request_disputes_path(@request), class: "space-y-5") do |f| %>
+    <% if @dispute.errors.any? %>
+      <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+        <% @dispute.errors.full_messages.each do |msg| %>
+          <p class="text-sm text-red-600"><%= msg %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <!-- 분쟁 유형 -->
+    <div>
+      <label class="block text-sm font-semibold text-gray-700 mb-3">어떤 문제인가요?</label>
+      <div class="grid grid-cols-2 gap-2">
+        <% Dispute::CATEGORIES.each do |key, label| %>
+          <label class="flex items-center gap-2 p-3 border border-gray-200 rounded-xl cursor-pointer hover:border-primary-400 has-[:checked]:border-primary-500 has-[:checked]:bg-primary-50 transition">
+            <%= f.radio_button :category, key, class: "hidden" %>
+            <span class="text-sm text-gray-700"><%= label %></span>
+          </label>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- 상세 내용 -->
+    <div>
+      <label class="block text-sm font-semibold text-gray-700 mb-2">상세 내용</label>
+      <%= f.text_area :description, rows: 5, placeholder: "어떤 문제가 있는지 자세히 알려주세요.\n예: 수리 후 2주 만에 같은 위치에서 다시 물이 새요.", class: "w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none" %>
+    </div>
+
+    <!-- 안내 -->
+    <div class="bg-blue-50 rounded-xl p-4">
+      <p class="text-xs text-blue-700 font-semibold mb-1">분쟁 절차 안내</p>
+      <ul class="text-xs text-blue-600 space-y-1">
+        <li>1. 접수 → 전문가에게 48시간 답변 요청</li>
+        <li>2. 전문가 미응답 시 자동으로 고객 유리 판정</li>
+        <li>3. 합의 실패 시 플랫폼 중재 (5영업일 이내)</li>
+        <li>4. 분쟁 금액 5만원 이하는 즉시 환불 처리</li>
+      </ul>
+    </div>
+
+    <%= f.submit "분쟁 접수하기", class: "w-full bg-red-500 text-white font-semibold py-3 rounded-xl hover:bg-red-600 transition cursor-pointer" %>
+  <% end %>
+</div>

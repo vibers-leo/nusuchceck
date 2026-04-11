@@ -69,6 +69,17 @@ Rails.application.routes.draw do
     end
     resources :estimates, only: [:show]
 
+    # 분쟁조정
+    resources :disputes, only: [:index, :show] do
+      member do
+        post :add_message
+        post :cancel
+      end
+    end
+    resources :requests do
+      resources :disputes, only: [:new, :create], controller: "disputes"
+    end
+
     resources :insurance_claims, only: [:index, :show, :new, :create, :edit, :update] do
       member do
         post :submit_claim
@@ -119,6 +130,17 @@ Rails.application.routes.draw do
       member do
         post :send_to_customer
         get  :download_pdf
+      end
+    end
+
+    # 구역 선점
+    resources :zone_claims, only: [:index, :create, :destroy]
+
+    # 분쟁 (전문가 측)
+    resources :disputes, only: [:index, :show] do
+      member do
+        post :respond
+        post :add_evidence
       end
     end
 
@@ -182,6 +204,18 @@ Rails.application.routes.draw do
     end
 
     resources :surveys, only: [:index, :show]
+
+    # 분쟁조정 (관리자)
+    resources :disputes, only: [:index, :show] do
+      member do
+        post :start_mediation
+        post :resolve
+        post :add_message
+      end
+    end
+
+    # 구역 관리
+    resources :service_zones
   end
 
   # 전문가 공개 프로필 (비로그인 접근 가능)
