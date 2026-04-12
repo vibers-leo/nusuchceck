@@ -1,4 +1,4 @@
-class Api::V1::LeakInspectionsController < Api::V1::BaseController
+class API::V1::LeakInspectionsController < API::V1::BaseController
   skip_before_action :authenticate_token!, only: [:create, :show]
 
   # POST /api/v1/leak_inspections

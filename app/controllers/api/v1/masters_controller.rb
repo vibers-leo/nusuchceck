@@ -1,4 +1,4 @@
-class Api::V1::MastersController < Api::V1::BaseController
+class API::V1::MastersController < API::V1::BaseController
   skip_before_action :authenticate_token!, only: [:index, :show]
 
   # GET /api/v1/masters

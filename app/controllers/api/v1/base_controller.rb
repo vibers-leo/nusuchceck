@@ -1,4 +1,4 @@
-class Api::V1::BaseController < ActionController::API
+class API::V1::BaseController < ActionController::API
   before_action :authenticate_token!
 
   private

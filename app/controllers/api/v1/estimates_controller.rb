@@ -1,4 +1,4 @@
-class Api::V1::EstimatesController < Api::V1::BaseController
+class API::V1::EstimatesController < API::V1::BaseController
   # GET /api/v1/estimates/:id
   def show
     estimate = Estimate.find(params[:id])

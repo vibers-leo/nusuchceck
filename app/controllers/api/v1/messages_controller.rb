@@ -1,4 +1,4 @@
-class Api::V1::MessagesController < Api::V1::BaseController
+class API::V1::MessagesController < API::V1::BaseController
   before_action :set_request
   before_action :check_chat_permission
 

@@ -1,4 +1,4 @@
-class Api::V1::RequestsController < Api::V1::BaseController
+class API::V1::RequestsController < API::V1::BaseController
   before_action :set_request, only: [:show, :cancel]
 
   # GET /api/v1/requests

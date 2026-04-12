@@ -1,4 +1,4 @@
-class Api::V1::MeController < Api::V1::BaseController
+class API::V1::MeController < API::V1::BaseController
   # GET /api/v1/me
   def show
     render json: user_detail_json(current_user)

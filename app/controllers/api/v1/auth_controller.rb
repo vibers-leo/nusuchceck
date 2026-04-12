@@ -1,4 +1,4 @@
-class Api::V1::AuthController < ActionController::API
+class API::V1::AuthController < ActionController::API
   # 인증 불필요한 엔드포인트
 
   # POST /api/v1/auth/sign_in

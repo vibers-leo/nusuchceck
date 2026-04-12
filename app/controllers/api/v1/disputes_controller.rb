@@ -1,4 +1,4 @@
-class Api::V1::DisputesController < Api::V1::BaseController
+class API::V1::DisputesController < API::V1::BaseController
   # GET /api/v1/disputes
   def index
     disputes = current_user.disputes_as_complainant.order(created_at: :desc)

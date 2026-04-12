@@ -1,4 +1,4 @@
-class Api::V1::NotificationsController < Api::V1::BaseController
+class API::V1::NotificationsController < API::V1::BaseController
   # GET /api/v1/notifications
   def index
     notifications = current_user.notifications.order(created_at: :desc).limit(50)
