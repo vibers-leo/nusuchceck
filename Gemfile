@@ -49,6 +49,12 @@ gem "geocoder"
 # JSON
 gem "jbuilder"
 
+# JWT (모바일 앱 API 인증)
+gem "jwt"
+
+# CORS (모바일 앱 API 요청 허용)
+gem "rack-cors"
+
 # Cloud Storage (Cloudflare R2 / Amazon S3 compatible)
 gem "aws-sdk-s3", require: false
 

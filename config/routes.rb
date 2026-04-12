@@ -263,6 +263,46 @@ Rails.application.routes.draw do
   # 설문조사 (Survey)
   resources :surveys, only: [:new, :create]
 
+  # === 모바일 앱 API ===
+  namespace :api do
+    namespace :v1 do
+      # 인증
+      post "auth/sign_in",  to: "auth#sign_in"
+      post "auth/sign_up",  to: "auth#sign_up"
+      post "auth/kakao",    to: "auth#kakao"
+      post "auth/refresh",  to: "auth#refresh"
+
+      # 내 정보
+      resource :me, only: [:show, :update], controller: "me"
+
+      # 요청
+      resources :requests, only: [:index, :show, :create] do
+        post :cancel, on: :member
+        resources :messages, only: [:index, :create]
+      end
+
+      # AI 점검
+      resources :leak_inspections, only: [:create, :show]
+
+      # 전문가
+      resources :masters, only: [:index, :show]
+
+      # 견적
+      resources :estimates, only: [:show] do
+        post :accept, on: :member
+      end
+
+      # 알림
+      resources :notifications, only: [:index] do
+        post :read, on: :member
+        post :read_all, on: :collection
+      end
+
+      # 분쟁
+      resources :disputes, only: [:index, :show, :create]
+    end
+  end
+
   # Static pages
   root "pages#home"
   get "about", to: "pages#about"
