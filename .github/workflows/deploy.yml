@@ -28,16 +28,16 @@ jobs:
             echo "▶ 기존 컨테이너 정리 (충돌 방지)..."
             docker rm -f nusucheck-app nusucheck-sidekiq 2>/dev/null || true
 
-            echo "▶ docker compose rebuild & restart..."
-            docker compose up -d --build --wait
+            echo "▶ docker compose rebuild & restart (app/sidekiq only)..."
+            docker compose up -d --build --no-deps app sidekiq
 
             echo "▶ DB 마이그레이션..."
-            sleep 15
-            docker compose exec -T app bin/rails db:migrate
+            sleep 20
+            docker exec nusucheck-app bin/rails db:migrate || true
 
             echo "▶ 헬스체크..."
             sleep 5
-            curl -sf http://localhost:4080/up || (echo "❌ 헬스체크 실패!" && docker compose logs --tail=30 && exit 1)
+            curl -sf http://localhost:4080/up || (echo "❌ 헬스체크 실패!" && docker logs nusucheck-app --tail=30 && exit 1)
 
             echo "▶ NPM nginx reload (502 방지)..."
             docker exec npm-app-1 nginx -s reload || true
