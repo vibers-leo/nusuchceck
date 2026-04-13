@@ -257,54 +257,45 @@
           </div>
         </div>
 
-        <!-- 영상 업로드 영역 (더 크고 눈에 띄게) -->
-        <div class="border-4 border-dashed border-primary-500 rounded-3xl p-12 text-center hover:border-primary-600 hover:bg-primary-50 bg-gradient-to-br from-primary-50/50 to-blue-50/30 transition-all cursor-pointer shadow-sm hover:shadow-md video-upload-box"
-             id="video-drop-zone"
-             role="button"
-             tabindex="0"
-             data-file-counter-target="dropZone"
-             aria-label="영상 파일 업로드: 촬영하거나 기존 영상을 선택하세요. 10초 이상 권장, 최대 2GB까지 업로드 가능"
-             aria-describedby="video-upload-help">
+        <!-- 영상 업로드 영역 -->
+        <div id="video-upload-box"
+             class="border-2 border-dashed border-primary-400 rounded-2xl p-6 text-center hover:border-primary-600 hover:bg-primary-50 bg-primary-50/30 transition-all cursor-pointer"
+             data-file-counter-target="dropZone">
           <%= f.file_field :videos,
                 multiple: true,
                 accept: "video/mp4,video/quicktime,video/avi,video/webm,video/3gpp",
-                capture: "environment",
                 class: "hidden",
                 id: "video-upload",
                 aria: { label: "영상 파일 선택" },
                 data: {
                   file_counter_target: "videoInput",
                   video_compressor_target: "input",
-                  action: "change->file-counter#updateVideoCounts change->check-wizard#onFileChange"
+                  action: "change->file-counter#updateVideoCounts change->check-wizard#onFileChange change->file-counter#showVideoPreview"
                 } %>
           <label for="video-upload" class="cursor-pointer block">
-            <div class="inline-block p-8 bg-gradient-to-br from-primary-600 to-purple-600 rounded-3xl mb-6 shadow-lg" aria-hidden="true">
-              <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <div class="inline-block p-4 bg-gradient-to-br from-primary-600 to-purple-600 rounded-2xl mb-3 shadow-md" aria-hidden="true">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
               </svg>
             </div>
-            <p class="text-2xl font-bold text-gray-900 mb-3">📱 촬영하거나 기존 영상 선택</p>
-            <p class="text-lg text-primary-700 font-semibold mb-2">10초 이상 권장</p>
-            <p id="video-upload-help" class="text-base text-gray-600"><strong class="text-primary-600">최대 2GB까지</strong> 업로드 가능 · MP4, MOV, WebM</p>
-            <p class="text-sm text-gray-500 mt-3">또는 영상 파일을 이 영역으로 드래그하세요</p>
+            <p class="text-base font-bold text-gray-900 mb-1">📱 촬영하거나 기존 영상 선택</p>
+            <p id="video-upload-help" class="text-sm text-gray-500">MP4, MOV, WebM · 최대 2GB</p>
           </label>
         </div>
 
-        <!-- 업로드된 파일 표시 (스크린 리더 알림) -->
-        <div data-file-counter-target="videoCount"
-             class="mt-4 text-center text-sm font-medium text-gray-500"
-             role="status"
-             aria-live="polite"
-             aria-atomic="true">
+        <!-- 영상 미리보기 영역 (업로드 후 표시) -->
+        <div id="video-preview-area" class="hidden">
+          <div data-file-counter-target="videoPreviewContainer" class="space-y-3">
+            <!-- JS로 video 태그 삽입 -->
+          </div>
+          <label for="video-upload" class="mt-3 flex items-center justify-center gap-2 text-sm text-primary-600 font-medium cursor-pointer hover:text-primary-800 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            영상 다시 선택
+          </label>
         </div>
 
-        <!-- 영상 미리보기 영역 -->
-        <div data-file-counter-target="videoPreview" class="mt-6 hidden">
-          <h3 class="text-sm font-bold text-gray-900 mb-3">📹 선택한 영상</h3>
-          <div data-file-counter-target="videoPreviewContainer" class="grid grid-cols-1 gap-3">
-            <!-- 미리보기가 여기에 동적으로 추가됩니다 -->
-          </div>
-        </div>
+        <!-- 스크린 리더 상태 -->
+        <div data-file-counter-target="videoCount" class="sr-only" role="status" aria-live="polite"></div>
 
         <!-- 촬영 팁 (노란색 박스로 눈에 띄게) -->
         <div class="mt-6 p-4 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl border border-yellow-200 shadow-sm">

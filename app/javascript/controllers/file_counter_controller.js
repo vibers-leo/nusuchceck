@@ -31,7 +31,11 @@ export default class extends Controller {
       if (i !== index) dt.items.add(file)
     })
     this.videoInputTarget.files = dt.files
-    this.updateVideoCounts()
+    if (dt.files.length > 0) {
+      this.showVideoPreview()
+    } else {
+      this.updateVideoCounts()
+    }
     this.videoInputTarget.dispatchEvent(new Event('change', { bubbles: true }))
   }
 
@@ -46,9 +50,9 @@ export default class extends Controller {
       }
     })
 
-    // 드롭존 내 어디든 클릭 시 파일 선택기 열기 (삭제 버튼 제외)
+    // 드롭존 내 어디든 클릭 시 파일 선택기 열기 (삭제 버튼 및 라벨 제외)
     dropZone.addEventListener('click', (e) => {
-      if (!e.target.closest('button')) {
+      if (!e.target.closest('button') && !e.target.closest('label')) {
         this.videoInputTarget.click()
       }
     })
@@ -95,34 +99,113 @@ export default class extends Controller {
     this.videoInputTarget.dispatchEvent(new Event('change', { bubbles: true }))
   }
 
+  // 영상 선택 시 업로드 박스 숨기고 미리보기 표시 (뷰에서 action으로 호출)
+  showVideoPreview() {
+    const uploadBox = document.getElementById('video-upload-box')
+    const previewArea = document.getElementById('video-preview-area')
+    if (!uploadBox || !previewArea) return
+
+    const files = Array.from(this.videoInputTarget.files)
+    if (files.length === 0) return
+
+    // 업로드 박스 숨기기
+    uploadBox.classList.add('hidden')
+    previewArea.classList.remove('hidden')
+
+    // 미리보기 컨테이너 초기화
+    const container = this.hasVideoPreviewContainerTarget
+      ? this.videoPreviewContainerTarget
+      : previewArea.querySelector('[data-file-counter-target="videoPreviewContainer"]')
+    if (!container) return
+
+    this._objectUrls.forEach(url => URL.revokeObjectURL(url))
+    this._objectUrls = []
+    container.innerHTML = ''
+
+    files.forEach((file, index) => {
+      const fileUrl = URL.createObjectURL(file)
+      this._objectUrls.push(fileUrl)
+
+      const isVideo = file.type.startsWith('video/')
+      const card = document.createElement('div')
+      card.className = 'bg-white rounded-2xl border border-primary-100 shadow-sm overflow-hidden'
+
+      if (isVideo) {
+        card.innerHTML = `
+          <div class="relative bg-black rounded-t-2xl" style="aspect-ratio:16/9">
+            <video src="${fileUrl}"
+              class="w-full h-full object-contain"
+              controls
+              preload="metadata"
+              playsinline
+              style="max-height:240px">
+            </video>
+          </div>
+          <div class="px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-2 min-w-0">
+              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <div class="min-w-0">
+                <p class="text-sm font-semibold text-gray-900 truncate">${file.name}</p>
+                <p class="text-xs text-gray-400">${this._formatSize(file.size)}</p>
+              </div>
+            </div>
+            <button type="button"
+              class="ml-3 flex-shrink-0 w-8 h-8 rounded-full bg-red-50 hover:bg-red-100 transition flex items-center justify-center"
+              onclick="this.closest('[data-controller~=file-counter]').dispatchEvent(new CustomEvent('remove-video', { detail: { index: ${index} }, bubbles: true }))"
+              aria-label="삭제">
+              <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        `
+      } else {
+        // 이미지
+        card.innerHTML = `
+          <div class="relative rounded-t-2xl overflow-hidden bg-gray-100" style="aspect-ratio:16/9">
+            <img src="${fileUrl}" class="w-full h-full object-contain" alt="${file.name}"/>
+          </div>
+          <div class="px-4 py-3 flex items-center justify-between">
+            <div class="min-w-0">
+              <p class="text-sm font-semibold text-gray-900 truncate">${file.name}</p>
+              <p class="text-xs text-gray-400">${this._formatSize(file.size)}</p>
+            </div>
+            <button type="button"
+              class="ml-3 flex-shrink-0 w-8 h-8 rounded-full bg-red-50 hover:bg-red-100 transition flex items-center justify-center"
+              onclick="this.closest('[data-controller~=file-counter]').dispatchEvent(new CustomEvent('remove-video', { detail: { index: ${index} }, bubbles: true }))"
+              aria-label="삭제">
+              <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        `
+      }
+      container.appendChild(card)
+    })
+  }
+
   updateVideoCounts() {
-    if (!this.hasVideoInputTarget || !this.hasVideoCountTarget) return
+    if (!this.hasVideoInputTarget) return
 
     const count = this.videoInputTarget.files.length
-    if (count > 0) {
-      const files = Array.from(this.videoInputTarget.files)
-      const videoCount = files.filter(f => f.type.startsWith('video/')).length
-      const imageCount = files.filter(f => f.type.startsWith('image/')).length
-      let label
-      if (videoCount > 0 && imageCount > 0) {
-        label = `영상 ${videoCount}개, 사진 ${imageCount}개 선택됨`
-      } else if (videoCount > 0) {
-        label = `${videoCount}개 영상 선택됨`
-      } else {
-        label = `${imageCount}개 사진 선택됨`
-      }
-      this.videoCountTarget.innerHTML = `
-        <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 text-primary-700 rounded-full">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
-          </svg>
-          <span class="font-bold">${label}</span>
-        </div>
-      `
-      this.showVideoPreviewsWithProgress()
-    } else {
-      this.videoCountTarget.textContent = ''
+
+    // 파일이 없어지면 업로드 박스 다시 표시
+    if (count === 0) {
+      const uploadBox = document.getElementById('video-upload-box')
+      const previewArea = document.getElementById('video-preview-area')
+      if (uploadBox) uploadBox.classList.remove('hidden')
+      if (previewArea) previewArea.classList.add('hidden')
+      if (this.hasVideoCountTarget) this.videoCountTarget.textContent = ''
       this.hideVideoPreviews()
+      return
+    }
+
+    // 기존 showVideoPreviewsWithProgress 호환 (다른 스텝에서도 쓸 경우)
+    if (this.hasVideoPreviewTarget) {
+      this.showVideoPreviewsWithProgress()
     }
   }
 
