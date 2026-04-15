@@ -1,0 +1,90 @@
+<div class="max-w-5xl mx-auto px-4 py-8">
+
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">전문가 등록 문의</h1>
+      <p class="text-sm text-gray-500 mt-0.5">파트너 전문가 신청 목록 · 승인/거절 관리</p>
+    </div>
+  </div>
+
+  <!-- 집계 -->
+  <div class="grid grid-cols-4 gap-3 mb-6">
+    <div class="bg-white border border-gray-100 rounded-xl p-4 text-center">
+      <p class="text-2xl font-bold text-gray-900"><%= @counts[:total] %></p>
+      <p class="text-xs text-gray-400 mt-0.5">전체</p>
+    </div>
+    <div class="bg-amber-50 border border-amber-100 rounded-xl p-4 text-center">
+      <p class="text-2xl font-bold text-amber-600"><%= @counts[:pending] %></p>
+      <p class="text-xs text-amber-500 mt-0.5">검토 대기</p>
+    </div>
+    <div class="bg-green-50 border border-green-100 rounded-xl p-4 text-center">
+      <p class="text-2xl font-bold text-green-600"><%= @counts[:approved] %></p>
+      <p class="text-xs text-green-500 mt-0.5">승인됨</p>
+    </div>
+    <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 text-center">
+      <p class="text-2xl font-bold text-gray-400"><%= @counts[:rejected] %></p>
+      <p class="text-xs text-gray-400 mt-0.5">거절됨</p>
+    </div>
+  </div>
+
+  <!-- 필터 -->
+  <%= form_with url: admin_expert_inquiries_path, method: :get, class: "flex gap-2 mb-4" do |f| %>
+    <%= f.select :q_status_eq,
+          [["전체", ""], ["검토 대기", "pending"], ["승인됨", "approved"], ["거절됨", "rejected"]],
+          { selected: params.dig(:q, :status_eq) },
+          class: "px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary-400 focus:outline-none" %>
+    <%= f.submit "필터", class: "px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition cursor-pointer" %>
+  <% end %>
+
+  <!-- 목록 -->
+  <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden">
+    <% if @inquiries.any? %>
+      <table class="w-full text-sm">
+        <thead class="bg-gray-50 border-b border-gray-100">
+          <tr>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">접수일</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">이름</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">연락처</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">이메일</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">상태</th>
+            <th class="px-4 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-50">
+          <% @inquiries.each do |inquiry| %>
+            <tr class="hover:bg-gray-50 transition">
+              <td class="px-4 py-3.5 text-gray-400 text-xs whitespace-nowrap">
+                <%= inquiry.created_at.strftime("%m/%d %H:%M") %>
+              </td>
+              <td class="px-4 py-3.5 font-semibold text-gray-900"><%= inquiry.name %></td>
+              <td class="px-4 py-3.5 text-gray-600"><%= inquiry.phone %></td>
+              <td class="px-4 py-3.5 text-gray-500 text-xs"><%= inquiry.email.presence || "-" %></td>
+              <td class="px-4 py-3.5">
+                <span class="px-2 py-0.5 rounded-full text-xs font-semibold
+                  <%= case inquiry.status
+                      when 'pending'  then 'bg-amber-100 text-amber-700'
+                      when 'approved' then 'bg-green-100 text-green-700'
+                      when 'rejected' then 'bg-gray-100 text-gray-500'
+                      end %>">
+                  <%= inquiry.status_label %>
+                </span>
+              </td>
+              <td class="px-4 py-3.5 text-right">
+                <%= link_to "상세", admin_expert_inquiry_path(inquiry),
+                      class: "text-xs font-semibold text-primary-600 hover:text-primary-800" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="px-4 py-3 border-t border-gray-50">
+        <%= paginate @inquiries %>
+      </div>
+    <% else %>
+      <div class="py-16 text-center">
+        <p class="text-gray-400 text-sm">접수된 문의가 없습니다.</p>
+      </div>
+    <% end %>
+  </div>
+
+</div>

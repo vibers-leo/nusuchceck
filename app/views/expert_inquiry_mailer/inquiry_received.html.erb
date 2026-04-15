@@ -1,10 +1,18 @@
-<h2>새 전문가 등록 문의가 접수되었습니다</h2>
-<p><strong>접수 시간:</strong> <%= @received_at %></p>
-<hr>
-<p><strong>이름:</strong> <%= @name %></p>
-<p><strong>전화번호:</strong> <%= @phone %></p>
-<p><strong>이메일:</strong> <%= @email %></p>
-<p><strong>문의 내용:</strong></p>
-<p><%= simple_format(@message) %></p>
-<hr>
-<p>누수체크 관리자 페이지에서 확인 후 지원자에게 연락해주세요.</p>
+<!DOCTYPE html>
+<html>
+<body style="font-family: sans-serif; color: #111; max-width: 520px; margin: 0 auto; padding: 24px;">
+  <h2 style="color: #1d4ed8; margin-bottom: 4px;">새 전문가 등록 문의</h2>
+  <p style="color: #6b7280; font-size: 13px; margin-top: 0;">접수 시간: <%= @inquiry.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+  <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 16px 0;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+    <tr><td style="padding: 8px 0; color: #6b7280; width: 80px;">이름</td><td style="padding: 8px 0; font-weight: 600;"><%= @inquiry.name %></td></tr>
+    <tr><td style="padding: 8px 0; color: #6b7280;">연락처</td><td style="padding: 8px 0; font-weight: 600;"><%= @inquiry.phone %></td></tr>
+    <tr><td style="padding: 8px 0; color: #6b7280;">이메일</td><td style="padding: 8px 0;"><%= @inquiry.email.presence || "-" %></td></tr>
+  </table>
+  <% if @inquiry.message.present? %>
+    <div style="margin-top: 12px; padding: 12px; background: #f9fafb; border-radius: 8px; font-size: 13px; white-space: pre-line;"><%= @inquiry.message %></div>
+  <% end %>
+  <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 16px 0;">
+  <p style="font-size: 13px; color: #6b7280;">관리자 페이지에서 승인 또는 거절하세요.<br>승인 시 지원자에게 결제 안내 이메일이 자동 발송됩니다.</p>
+</body>
+</html>

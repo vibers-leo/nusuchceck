@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family: sans-serif; color: #111; max-width: 520px; margin: 0 auto; padding: 24px;">
+  <h2 style="color: #1d4ed8;">새 전문가 등록 문의 (DB 저장 실패)</h2>
+  <table style="width: 100%; font-size: 14px;">
+    <tr><td style="padding: 6px 0; color: #6b7280; width: 80px;">이름</td><td style="font-weight: 600;"><%= @inquiry.name %></td></tr>
+    <tr><td style="padding: 6px 0; color: #6b7280;">연락처</td><td><%= @inquiry.phone %></td></tr>
+    <tr><td style="padding: 6px 0; color: #6b7280;">이메일</td><td><%= @inquiry.email.presence || "-" %></td></tr>
+  </table>
+  <div style="margin-top: 12px; padding: 12px; background: #f9fafb; border-radius: 8px; font-size: 13px;"><%= @inquiry.message %></div>
+</body>
+</html>

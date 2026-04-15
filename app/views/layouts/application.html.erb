@@ -301,6 +301,14 @@
 
           <% elsif current_user.admin? %>
             <%# 하단 탭에 없는 보조 메뉴만 (대시보드/체크/마스터/커뮤니티/마이는 하단 탭에 있음) %>
+            <%= link_to admin_expert_inquiries_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl hover:bg-amber-50 transition-colors #{controller_path == 'admin/expert_inquiries' ? 'bg-amber-50 text-amber-700' : 'text-gray-700'}" do %>
+              <i class="fa-solid fa-user-plus w-5 text-center"></i>
+              <span class="font-medium">전문가 등록 문의</span>
+              <% pending = ExpertInquiry.pending.count %>
+              <% if pending > 0 %>
+                <span class="ml-auto bg-amber-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full"><%= pending %></span>
+              <% end %>
+            <% end %>
             <%= link_to admin_feedbacks_path, class: "flex items-center gap-3 px-3 py-3.5 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors" do %>
               <i class="fa-solid fa-comments w-5 text-center"></i>
               <span class="font-medium">피드백</span>

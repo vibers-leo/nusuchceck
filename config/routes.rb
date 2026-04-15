@@ -201,6 +201,14 @@ Rails.application.routes.draw do
       end
     end
 
+    # 전문가 등록 문의
+    resources :expert_inquiries, only: [:index, :show] do
+      member do
+        post :approve
+        post :reject
+      end
+    end
+
     # 피드백 및 설문조사 관리
     resources :feedbacks, only: [:index, :show] do
       member do
