@@ -77,12 +77,72 @@ class Admin::DashboardController < ApplicationController
     end
 
     # === 실시간 데이터 (캐시 안함) ===
-    # 관리자가 즉시 확인해야 하는 최신 데이터
     @recent_requests = Request.recent.limit(10)
     @recent_insurance_claims = InsuranceClaim.recent.limit(5)
     @pending_masters = Master.joins(:master_profile)
                              .where(master_profiles: { verified: false })
                              .includes(:master_profile)
                              .order(created_at: :desc)
+
+    # === 카드 드릴다운 — 30일 일자별 테이블 데이터 ===
+    thirty_days = (29.downto(0)).map { |i| Date.current - i.days }
+
+    raw_requests = Request.where("created_at >= ?", 30.days.ago)
+                          .group("DATE(created_at)").order("DATE(created_at)").count
+    raw_completed = Request.where(status: "closed")
+                           .where("updated_at >= ?", 30.days.ago)
+                           .group("DATE(updated_at)").order("DATE(updated_at)").count
+    raw_new_masters = Master.where("created_at >= ?", 30.days.ago)
+                            .group("DATE(created_at)").order("DATE(created_at)").count
+    raw_verified = MasterProfile.where("verified_at >= ?", 30.days.ago)
+                                .group("DATE(verified_at)").order("DATE(verified_at)").count
+    raw_escrow_deposits = EscrowTransaction.where(status: "deposited")
+                                           .where("created_at >= ?", 30.days.ago)
+                                           .group("DATE(created_at)").order("DATE(created_at)").count
+    raw_revenue = EscrowTransaction.where(status: ["released", "settled"])
+                                   .where("updated_at >= ?", 30.days.ago)
+                                   .group("DATE(updated_at)").order("DATE(updated_at)")
+                                   .sum(:platform_fee)
+    raw_insurance = InsuranceClaim.where("created_at >= ?", 30.days.ago)
+                                  .group("DATE(created_at)").order("DATE(created_at)").count
+
+    # 누적 기준값
+    req_total_before    = Request.where("created_at < ?", 30.days.ago).count
+    master_total_before = Master.where("created_at < ?", 30.days.ago).count
+    ins_total_before    = InsuranceClaim.where("created_at < ?", 30.days.ago).count
+
+    req_cum = req_total_before
+    master_cum = master_total_before
+    ins_cum = ins_total_before
+
+    @daily_rows = thirty_days.map do |d|
+      ds = d.to_s
+      new_req     = raw_requests[ds] || 0
+      done_req    = raw_completed[ds] || 0
+      new_master  = raw_new_masters[ds] || 0
+      new_verified = raw_verified[ds] || 0
+      escrow_dep  = raw_escrow_deposits[ds] || 0
+      rev         = raw_revenue[ds] || 0
+      new_ins     = raw_insurance[ds] || 0
+
+      req_cum    += new_req
+      master_cum += new_master
+      ins_cum    += new_ins
+
+      {
+        date:        d.strftime("%m/%d"),
+        weekday:     %w[일 월 화 수 목 금 토][d.wday],
+        new_req:     new_req,
+        done_req:    done_req,
+        req_cum:     req_cum,
+        new_master:  new_master,
+        master_cum:  master_cum,
+        new_verified: new_verified,
+        escrow_dep:  escrow_dep,
+        revenue:     rev,
+        new_ins:     new_ins,
+        ins_cum:     ins_cum,
+      }
+    end.reverse  # 최신 날짜가 위로
   end
 end

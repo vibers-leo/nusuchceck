@@ -44,138 +44,93 @@
   <% end %>
 
   <!-- 통계 카드 -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-    <!-- 전체 체크 -->
-    <div class="bg-white rounded-2xl border border-gray-100 p-6 card-hover">
-      <div class="flex items-center">
-        <div class="flex-shrink-0 bg-primary-100 rounded-lg p-3">
-          <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="stat-cards">
+    <%
+      cards = [
+        { metric: "requests",        icon_bg: "bg-primary-100", icon_color: "text-primary-600",
+          label: "전체 체크",        value: @total_requests,
+          icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>' },
+        { metric: "active_requests", icon_bg: "bg-yellow-100", icon_color: "text-yellow-600",
+          label: "진행중 체크",      value: @active_requests,
+          icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>' },
+        { metric: "masters",         icon_bg: "bg-green-100",   icon_color: "text-green-600",
+          label: "전체 마스터",      value: @total_masters,
+          icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>' },
+        { metric: "verified",        icon_bg: "bg-primary-100", icon_color: "text-primary-600",
+          label: "인증 마스터",      value: @verified_masters,
+          icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>' },
+        { metric: "escrow",          icon_bg: "bg-purple-100",  icon_color: "text-purple-600",
+          label: "대기 에스크로",    value: @pending_escrows,
+          icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>' },
+        { metric: "revenue",         icon_bg: "bg-red-100",     icon_color: "text-red-600",
+          label: "총 수수료 매출",   value: number_to_currency(@revenue, unit: "₩", precision: 0),
+          icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>' },
+        { metric: "insurance",       icon_bg: "bg-indigo-100",  icon_color: "text-indigo-600",
+          label: "전체 보험청구",    value: @total_insurance_claims,
+          icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>' },
+        { metric: "ins_pending",     icon_bg: "bg-orange-100",  icon_color: "text-orange-600",
+          label: "작성/검토 대기",   value: @pending_insurance_claims,
+          icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>' },
+      ]
+    %>
+    <% cards.each do |card| %>
+      <button type="button" onclick="toggleMetric('<%= card[:metric] %>')"
+              id="card-<%= card[:metric] %>"
+              class="bg-white rounded-2xl border border-gray-100 p-6 card-hover text-left w-full transition-all hover:border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-300 group">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 <%= card[:icon_bg] %> rounded-lg p-3">
+            <svg class="w-6 h-6 <%= card[:icon_color] %>" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <%= card[:icon].html_safe %>
+            </svg>
+          </div>
+          <div class="ml-4 flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-500"><%= card[:label] %></p>
+            <p class="text-2xl font-bold text-gray-900"><%= card[:value] %></p>
+          </div>
+          <svg class="w-4 h-4 text-gray-300 group-hover:text-primary-400 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
           </svg>
         </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-500">전체 체크</p>
-          <p class="text-2xl font-bold text-gray-900"><%= @total_requests %></p>
-        </div>
-      </div>
-    </div>
+      </button>
+    <% end %>
+  </div>
 
-    <!-- 진행중 체크 -->
-    <div class="bg-white rounded-2xl border border-gray-100 p-6 card-hover">
-      <div class="flex items-center">
-        <div class="flex-shrink-0 bg-yellow-100 rounded-lg p-3">
-          <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+  <!-- 드릴다운 테이블 패널 -->
+  <div id="drill-panel" class="hidden">
+    <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+      <!-- 패널 헤더 -->
+      <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-gray-50">
+        <div class="flex items-center gap-2">
+          <h3 id="drill-title" class="text-sm font-bold text-gray-900"></h3>
+          <span class="text-xs text-gray-400">최근 30일 · 일자별</span>
+        </div>
+        <button type="button" onclick="closeDrill()" class="text-gray-400 hover:text-gray-600">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
           </svg>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-500">진행중 체크</p>
-          <p class="text-2xl font-bold text-gray-900"><%= @active_requests %></p>
-        </div>
+        </button>
       </div>
-    </div>
 
-    <!-- 전체 마스터 -->
-    <div class="bg-white rounded-2xl border border-gray-100 p-6 card-hover">
-      <div class="flex items-center">
-        <div class="flex-shrink-0 bg-green-100 rounded-lg p-3">
-          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-          </svg>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-500">전체 마스터</p>
-          <p class="text-2xl font-bold text-gray-900"><%= @total_masters %></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 인증 마스터 -->
-    <div class="bg-white rounded-2xl border border-gray-100 p-6 card-hover">
-      <div class="flex items-center">
-        <div class="flex-shrink-0 bg-primary-100 rounded-lg p-3">
-          <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-          </svg>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-500">인증 마스터</p>
-          <p class="text-2xl font-bold text-gray-900"><%= @verified_masters %></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 대기 에스크로 -->
-    <div class="bg-white rounded-2xl border border-gray-100 p-6 card-hover">
-      <div class="flex items-center">
-        <div class="flex-shrink-0 bg-purple-100 rounded-lg p-3">
-          <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
-          </svg>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-500">대기 에스크로</p>
-          <p class="text-2xl font-bold text-gray-900"><%= @pending_escrows %></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 총 매출 -->
-    <div class="bg-white rounded-2xl border border-gray-100 p-6 card-hover">
-      <div class="flex items-center">
-        <div class="flex-shrink-0 bg-red-100 rounded-lg p-3">
-          <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-500">총 수수료 매출</p>
-          <p class="text-2xl font-bold text-gray-900"><%= number_to_currency(@revenue, unit: "₩", precision: 0) %></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 전체 보험청구 -->
-    <div class="bg-white rounded-2xl border border-gray-100 p-6 card-hover">
-      <div class="flex items-center">
-        <div class="flex-shrink-0 bg-indigo-100 rounded-lg p-3">
-          <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-500">전체 보험청구</p>
-          <p class="text-2xl font-bold text-gray-900"><%= @total_insurance_claims %></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 제출 대기 보험청구 -->
-    <div class="bg-white rounded-2xl border border-gray-100 p-6 card-hover">
-      <div class="flex items-center">
-        <div class="flex-shrink-0 bg-orange-100 rounded-lg p-3">
-          <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-          </svg>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-500">작성/검토 대기</p>
-          <p class="text-2xl font-bold text-gray-900"><%= @pending_insurance_claims %></p>
-        </div>
+      <!-- 테이블 래퍼 -->
+      <div class="overflow-x-auto max-h-96 overflow-y-auto">
+        <table class="min-w-full text-sm">
+          <thead class="bg-gray-50 sticky top-0 z-10">
+            <tr id="drill-thead"></tr>
+          </thead>
+          <tbody id="drill-tbody" class="divide-y divide-gray-100"></tbody>
+        </table>
       </div>
     </div>
   </div>
 
   <!-- 📈 차트 섹션 -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- 30일 체크 추이 -->
     <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 p-6">
       <h2 class="text-base font-semibold text-gray-900 mb-4">📈 30일 체크 추이</h2>
       <div class="h-56">
         <canvas id="requestTrendChart"></canvas>
       </div>
     </div>
-    <!-- 증상 유형 분포 -->
     <div class="bg-white rounded-2xl border border-gray-100 p-6">
       <h2 class="text-base font-semibold text-gray-900 mb-4">🔍 증상 유형 분포</h2>
       <div class="h-56 flex items-center justify-center">
@@ -184,7 +139,6 @@
     </div>
   </div>
 
-  <!-- 수익 추이 + 완료율 -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 p-6">
       <h2 class="text-base font-semibold text-gray-900 mb-4">💰 6개월 수수료 수익</h2>
@@ -227,7 +181,7 @@
     </div>
   </div>
 
-  <!-- Chart.js CDN -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script>
     <%
@@ -239,7 +193,6 @@
       rev_labels   = @monthly_revenue.keys
       rev_data     = @monthly_revenue.values.map(&:to_f)
     %>
-    // 30일 체크 추이
     new Chart(document.getElementById('requestTrendChart'), {
       type: 'bar',
       data: {
@@ -253,7 +206,6 @@
         scales: { x: { grid: { display:false }, ticks: { font:{size:10}, maxTicksLimit:10 } },
                   y: { beginAtZero:true, ticks: { stepSize:1, font:{size:10} } } } }
     });
-    // 증상 유형 도넛
     new Chart(document.getElementById('symptomChart'), {
       type: 'doughnut',
       data: {
@@ -265,7 +217,6 @@
       options: { responsive: true, maintainAspectRatio: false,
         plugins: { legend: { position:'bottom', labels:{ font:{size:11}, padding:8, boxWidth:12 } } } }
     });
-    // 6개월 수익
     new Chart(document.getElementById('revenueChart'), {
       type: 'line',
       data: {
@@ -280,11 +231,120 @@
                   y: { beginAtZero:true, ticks:{ font:{size:10},
                     callback: (v) => '₩' + v.toLocaleString() } } } }
     });
+
+    // ── 드릴다운 데이터 (Rails → JS) ──────────────────────────────────────
+    const ROWS = <%= @daily_rows.to_json.html_safe %>;
+
+    const METRICS = {
+      requests: {
+        title: "전체 체크 — 일자별",
+        cols: ["일자", "요일", "신규 접수", "완료", "누적"],
+        row:  r => [r.date, r.weekday, r.new_req, r.done_req, r.req_cum],
+        highlights: [2]  // 강조할 컬럼 인덱스
+      },
+      active_requests: {
+        title: "진행중 체크 — 일자별",
+        cols: ["일자", "요일", "신규 접수", "당일 완료"],
+        row:  r => [r.date, r.weekday, r.new_req, r.done_req],
+        highlights: [2]
+      },
+      masters: {
+        title: "전체 마스터 — 일자별",
+        cols: ["일자", "요일", "신규 가입", "누적"],
+        row:  r => [r.date, r.weekday, r.new_master, r.master_cum],
+        highlights: [2]
+      },
+      verified: {
+        title: "인증 마스터 — 일자별",
+        cols: ["일자", "요일", "신규 인증"],
+        row:  r => [r.date, r.weekday, r.new_verified],
+        highlights: [2]
+      },
+      escrow: {
+        title: "에스크로 입금 — 일자별",
+        cols: ["일자", "요일", "신규 입금 건"],
+        row:  r => [r.date, r.weekday, r.escrow_dep],
+        highlights: [2]
+      },
+      revenue: {
+        title: "수수료 매출 — 일자별",
+        cols: ["일자", "요일", "수수료 수입"],
+        row:  r => [r.date, r.weekday, '₩' + r.revenue.toLocaleString()],
+        highlights: [2]
+      },
+      insurance: {
+        title: "보험청구 — 일자별",
+        cols: ["일자", "요일", "신규 청구", "누적"],
+        row:  r => [r.date, r.weekday, r.new_ins, r.ins_cum],
+        highlights: [2]
+      },
+      ins_pending: {
+        title: "보험청구 신규 접수 — 일자별",
+        cols: ["일자", "요일", "신규 청구"],
+        row:  r => [r.date, r.weekday, r.new_ins],
+        highlights: [2]
+      },
+    };
+
+    let activeMetric = null;
+
+    function toggleMetric(metric) {
+      const panel = document.getElementById('drill-panel');
+      // 같은 카드 재클릭 → 닫기
+      if (activeMetric === metric) {
+        closeDrill();
+        return;
+      }
+      activeMetric = metric;
+
+      // 카드 활성 스타일
+      document.querySelectorAll('[id^="card-"]').forEach(c => {
+        c.classList.remove('border-primary-400', 'ring-2', 'ring-primary-200', 'bg-primary-50');
+      });
+      const activeCard = document.getElementById('card-' + metric);
+      if (activeCard) activeCard.classList.add('border-primary-400', 'ring-2', 'ring-primary-200', 'bg-primary-50');
+
+      const cfg = METRICS[metric];
+      document.getElementById('drill-title').textContent = cfg.title;
+
+      // 헤더
+      const thead = document.getElementById('drill-thead');
+      thead.innerHTML = cfg.cols.map((col, i) =>
+        `<th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide whitespace-nowrap ${i === 0 ? 'sticky left-0 bg-gray-50' : ''}">${col}</th>`
+      ).join('');
+
+      // 바디
+      const tbody = document.getElementById('drill-tbody');
+      const today = new Date();
+      tbody.innerHTML = ROWS.map((r, idx) => {
+        const cells = cfg.row(r);
+        const isToday = idx === 0;
+        const hasData = cfg.highlights.some(hi => cells[hi] > 0);
+        const rowClass = isToday ? 'bg-primary-50' : (hasData ? 'hover:bg-gray-50' : 'hover:bg-gray-50 opacity-60');
+        return `<tr class="${rowClass}">` +
+          cells.map((cell, i) => {
+            const isHighlight = cfg.highlights.includes(i) && cell !== 0 && cell !== '₩0';
+            const sticky = i === 0 ? 'sticky left-0 ' + (isToday ? 'bg-primary-50' : 'bg-white') : '';
+            return `<td class="px-4 py-2.5 whitespace-nowrap text-sm ${sticky} ${isHighlight ? 'font-bold text-primary-700' : 'text-gray-700'} ${i === 1 ? 'text-gray-400 text-xs' : ''}">${cell}</td>`;
+          }).join('') +
+        `</tr>`;
+      }).join('');
+
+      panel.classList.remove('hidden');
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function closeDrill() {
+      activeMetric = null;
+      document.getElementById('drill-panel').classList.add('hidden');
+      document.querySelectorAll('[id^="card-"]').forEach(c => {
+        c.classList.remove('border-primary-400', 'ring-2', 'ring-primary-200', 'bg-primary-50');
+      });
+    }
   </script>
 
   <!-- 최근 체크 + 보험청구 -->
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <!-- 최근 체크 목록 -->
     <div class="bg-white rounded-2xl border border-gray-100">
       <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
         <h2 class="text-lg font-semibold text-gray-900">📋 최근 체크</h2>
@@ -316,7 +376,6 @@
       </div>
     </div>
 
-    <!-- 최근 보험청구 목록 -->
     <div class="bg-white rounded-2xl border border-gray-100">
       <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
         <h2 class="text-lg font-semibold text-gray-900">💼 최근 보험청구</h2>
