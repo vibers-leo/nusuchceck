@@ -128,16 +128,14 @@ test.describe('고객 — 로그인 후 기능', () => {
   });
 
   test('체크 접수 폼 — 1단계 렌더', async ({ page }) => {
-    await page.goto(BASE + '/customers/requests/new', { waitUntil: 'domcontentloaded' });
-    const ok = !page.url().includes('sign_in');
-    expect(ok, '체크 접수 폼 진입 실패').toBeTruthy();
-    // 위자드 또는 폼 렌더 확인
-    const hasWizard = await page.locator('[data-check-wizard-target="step"]').first().isVisible().catch(() => false);
-    const hasForm = await page.locator('form').first().isVisible().catch(() => false);
+    // /new 는 모드 선택 화면 → ?mode=urgent 로 위자드 진입
+    await page.goto(BASE + '/customers/requests/new?mode=urgent', { waitUntil: 'domcontentloaded' });
+    const step1 = page.locator('[data-check-wizard-target="step"]').first();
+    await expect(step1).toBeVisible({ timeout: 8000 });
     record(
       '체크 접수 폼 1단계 렌더',
-      hasWizard || hasForm ? '⚠️' : '❌',
-      `위자드: ${hasWizard}, 폼: ${hasForm} (7-step 제출은 자동화 범위 외)`,
+      '⚠️',
+      '위자드 1단계(증상 선택) 렌더 확인 (7-step 전체 제출은 자동화 범위 외)',
       '고객 기능',
     );
   });
