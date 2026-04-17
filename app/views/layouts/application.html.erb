@@ -41,6 +41,9 @@
   <%= action_cable_meta_tag %>
   <!-- Font Awesome 6 Free -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Driver.js — 인터랙티브 투어 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.css" data-turbo-track="reload"/>
+  <script src="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.js.iife.js" data-turbo-track="reload"></script>
 
   <!-- Sentry Error Tracking (프로덕션/스테이징만) -->
   <% if Rails.env.production? || Rails.env.staging? %>
@@ -139,15 +142,16 @@
           %>
           <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center space-x-0.5">
             <% if current_user.customer? %>
-              <%= link_to "홈", customers_dashboard_path, class: (controller_path == 'customers/dashboard' ? nav_link_active : nav_link) %>
-              <%= link_to "내 체크", customers_requests_path, class: (controller_path == 'customers/requests' ? nav_link_active : nav_link) %>
-              <%= link_to "커뮤니티", community_path, class: (controller_name == 'posts' ? nav_link_active : nav_link) %>
+              <%= link_to "홈", customers_dashboard_path, id: "tnav-home", class: (controller_path == 'customers/dashboard' ? nav_link_active : nav_link) %>
+              <%= link_to "내 체크", customers_requests_path, id: "tnav-requests", class: (controller_path == 'customers/requests' ? nav_link_active : nav_link) %>
+              <%= link_to "커뮤니티", community_path, id: "tnav-community", class: (controller_name == 'posts' ? nav_link_active : nav_link) %>
             <% elsif current_user.master? %>
-              <%= link_to "홈", expert_dashboard_path, class: (controller_name == 'dashboard' ? nav_link_active : nav_link) %>
-              <%= link_to "오더 피드", open_orders_masters_requests_path, class: (action_name == 'open_orders' ? nav_link_active : nav_link) %>
-              <%= link_to "내 작업", masters_requests_path, class: (controller_path == 'masters/requests' && action_name != 'open_orders' ? nav_link_active : nav_link) %>
-              <%= link_to "결제 관리", masters_billing_path, class: (controller_path == 'masters/billing' ? nav_link_active : nav_link) %>
-              <%= link_to "커뮤니티", community_path, class: (controller_name == 'posts' ? nav_link_active : nav_link) %>
+              <%= link_to "홈", expert_dashboard_path, id: "tnav-home", class: (controller_name == 'dashboard' ? nav_link_active : nav_link) %>
+              <%= link_to "오더 피드", open_orders_masters_requests_path, id: "tnav-orders", class: (action_name == 'open_orders' ? nav_link_active : nav_link) %>
+              <%= link_to "내 작업", masters_requests_path, id: "tnav-my-work", class: (controller_path == 'masters/requests' && action_name != 'open_orders' ? nav_link_active : nav_link) %>
+              <%= link_to "구역 선점", masters_zone_claims_path, id: "cta-zone-claim", class: (controller_path == 'masters/zone_claims' ? nav_link_active : nav_link) %>
+              <%= link_to "결제 관리", masters_billing_path, id: "tnav-billing", class: (controller_path == 'masters/billing' ? nav_link_active : nav_link) %>
+              <%= link_to "커뮤니티", community_path, id: "tnav-community", class: (controller_name == 'posts' ? nav_link_active : nav_link) %>
             <% elsif current_user.admin? %>
               <%= link_to "관리자", admin_root_path, class: (controller_path.start_with?('admin') ? nav_link_active : nav_link) %>
               <%= link_to "고객체험", customers_dashboard_path, class: (controller_path.start_with?('customers') ? nav_link_active : nav_link) %>
@@ -169,10 +173,22 @@
           <% end %>
 
           <% if user_signed_in? %>
-            <%= render "shared/notifications_dropdown" %>
+            <!-- 튜토리얼 도움말 버튼 -->
+            <button type="button" id="tutorial-help-btn"
+                    onclick="window.nusuTutorial && window.nusuTutorial.start()"
+                    title="앱 사용법 보기"
+                    class="p-2 text-gray-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors hidden md:flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </button>
+
+            <div id="tnav-notifications">
+              <%= render "shared/notifications_dropdown" %>
+            </div>
 
             <!-- 유저 드롭다운 (데스크톱만 표시) -->
-            <div class="relative hidden md:block">
+            <div class="relative hidden md:block" id="tnav-user-menu">
               <button type="button"
                       onclick="toggleUserDropdown(event)"
                       class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
@@ -754,5 +770,273 @@
     이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
   </a>
 </div>
+
+<!-- ───────────────────────────────────────────────
+     누수체크 인터랙티브 튜토리얼 (Driver.js)
+     역할별(고객/전문가) 자동 시작 + 수동 재시작
+──────────────────────────────────────────────── -->
+<% if user_signed_in? && !current_user.admin? %>
+<script>
+(function() {
+  var ROLE      = "<%= current_user.master? ? 'master' : 'customer' %>";
+  var STORE_KEY = "nusu_tour_done_" + ROLE + "_v1";
+
+  // ── 스텝 정의 ──────────────────────────────────
+  var CUSTOMER_STEPS = [
+    {
+      popover: {
+        title: "👋 누수체크에 오신 것을 환영해요!",
+        description: "앱 주요 기능을 30초만에 안내해 드릴게요. 언제든지 우측 상단 <strong>?</strong> 버튼으로 다시 볼 수 있어요.",
+        side: "bottom", align: "center"
+      }
+    },
+    {
+      element: "#tnav-home",
+      popover: {
+        title: "🏠 홈 대시보드",
+        description: "체크 현황, 견적 알림, 진행 중인 작업을 한눈에 확인할 수 있어요.",
+        side: "bottom", align: "start"
+      }
+    },
+    {
+      element: "#tnav-requests",
+      popover: {
+        title: "📋 내 체크",
+        description: "접수한 모든 체크 목록이 여기 있어요. 견적을 확인하고 마스터를 선택할 수 있어요.",
+        side: "bottom", align: "start"
+      }
+    },
+    {
+      element: "#cta-new-check",
+      popover: {
+        title: "🔵 새 체크 접수",
+        description: "누수가 의심되면 여기서 바로 접수해요! 위치·증상을 입력하면 주변 전문가들이 견적을 보내드려요.",
+        side: "bottom", align: "start"
+      }
+    },
+    {
+      element: "#tnav-community",
+      popover: {
+        title: "💬 커뮤니티",
+        description: "누수 관련 정보와 다른 고객들의 후기를 볼 수 있어요.",
+        side: "bottom", align: "start"
+      }
+    },
+    {
+      element: "#tnav-notifications",
+      popover: {
+        title: "🔔 알림",
+        description: "견적 도착, 마스터 배정, 작업 완료 알림이 여기 와요. 빨간 점이 뜨면 확인해 주세요!",
+        side: "bottom", align: "end"
+      }
+    },
+    {
+      element: "#tnav-user-menu",
+      popover: {
+        title: "👤 내 정보",
+        description: "프로필 수정, 비밀번호 변경, 로그아웃은 여기서 할 수 있어요.",
+        side: "bottom", align: "end"
+      }
+    },
+    {
+      popover: {
+        title: "✅ 준비 완료!",
+        description: "이제 누수체크를 자유롭게 이용하세요! 궁금한 점은 우측 상단 <strong>?</strong> 버튼을 눌러 다시 볼 수 있어요.",
+        side: "bottom", align: "center"
+      }
+    }
+  ];
+
+  var MASTER_STEPS = [
+    {
+      popover: {
+        title: "👋 전문가님, 환영해요!",
+        description: "누수체크 전문가 앱의 주요 기능을 안내해 드릴게요. 30초면 충분해요!",
+        side: "bottom", align: "center"
+      }
+    },
+    {
+      element: "#tnav-home",
+      popover: {
+        title: "🏠 홈 대시보드",
+        description: "오늘의 작업 현황과 수익, 구역 현황을 한눈에 확인할 수 있어요.",
+        side: "bottom", align: "start"
+      }
+    },
+    {
+      element: "#tnav-orders",
+      popover: {
+        title: "📡 오더 피드",
+        description: "내 선점 구역에서 새로운 체크 요청이 실시간으로 올라와요. 빠르게 견적을 보내면 매칭 확률이 높아져요!",
+        side: "bottom", align: "start"
+      }
+    },
+    {
+      element: "#tnav-my-work",
+      popover: {
+        title: "🔧 내 작업",
+        description: "진행 중인 체크를 관리해요. 현장 방문 후 견적 제출, 에스크로 결제 확인까지 여기서 해요.",
+        side: "bottom", align: "start"
+      }
+    },
+    {
+      element: "#tnav-billing",
+      popover: {
+        title: "💳 결제 관리",
+        description: "전문가 등록 마스터 플랜(월 99,000원) 구독과 결제 내역을 확인해요. 자동결제 해지도 여기서 해요.",
+        side: "bottom", align: "start"
+      }
+    },
+    {
+      element: "#tnav-community",
+      popover: {
+        title: "💬 커뮤니티",
+        description: "다른 전문가들과 정보를 나누고, 후기를 볼 수 있어요.",
+        side: "bottom", align: "start"
+      }
+    },
+    {
+      element: "#tnav-notifications",
+      popover: {
+        title: "🔔 알림",
+        description: "새 체크 요청, 고객 메시지, 에스크로 입금 알림이 여기 와요. 놓치지 마세요!",
+        side: "bottom", align: "end"
+      }
+    },
+    {
+      element: "#tutorial-help-btn",
+      popover: {
+        title: "❓ 도움말 버튼",
+        description: "이 버튼을 누르면 언제든지 투어를 다시 볼 수 있어요.",
+        side: "bottom", align: "end"
+      }
+    },
+    {
+      element: "#cta-zone-claim",
+      popover: {
+        title: "📍 구역 선점",
+        description: "내 서비스 구역을 선점하면 해당 구역의 체크 요청이 우선 배정돼요! 최대 3개 구역까지 선택할 수 있어요.",
+        side: "top", align: "start"
+      }
+    },
+    {
+      popover: {
+        title: "🎉 이제 시작해볼까요?",
+        description: "오더 피드에서 첫 번째 견적을 보내보세요! 모르는 게 있으면 <strong>?</strong> 버튼을 눌러 다시 볼 수 있어요.",
+        side: "bottom", align: "center"
+      }
+    }
+  ];
+
+  // ── Driver.js 초기화 ───────────────────────────
+  function buildDriver(steps) {
+    if (typeof window.driver === 'undefined' || typeof window.driver.js === 'undefined') return null;
+    var driverJs = window.driver.js.driver;
+
+    // 존재하지 않는 element 스텝 필터링 (페이지 이동 전 실행 대비)
+    var filtered = steps.filter(function(s) {
+      if (!s.element) return true;
+      return document.querySelector(s.element) !== null;
+    });
+
+    return driverJs({
+      showProgress: true,
+      progressText: "{{current}} / {{total}}",
+      nextBtnText: "다음 →",
+      prevBtnText: "← 이전",
+      doneBtnText: "완료 ✓",
+      smoothScroll: true,
+      animate: true,
+      overlayOpacity: 0.6,
+      popoverClass: "nusu-tour-popover",
+      onDestroyStarted: function() {
+        localStorage.setItem(STORE_KEY, "1");
+        if (window._nusuDriverInstance) window._nusuDriverInstance.destroy();
+      },
+      steps: filtered
+    });
+  }
+
+  // ── 전역 API ──────────────────────────────────
+  window.nusuTutorial = {
+    start: function() {
+      var steps = ROLE === "master" ? MASTER_STEPS : CUSTOMER_STEPS;
+      var d = buildDriver(steps);
+      if (!d) { return; }
+      window._nusuDriverInstance = d;
+      d.drive();
+    },
+    reset: function() {
+      localStorage.removeItem(STORE_KEY);
+      window.nusuTutorial.start();
+    }
+  };
+
+  // ── 첫 방문자 자동 시작 ───────────────────────
+  function autoStart() {
+    if (localStorage.getItem(STORE_KEY)) return;
+    // Driver.js 로드 완료 대기 (CDN 비동기)
+    var attempts = 0;
+    var timer = setInterval(function() {
+      attempts++;
+      if (attempts > 20) { clearInterval(timer); return; }
+      if (typeof window.driver !== 'undefined' && typeof window.driver.js !== 'undefined') {
+        clearInterval(timer);
+        setTimeout(function() { window.nusuTutorial.start(); }, 800);
+      }
+    }, 200);
+  }
+
+  document.addEventListener("turbo:load", autoStart);
+  if (document.readyState !== "loading") autoStart();
+  else document.addEventListener("DOMContentLoaded", autoStart);
+})();
+</script>
+
+<style>
+/* Driver.js 커스텀 스타일 */
+.nusu-tour-popover .driver-popover-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+.nusu-tour-popover .driver-popover-description {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #4b5563;
+}
+.nusu-tour-popover .driver-popover-footer button {
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 6px 14px;
+}
+.nusu-tour-popover .driver-popover-next-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+}
+.nusu-tour-popover .driver-popover-next-btn:hover {
+  background: #1d4ed8;
+}
+.nusu-tour-popover .driver-popover-prev-btn {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+.nusu-tour-popover .driver-popover-progress-text {
+  font-size: 11px;
+  color: #9ca3af;
+}
+.nusu-tour-popover {
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+  min-width: 280px;
+  max-width: 340px;
+}
+</style>
+<% end %>
+
 </body>
 </html>
