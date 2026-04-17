@@ -22,22 +22,37 @@
           </div>
           <div class="text-right">
             <p class="text-xl font-bold text-gray-900">99,000원</p>
-            <p class="text-xs text-gray-400">/ 월</p>
+            <p class="text-xs text-gray-400">/ 월 (VAT 포함)</p>
           </div>
         </div>
 
-        <div class="border-t border-gray-100 pt-4 space-y-2 text-sm">
+        <div class="border-t border-gray-100 pt-4 space-y-2.5 text-sm">
           <div class="flex justify-between">
             <span class="text-gray-500">시작일</span>
             <span class="font-medium"><%= @subscription.starts_on&.strftime("%Y년 %m월 %d일") %></span>
           </div>
           <div class="flex justify-between">
             <span class="text-gray-500">다음 결제일</span>
-            <span class="font-medium"><%= @subscription.expires_on&.strftime("%Y년 %m월 %d일") %></span>
+            <span class="font-medium text-blue-700">
+              <%= (@subscription.next_billing_at || @subscription.expires_on)&.strftime("%Y년 %m월 %d일") %>
+            </span>
           </div>
           <div class="flex justify-between">
-            <span class="text-gray-500">자동결제</span>
-            <span class="font-medium text-green-600"><%= @subscription.has_billing_key? ? "등록됨" : "미등록" %></span>
+            <span class="text-gray-500">결제 수단</span>
+            <span class="font-medium">카드 자동결제 (토스페이먼츠)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-500">자동결제 상태</span>
+            <% if @subscription.has_billing_key? %>
+              <span class="inline-flex items-center gap-1 text-green-600 font-semibold">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                등록됨
+              </span>
+            <% else %>
+              <span class="text-gray-400">미등록</span>
+            <% end %>
           </div>
         </div>
       </div>
@@ -48,7 +63,7 @@
           <h2 class="font-bold text-gray-900 mb-3">선점 구역</h2>
           <% current_user.zone_claims.active.includes(:service_zone).each do |claim| %>
             <div class="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
-              <span class="text-sm font-medium text-gray-900"><%= claim.service_zone.name %></span>
+              <span class="text-sm font-medium text-gray-900"><%= claim.service_zone.display_name %></span>
               <span class="text-xs text-gray-500"><%= claim.claimed_at&.strftime("%Y.%m.%d") %> 선점</span>
             </div>
           <% end %>
@@ -56,18 +71,23 @@
       <% end %>
 
       <!-- 해지 -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-        <h2 class="font-bold text-gray-900 mb-2">자동결제 해지</h2>
-        <p class="text-sm text-gray-500 mb-4">해지하면 다음 결제일(<%= @subscription.expires_on&.strftime("%Y년 %m월 %d일") %>)까지 구독이 유지돼요.</p>
-        <%= button_to "자동결제 해지하기", masters_billing_path,
-              method: :delete,
-              data: { confirm: "정말 해지하시겠어요? 다음 결제일까지는 구독이 유지됩니다." },
-              class: "text-sm text-red-500 hover:text-red-700 underline" %>
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-4">
+        <h2 class="font-bold text-gray-900 mb-1">자동결제 해지</h2>
+        <p class="text-sm text-gray-500 mb-4">
+          해지하면 <strong><%= (@subscription.next_billing_at || @subscription.expires_on)&.strftime("%Y년 %m월 %d일") %></strong>까지 서비스가 유지되고, 이후 갱신되지 않아요.
+          위약금은 없으며, 이미 결제된 금액은 환불되지 않아요.
+          (<%= link_to "환불 정책", refund_path, class: "text-blue-600 underline", target: "_blank" %>)
+        </p>
+        <%= button_to masters_billing_path, method: :delete,
+              data: { confirm: "정말 해지하시겠어요?\n\n다음 결제일까지는 서비스가 유지됩니다.\n해지 후 재가입은 언제든 가능해요." },
+              class: "text-sm text-red-500 hover:text-red-700 underline cursor-pointer" do %>
+          자동결제 해지하기
+        <% end %>
       </div>
 
     <% else %>
       <!-- 미가입 -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center">
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center mb-4">
         <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -79,6 +99,55 @@
               class: "inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition-colors" %>
       </div>
     <% end %>
+
+    <!-- 결제 내역 -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+      <h2 class="font-bold text-gray-900 mb-4">결제 내역</h2>
+
+      <% if @payment_logs.any? %>
+        <div class="space-y-3">
+          <% @payment_logs.each do |log| %>
+            <% details = log.details.is_a?(Hash) ? log.details : {} %>
+            <div class="flex items-start justify-between py-3 border-b border-gray-50 last:border-0 gap-3">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-0.5">
+                  <% case log.action
+                     when "success" %>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700">결제 완료</span>
+                  <% when "fail" %>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-700">결제 실패</span>
+                  <% when "refund", "cancel" %>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700">환불/취소</span>
+                  <% else %>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-500"><%= log.action %></span>
+                  <% end %>
+                  <% if details["order_id"].present? %>
+                    <span class="font-mono text-[10px] text-gray-400 truncate"><%= details["order_id"] %></span>
+                  <% end %>
+                </div>
+                <p class="text-xs text-gray-400"><%= log.created_at.strftime("%Y.%m.%d %H:%M") %></p>
+              </div>
+              <% if details["amount"].present? %>
+                <p class="text-sm font-bold text-gray-900 flex-shrink-0">
+                  <%= number_to_currency(details["amount"], unit: "₩", precision: 0) %>
+                </p>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-center py-8">
+          <p class="text-sm text-gray-400">아직 결제 내역이 없어요</p>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- 정책 링크 -->
+    <div class="mt-6 text-center space-x-4 text-xs text-gray-400">
+      <%= link_to "이용약관", terms_path, class: "hover:text-gray-600 underline", target: "_blank" %>
+      <%= link_to "환불 정책", refund_path, class: "hover:text-gray-600 underline", target: "_blank" %>
+      <%= link_to "개인정보처리방침", privacy_path, class: "hover:text-gray-600 underline", target: "_blank" %>
+    </div>
 
   </div>
 </div>

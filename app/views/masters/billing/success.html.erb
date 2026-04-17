@@ -1,0 +1,96 @@
+<% content_for :title, "결제 완료 - 누수체크" %>
+
+<div class="min-h-screen bg-gray-50 py-10">
+  <div class="max-w-lg mx-auto px-4">
+
+    <!-- 성공 아이콘 -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-5">
+        <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <h1 class="text-2xl font-bold text-gray-900">결제가 완료되었어요</h1>
+      <p class="text-gray-500 mt-2 text-sm">전문가 등록 마스터 플랜이 바로 시작됩니다</p>
+    </div>
+
+    <!-- 결제 영수증 카드 -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-4">
+      <h2 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        결제 영수증
+      </h2>
+
+      <dl class="space-y-3 text-sm">
+        <div class="flex justify-between">
+          <dt class="text-gray-500">주문번호</dt>
+          <dd class="font-mono text-gray-900 text-xs bg-gray-50 px-2 py-0.5 rounded"><%= @order_id %></dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-gray-500">상품명</dt>
+          <dd class="font-medium text-gray-900 text-right max-w-[60%]"><%= @order_name %></dd>
+        </div>
+        <div class="flex justify-between border-t border-gray-100 pt-3">
+          <dt class="font-semibold text-gray-700">결제 금액</dt>
+          <dd class="text-xl font-bold text-blue-600"><%= number_to_currency(@amount, unit: "₩", precision: 0) %></dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-gray-500">결제 일시</dt>
+          <dd class="text-gray-900"><%= @paid_at.strftime("%Y년 %m월 %d일 %H:%M") %></dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-gray-500">결제 수단</dt>
+          <dd class="text-gray-900">카드 자동결제 (토스페이먼츠)</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-gray-500">다음 결제일</dt>
+          <dd class="font-medium text-gray-900"><%= @next_billing_at.strftime("%Y년 %m월 %d일") %></dd>
+        </div>
+      </dl>
+    </div>
+
+    <!-- 플랜 혜택 안내 -->
+    <div class="bg-blue-50 rounded-2xl p-5 mb-4">
+      <p class="text-sm font-bold text-blue-800 mb-3">이제 이용 가능한 혜택</p>
+      <ul class="space-y-2">
+        <% [
+          "선택 구역 고객에게 1순위로 노출돼요",
+          "신규 체크 접수 시 가장 먼저 알림을 받아요",
+          "건수 제한 없이 모든 요청에 견적을 제출할 수 있어요",
+          "마이페이지 → 결제 관리에서 언제든 해지할 수 있어요",
+        ].each do |item| %>
+          <li class="flex items-start gap-2 text-sm text-blue-700">
+            <svg class="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <%= item %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <!-- 자동결제 안내 -->
+    <div class="bg-amber-50 border border-amber-100 rounded-xl p-4 mb-6 text-xs text-amber-800">
+      <p class="font-semibold mb-1">자동결제 안내</p>
+      <p>매월 <strong><%= @next_billing_at.strftime("%d일") %></strong>에 등록된 카드로 <strong>99,000원</strong>이 자동 결제됩니다.
+      해지는 <strong>결제 관리 페이지</strong>에서 언제든 가능하며, 해지 후 현재 구독 기간 만료일까지 서비스가 유지됩니다.</p>
+    </div>
+
+    <!-- 버튼 -->
+    <div class="space-y-3">
+      <%= link_to masters_zone_claims_path, class: "block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-colors" do %>
+        구역 선점하러 가기 →
+      <% end %>
+      <%= link_to masters_billing_path, class: "block w-full text-center bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 rounded-xl border border-gray-200 transition-colors text-sm" do %>
+        결제 관리 페이지
+      <% end %>
+    </div>
+
+    <p class="text-center text-xs text-gray-400 mt-6">
+      문의: <a href="mailto:contact@nusucheck.com" class="underline">contact@nusucheck.com</a>
+    </p>
+
+  </div>
+</div>

@@ -48,16 +48,55 @@
       </ul>
     </div>
 
-    <!-- 결제 버튼 -->
+    <!-- 약관 동의 + 결제 버튼 -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-4">
-      <p class="text-sm text-gray-600 mb-4">카드를 등록하면 즉시 결제 후 구독이 시작돼요.<br>매월 같은 날 자동으로 갱신됩니다.</p>
+      <div class="bg-amber-50 rounded-xl p-4 mb-5 text-xs text-amber-800 space-y-1">
+        <p class="font-semibold">자동결제 안내</p>
+        <p>카드 등록 즉시 <strong>99,000원</strong>이 결제되고, 이후 매월 같은 날 자동 갱신됩니다.</p>
+        <p>해지는 결제 관리 페이지에서 언제든 가능하며, 이미 결제된 금액은 환불되지 않습니다.</p>
+      </div>
+
+      <!-- 약관 동의 체크박스 -->
+      <div class="space-y-2.5 mb-5">
+        <label class="flex items-start gap-3 cursor-pointer">
+          <input type="checkbox" id="agree-terms" class="w-4 h-4 mt-0.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 flex-shrink-0">
+          <span class="text-sm text-gray-700">
+            <a href="<%= terms_path %>" target="_blank" class="text-blue-600 underline font-semibold">서비스 이용약관</a>에 동의합니다 <span class="text-red-500 font-bold">(필수)</span>
+          </span>
+        </label>
+        <label class="flex items-start gap-3 cursor-pointer">
+          <input type="checkbox" id="agree-refund" class="w-4 h-4 mt-0.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 flex-shrink-0">
+          <span class="text-sm text-gray-700">
+            <a href="<%= refund_path %>" target="_blank" class="text-blue-600 underline font-semibold">취소 및 환불 정책</a>에 동의합니다 <span class="text-red-500 font-bold">(필수)</span>
+          </span>
+        </label>
+        <label class="flex items-start gap-3 cursor-pointer">
+          <input type="checkbox" id="agree-auto" class="w-4 h-4 mt-0.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 flex-shrink-0">
+          <span class="text-sm text-gray-700">
+            매월 99,000원의 <strong>자동결제</strong>에 동의합니다 <span class="text-red-500 font-bold">(필수)</span>
+          </span>
+        </label>
+        <label class="flex items-start gap-3 cursor-pointer">
+          <input type="checkbox" id="agree-privacy" class="w-4 h-4 mt-0.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 flex-shrink-0">
+          <span class="text-sm text-gray-700">
+            결제 처리를 위한 개인정보 제3자 제공 (토스페이먼츠)에 동의합니다 <span class="text-red-500 font-bold">(필수)</span>
+          </span>
+        </label>
+      </div>
+
+      <!-- 전체 동의 체크박스 -->
+      <label class="flex items-center gap-3 cursor-pointer py-3 border-t border-gray-100 mb-5">
+        <input type="checkbox" id="agree-all" class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+        <span class="text-sm font-bold text-gray-900">위 내용에 모두 동의합니다</span>
+      </label>
 
       <button id="toss-payment-btn"
               data-customer-key="<%= @customer_key %>"
               data-success-url="<%= @success_url %>"
               data-fail-url="<%= @fail_url %>"
               data-client-key="<%= @toss_client_key %>"
-              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition-colors text-lg">
+              disabled
+              class="w-full bg-blue-600 text-white font-bold py-4 px-6 rounded-xl text-lg disabled:opacity-40 disabled:cursor-not-allowed transition-all hover:enabled:bg-blue-700">
         카드 등록하고 시작하기
       </button>
     </div>
@@ -66,8 +105,8 @@
     <div class="text-center space-y-1">
       <p class="text-xs text-gray-400">토스페이먼츠 · 안전한 결제</p>
       <p class="text-xs text-gray-400">
-        결제 전 <a href="/terms" class="underline" target="_blank">이용약관</a>과
-        <a href="/refund" class="underline" target="_blank">환불정책</a>을 확인해주세요
+        문의:
+        <a href="mailto:contact@nusucheck.com" class="underline">contact@nusucheck.com</a>
       </p>
     </div>
 
@@ -75,10 +114,38 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', async function() {
-  const btn = document.getElementById('toss-payment-btn');
+document.addEventListener('DOMContentLoaded', function() {
+  const btn        = document.getElementById('toss-payment-btn');
+  const agreeAll   = document.getElementById('agree-all');
+  const required   = ['agree-terms', 'agree-refund', 'agree-auto', 'agree-privacy'];
+
   if (!btn) return;
 
+  // 필수 체크박스 모두 체크됐는지 확인 → 버튼 활성화
+  function updateBtn() {
+    const allChecked = required.every(id => document.getElementById(id)?.checked);
+    btn.disabled = !allChecked;
+  }
+
+  // 전체 동의 체크 시 개별 항목 모두 체크/해제
+  agreeAll?.addEventListener('change', function() {
+    required.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.checked = this.checked;
+    });
+    updateBtn();
+  });
+
+  // 개별 항목 변경 시 전체 동의 상태 반영
+  required.forEach(id => {
+    document.getElementById(id)?.addEventListener('change', function() {
+      const allChecked = required.every(i => document.getElementById(i)?.checked);
+      if (agreeAll) agreeAll.checked = allChecked;
+      updateBtn();
+    });
+  });
+
+  // 결제 버튼 클릭
   btn.addEventListener('click', async function() {
     btn.disabled = true;
     btn.textContent = '결제창 열기...';
@@ -86,16 +153,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     try {
       const { loadTossPayments } = await import('https://js.tosspayments.com/v2/standard');
       const tossPayments = await loadTossPayments(btn.dataset.clientKey);
-      const payment = tossPayments.payment({
-        customerKey: btn.dataset.customerKey,
-      });
+      const payment = tossPayments.payment({ customerKey: btn.dataset.customerKey });
 
       await payment.requestBillingAuth({
         method: 'CARD',
         successUrl: btn.dataset.successUrl,
-        failUrl: btn.dataset.failUrl,
+        failUrl:    btn.dataset.failUrl,
         customerEmail: '<%= current_user.email %>',
-        customerName: '<%= current_user.name %>',
+        customerName:  '<%= current_user.name %>',
       });
     } catch(e) {
       console.error(e);

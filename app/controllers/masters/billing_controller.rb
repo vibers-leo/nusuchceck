@@ -30,6 +30,9 @@ class Masters::BillingController < ApplicationController
   # GET /masters/billing
   # 현재 구독/결제 현황
   def show
+    @payment_logs = PaymentAuditLog.where(user: current_user)
+                                   .order(created_at: :desc)
+                                   .limit(12)
   end
 
   # GET /masters/billing/success
@@ -80,7 +83,13 @@ class Masters::BillingController < ApplicationController
       ip_address: request.remote_ip
     )
 
-    redirect_to masters_billing_path, notice: "🎉 전문가 등록 마스터 플랜이 시작되었어요! 내 구역에서 우선 노출됩니다."
+    # 결제 성공 페이지에 표시할 정보 전달
+    @order_id   = order_id
+    @amount     = ZONE_PLAN_AMOUNT
+    @order_name = ZONE_PLAN_NAME
+    @paid_at    = Time.current
+    @next_billing_at = @subscription.next_billing_at || 1.month.from_now
+    render :success
 
   rescue TossPaymentsService::PaymentError => e
     Rails.logger.error "[Billing] 빌링키/결제 실패: #{e.message}"
@@ -110,8 +119,8 @@ class Masters::BillingController < ApplicationController
 
   # GET /masters/billing/fail
   def fail
-    error_message = params[:message] || "결제가 취소되었어요."
-    redirect_to new_masters_billing_path, alert: error_message
+    @error_code    = params[:code]    || "UNKNOWN"
+    @error_message = params[:message] || "결제가 취소되었어요."
   end
 
   # DELETE /masters/billing
