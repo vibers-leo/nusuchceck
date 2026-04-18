@@ -12,13 +12,13 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2"
-          bundler-cache: true
+          bundler-cache: false
+      - name: Install brakeman & bundler-audit
+        run: gem install brakeman bundler-audit --no-document
       - name: Brakeman (static security analysis)
-        run: bundle exec brakeman --no-pager -q -w 2
+        run: brakeman --no-pager -q -w 2
       - name: bundler-audit (gem CVE check)
-        run: |
-          gem install bundler-audit --no-document
-          bundle-audit check --update
+        run: bundle-audit check --update
 
   deploy:
     needs: security_scan
