@@ -17,7 +17,7 @@ gem "image_processing", "~> 1.2"
 gem "streamio-ffmpeg"
 
 # Authentication & Authorization
-gem "devise"
+gem "devise", ">= 5.0.3"   # CVE-2026-32700: confirmable email race condition
 # 카카오 로그인 (OAuth2 기반 커스텀 전략)
 gem "omniauth-oauth2", "~> 1.8"
 gem "omniauth-rails_csrf_protection"
@@ -55,6 +55,14 @@ gem "jwt"
 
 # CORS (모바일 앱 API 요청 허용)
 gem "rack-cors"
+
+# CVE 패치 — 직접 의존성 아니지만 버전 고정으로 취약점 제거
+gem "rack", ">= 3.2.5"             # CVE-2026-22860 (High): Directory Traversal
+gem "bcrypt", ">= 3.1.22"          # CVE-2026-33306: JRuby zero-iteration
+gem "nokogiri", ">= 1.19.1"        # GHSA-wx95-c6cv-8532
+gem "loofah", ">= 2.25.1"          # GHSA-46fp-8f5p-pf2m: URI allowlist bypass
+gem "json", ">= 2.9.1"             # CVE-2026-33210: format string injection
+gem "faraday", ">= 2.14.1"         # CVE-2026-25765 (Medium): SSRF
 
 # Rate Limiting & Brute-force protection
 gem "rack-attack"
