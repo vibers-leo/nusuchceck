@@ -39,7 +39,7 @@ class API::V1::RequestsController < API::V1::BaseController
   private
 
   def set_request
-    @request = current_user.requests.find(params[:id])
+    @request = current_user.requests.find_by!(public_token: params[:id])
   rescue ActiveRecord::RecordNotFound
     render_error("요청을 찾을 수 없어요", status: :not_found)
   end

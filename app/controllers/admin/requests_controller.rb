@@ -90,6 +90,10 @@ class Admin::RequestsController < ApplicationController
   private
 
   def set_request
-    @request = Request.includes(:customer, :master, :estimates, :escrow_transactions, :insurance_claims).find(params[:id])
+    @request = if params[:id].to_s.match?(/\A\d+\z/)
+                  Request.includes(:customer, :master, :estimates, :escrow_transactions, :insurance_claims).find(params[:id])
+                else
+                  Request.includes(:customer, :master, :estimates, :escrow_transactions, :insurance_claims).find_by!(public_token: params[:id])
+                end
   end
 end

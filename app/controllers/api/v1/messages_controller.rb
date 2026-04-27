@@ -32,7 +32,7 @@ class API::V1::MessagesController < API::V1::BaseController
   private
 
   def set_request
-    @request = Request.find(params[:request_id])
+    @request = Request.find_by!(public_token: params[:request_id])
   rescue ActiveRecord::RecordNotFound
     render json: { error: "요청을 찾을 수 없어요" }, status: :not_found
   end

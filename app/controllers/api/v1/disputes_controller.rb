@@ -15,7 +15,7 @@ class API::V1::DisputesController < API::V1::BaseController
 
   # POST /api/v1/disputes
   def create
-    request = current_user.requests.find(params[:request_id])
+    request = current_user.requests.find_by!(public_token: params[:request_id])
     dispute = request.disputes.build(
       complainant: current_user,
       respondent: request.master,

@@ -309,7 +309,7 @@ class Customers::RequestsController < ApplicationController
   private
 
   def set_request
-    @request = current_user.requests.find(params[:id])
+    @request = current_user.requests.find_by!(public_token: params[:id])
   end
 
   def request_params

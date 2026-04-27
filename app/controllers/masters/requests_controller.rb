@@ -189,9 +189,9 @@ class Masters::RequestsController < ApplicationController
   def set_request
     # show, apply, claim 액션은 공개 오더도 볼 수 있으므로 전체에서 찾음
     if action_name.in?(["show", "apply", "claim"])
-      @request = Request.find(params[:id])
+      @request = Request.find_by!(public_token: params[:id])
     else
-      @request = current_user.assigned_requests.find(params[:id])
+      @request = current_user.assigned_requests.find_by!(public_token: params[:id])
     end
   end
 end

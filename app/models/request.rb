@@ -1,6 +1,13 @@
 class Request < ApplicationRecord
   include AASM
 
+  # URL에 순차 ID 대신 랜덤 토큰 사용
+  before_create :generate_public_token
+
+  def to_param
+    public_token
+  end
+
   belongs_to :customer, class_name: "Customer", inverse_of: :requests
   belongs_to :master, class_name: "Master", optional: true, inverse_of: :assigned_requests
   has_many :master_applications, dependent: :destroy
@@ -278,5 +285,12 @@ class Request < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     %w[customer master estimates]
+  end
+
+  def generate_public_token
+    loop do
+      self.public_token = SecureRandom.alphanumeric(12).downcase
+      break unless Request.exists?(public_token: public_token)
+    end
   end
 end

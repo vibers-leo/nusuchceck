@@ -27,6 +27,6 @@ class RequestsController < ApplicationController
   private
 
   def set_request
-    @request = Request.find(params[:id])
+    @request = Request.find_by!(public_token: params[:id])
   end
 end

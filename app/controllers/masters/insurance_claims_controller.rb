@@ -93,7 +93,7 @@ class Masters::InsuranceClaimsController < ApplicationController
   end
 
   def set_request
-    @request = current_user.assigned_requests.find(params[:request_id])
+    @request = current_user.assigned_requests.find_by!(public_token: params[:request_id])
   end
 
   def insurance_claim_params

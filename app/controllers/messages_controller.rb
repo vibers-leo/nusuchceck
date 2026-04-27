@@ -58,7 +58,7 @@ class MessagesController < ApplicationController
   private
 
   def set_request
-    @request = Request.find(params[:request_id])
+    @request = Request.find_by!(public_token: params[:request_id])
   end
 
   def check_chat_permission

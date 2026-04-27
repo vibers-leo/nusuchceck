@@ -229,7 +229,7 @@ class Customers::TossPaymentsController < ApplicationController
   private
 
   def set_request
-    @request = current_user.requests.find(params[:request_id])
+    @request = current_user.requests.find_by!(public_token: params[:request_id])
   rescue ActiveRecord::RecordNotFound
     redirect_to customers_requests_path, alert: "체크 정보를 찾을 수 없습니다."
   end
