@@ -18,15 +18,19 @@ class Admin::RequestsController < ApplicationController
     authorize @request
 
     # 로테이션 배정 시도
-    matched_master = RotationMatchingService.new(@request).assign!
+    matched_master = begin
+      RotationMatchingService.new(@request).assign!
+    rescue => e
+      Rails.logger.warn "[Admin::Requests#publish] 로테이션 매칭 실패: #{e.message}"
+      nil
+    end
 
     if matched_master
       SystemMessageService.send_master_assigned_message(@request, matched_master)
-      redirect_to admin_request_path(@request), notice: "🎯 로테이션 배정: #{matched_master.name} 전문가에게 자동 배정됐어요."
+      redirect_to admin_request_path(@request), notice: "#{matched_master.name} 전문가에게 자동 배정됐어요."
     else
-      # 구역 전문가 없으면 공개 오더 풀
       @request.publish! if @request.may_publish?
-      redirect_to admin_request_path(@request), notice: "공개 오더 풀에 등록했어요. 전문가가 선택할 수 있어요."
+      redirect_to admin_request_path(@request), notice: "공개 오더 풀에 등록했어요."
     end
   rescue AASM::InvalidTransition => e
     redirect_to admin_request_path(@request), alert: "공개 등록 실패: #{e.message}"

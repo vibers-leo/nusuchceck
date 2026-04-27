@@ -16,7 +16,7 @@ class RequestPolicy < ApplicationPolicy
   end
 
   def publish?
-    user.admin? && record.may_publish?
+    user.admin? && (record.reported? || record.may_publish?)
   end
 
   def assign_master?
