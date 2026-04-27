@@ -389,18 +389,18 @@
 
       <!-- 스티커 탭 -->
       <div id="panel-sticker" class="hidden p-3 max-h-48 overflow-y-auto">
-        <% sticker_files = Dir.glob(Rails.root.join("public/stickers/*")).select { |f| f.match?(/\.(png|gif|webp|jpg)$/i) }.map { |f| File.basename(f) } %>
+        <% sticker_files = Dir.glob(Rails.root.join("public/images/stickers/*")).select { |f| f.match?(/\.(png|gif|webp|jpg)$/i) }.sort.map { |f| File.basename(f) } %>
         <% if sticker_files.any? %>
           <div class="grid grid-cols-4 gap-2">
             <% sticker_files.each do |filename| %>
               <button type="button" onclick="sendSticker('<%= filename %>'); closeExpressionPanel()"
-                      class="w-full aspect-square rounded-xl overflow-hidden hover:bg-gray-100 p-1 transition-colors">
-                <img src="/stickers/<%= filename %>" alt="sticker" class="w-full h-full object-contain">
+                      class="w-full aspect-square rounded-xl overflow-hidden hover:bg-gray-100 p-1.5 transition-colors">
+                <img src="/images/stickers/<%= filename %>" alt="sticker" class="w-full h-full object-contain" loading="lazy">
               </button>
             <% end %>
           </div>
         <% else %>
-          <p class="text-xs text-gray-400 text-center py-6">public/stickers/ 폴더에 이미지를 추가하면<br>스티커로 사용할 수 있어요</p>
+          <p class="text-xs text-gray-400 text-center py-6">스티커가 아직 없어요</p>
         <% end %>
       </div>
     </div>

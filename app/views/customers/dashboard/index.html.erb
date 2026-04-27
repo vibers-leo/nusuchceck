@@ -134,13 +134,9 @@
         </div>
       <% else %>
         <div class="bg-white rounded-2xl p-10 text-center border-2 border-dashed border-gray-200">
-          <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-            </svg>
-          </div>
+          <img src="/images/characters/hello.png" alt="" class="w-28 h-28 mx-auto mb-4 object-contain" loading="lazy" />
           <p class="text-gray-600 mb-4 font-medium">진행 중인 체크가 없어요</p>
-          <p class="text-sm text-gray-500 mb-6">누수가 의심되면 바로 체크하세요!</p>
+          <p class="text-sm text-gray-500 mb-6">누수가 의심되면 바로 체크해보세요</p>
           <%= link_to new_customers_request_path, class: "inline-flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-all font-bold shadow-md" do %>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>

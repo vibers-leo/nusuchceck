@@ -45,7 +45,7 @@
         <% unless is_my_message %>
           <div class="text-xs text-gray-500 mb-1 ml-1 font-medium"><%= message.sender_name %></div>
         <% end %>
-        <img src="/stickers/<%= message.content %>" alt="sticker"
+        <img src="/images/stickers/<%= message.content %>" alt="sticker"
              class="w-32 h-32 object-contain select-none"
              draggable="false">
         <div class="text-[10px] text-gray-400 mt-0.5 <%= is_my_message ? 'text-right' : 'text-left' %>">
