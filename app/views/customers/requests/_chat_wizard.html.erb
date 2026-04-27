@@ -8,7 +8,7 @@
   <div class="bg-white border-b border-gray-100 px-4 py-3.5 flex items-center justify-between flex-shrink-0">
     <div class="flex items-center gap-3">
       <div class="w-9 h-9 bg-primary-100 rounded-full flex items-center justify-center">
-        <span class="text-lg">🤖</span>
+        <img src="/images/characters/ai-robot.png" alt="" class="w-6 h-6 object-contain" loading="lazy">
       </div>
       <div>
         <p class="text-sm font-bold text-gray-900">누수 AI 도우미</p>
@@ -34,7 +34,7 @@
     <!-- 타이핑 인디케이터 (JS로 표시/숨김) -->
     <div data-chat-wizard-target="typingIndicator" class="hidden flex items-end gap-2 bubble-fade-in">
       <div class="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mb-1">
-        <span class="text-sm">🤖</span>
+        <img src="/images/characters/ai-robot.png" alt="" class="w-5 h-5 object-contain" loading="lazy">
       </div>
       <div class="bg-white border border-gray-100 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
         <div class="flex items-center gap-1.5">
@@ -56,7 +56,7 @@
       <button type="button"
               data-action="click->chat-wizard#selectUrgent"
               class="w-full flex items-center gap-3 py-4 px-5 rounded-2xl bg-red-500 text-white font-bold text-sm hover:bg-red-600 active:scale-[0.98] transition-all">
-        <span class="text-xl flex-shrink-0">🚨</span>
+        <span class="text-xl flex-shrink-0"></span>
         <div class="text-left">
           <p class="font-bold">네, 지금 당장 누수 중이에요</p>
           <p class="text-xs text-red-200 font-normal mt-0.5">빠른 출동 요청</p>
@@ -65,7 +65,7 @@
       <button type="button"
               data-action="click->chat-wizard#selectPrecheck"
               class="w-full flex items-center gap-3 py-4 px-5 rounded-2xl border-2 border-primary-200 bg-primary-50 text-primary-800 font-bold text-sm hover:border-primary-400 active:scale-[0.98] transition-all">
-        <span class="text-xl flex-shrink-0">🔍</span>
+        <img src="/images/icons/inspect.png" alt="" class="w-7 h-7 flex-shrink-0 object-contain" loading="lazy">
         <div class="text-left">
           <p class="font-bold">아니요, 점검이나 진단이 필요해요</p>
           <p class="text-xs text-primary-500 font-normal mt-0.5">사전 점검 예약</p>
@@ -79,11 +79,11 @@
       <div class="grid grid-cols-3 gap-2">
         <% [
           { value: "wall_leak",    label: "벽면 누수",   emoji: "🧱" },
-          { value: "ceiling_leak", label: "천장 누수",   emoji: "💧" },
+          { value: "ceiling_leak", label: "천장 누수",   icon: "leak" },
           { value: "floor_leak",   label: "바닥 누수",   emoji: "🌊" },
-          { value: "pipe_leak",    label: "배관 누수",   emoji: "🔧" },
-          { value: "toilet_leak",  label: "화장실 누수", emoji: "🚽" },
-          { value: "outdoor_leak", label: "외부 누수",   emoji: "🏠" },
+          { value: "pipe_leak",    label: "배관 누수",   icon: "tools" },
+          { value: "toilet_leak",  label: "화장실 누수", emoji: "leak" },
+          { value: "outdoor_leak", label: "외부 누수",   icon: "houses" },
         ].each do |symptom| %>
           <button type="button"
                   data-action="click->chat-wizard#selectSymptom"
@@ -104,7 +104,7 @@
         <% [
           { value: "apartment",      label: "아파트",    emoji: "🏢" },
           { value: "villa",          label: "빌라/연립", emoji: "🏘️" },
-          { value: "house",          label: "단독주택",  emoji: "🏠" },
+          { value: "house",          label: "단독주택",  icon: "houses" },
           { value: "office",         label: "사무실",    emoji: "🏬" },
           { value: "retail_store",   label: "상가",      emoji: "🏪" },
           { value: "other_building", label: "기타",      emoji: "🏗️" },

@@ -97,7 +97,7 @@
                   when "disputed"  then "bg-orange-100 text-orange-700"
                   else "bg-gray-100 text-gray-700"
                 end
-                type_icon = { "trip" => "🚗", "detection" => "🔍", "construction" => "🔧" }[escrow.escrow_type] || "💳"
+                type_icon = { "trip" => icon_img("clock", size: 5), "detection" => "검사", "construction" => "공사" }[escrow.escrow_type] || icon_img("payment", size: 5)
               %>
               <tr class="hover:bg-gray-50">
                 <td class="px-6 py-4 text-sm">

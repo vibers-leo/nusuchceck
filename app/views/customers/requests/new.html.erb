@@ -62,12 +62,12 @@
 
         <div class="space-y-3" data-check-wizard-target="buttonGroup" data-field="symptom_type">
           <% [
-            ["wall_leak", "💧", "벽면 누수", "벽에서 물이 배어나와요", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
-            ["ceiling_leak", "💧", "천장 누수", "천장에서 물이 떨어져요", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
-            ["floor_leak", "💧", "바닥 누수", "바닥이 축축해요", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
-            ["pipe_leak", "🔧", "배관 누수", "배관에서 새는 것 같아요", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
-            ["toilet_leak", "🚽", "화장실 누수", "화장실에서 물이 새요", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
-            ["outdoor_leak", "🏠", "외부 누수", "외벽, 창틀에서 새요", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"]
+            ["wall_leak", "leak", "벽면 누수", "벽에서 물이 배어나와요", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
+            ["ceiling_leak", "leak", "천장 누수", "천장에서 물이 떨어져요", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
+            ["floor_leak", "leak", "바닥 누수", "바닥이 축축해요", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
+            ["pipe_leak", "tools", "배관 누수", "배관에서 새는 것 같아요", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
+            ["toilet_leak", "leak", "화장실 누수", "화장실에서 물이 새요", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
+            ["outdoor_leak", "houses", "외부 누수", "외벽, 창틀에서 새요", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"]
           ].each do |value, icon, title, desc, gradient, bg_gradient, border_color, icon_gradient, check_gradient| %>
             <button type="button"
                     class="option-btn w-full flex items-center gap-4 p-5 rounded-2xl border-2 <%= border_color %> bg-gradient-to-br <%= bg_gradient %> hover:shadow-xl transition-all duration-200 text-left group select-button focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 shadow-md"
@@ -79,7 +79,11 @@
                     tabindex="0">
               <!-- 아이콘 서클 (그라디언트) -->
               <div class="icon-circle w-14 h-14 bg-gradient-to-br <%= icon_gradient %> rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
-                <span class="text-2xl"><%= icon %></span>
+                <% if icon.length <= 10 && !icon.match?(/[\u{1F000}-\u{1FFFF}]/) %>
+                  <img src="/images/icons/<%= icon %>.png" alt="" class="w-8 h-8 object-contain">
+                <% else %>
+                  <span class="text-2xl"><%= icon %></span>
+                <% end %>
               </div>
               <div class="flex-1 min-w-0">
                 <p class="font-bold text-gray-900 text-base"><%= title %></p>
@@ -115,7 +119,7 @@
           <% [
             ["apartment", "🏢", "아파트", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
             ["villa", "🏘️", "빌라/연립", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
-            ["house", "🏠", "단독주택", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
+            ["house", "houses", "단독주택", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
             ["office", "🏬", "사무실", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
             ["retail_store", "🏪", "상가", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
             ["factory", "🏭", "공장", "primary", "from-primary-50 to-purple-100", "border-primary-200", "from-primary-500 to-purple-600", "from-primary-600 to-purple-700"],
@@ -140,7 +144,11 @@
               </div>
               <!-- 아이콘 서클 (그라디언트) -->
               <div class="icon-circle w-14 h-14 bg-gradient-to-br <%= icon_gradient %> rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                <span class="text-3xl"><%= icon %></span>
+                <% if icon.length <= 10 && !icon.match?(/[\u{1F000}-\u{1FFFF}]/) %>
+                  <img src="/images/icons/<%= icon %>.png" alt="" class="w-10 h-10 object-contain">
+                <% else %>
+                  <span class="text-3xl"><%= icon %></span>
+                <% end %>
               </div>
               <span class="text-sm font-bold text-gray-900"><%= label %></span>
             </button>
@@ -165,7 +173,7 @@
             <label class="block text-sm font-semibold text-gray-900 mb-2">주소</label>
             <div class="cursor-pointer" data-action="click->address-search#open">
               <%= f.text_field :address,
-                    placeholder: "🔍 주소를 검색하세요",
+                    placeholder: "주소를 검색하세요",
                     required: true,
                     readonly: true,
                     data: {
@@ -233,7 +241,7 @@
         <div class="mb-6 text-center">
           <p class="text-sm font-medium text-primary-600 mb-2">영상 촬영</p>
           <h1 class="text-[26px] font-bold text-gray-900 leading-tight tracking-tight">
-            📹 영상을 찍어주세요
+            영상을 찍어주세요
           </h1>
           <p class="text-[15px] text-gray-600 mt-3">10초 이상 촬영하면 전문가가 정확히 진단해요</p>
         </div>
@@ -248,7 +256,7 @@
             </div>
             <div class="flex-1">
               <p class="font-bold text-gray-900 text-base mb-1.5">
-                📹 영상이 사진보다 10배 더 정확해요!
+                영상이 사진보다 10배 더 정확해요!
               </p>
               <p class="text-gray-800 text-sm leading-relaxed">
                 10초 이상의 영상으로 누수 상황을 보여주시면 전문가가 <strong>현장 방문 전에도 정확한 진단</strong>이 가능합니다.
@@ -278,7 +286,7 @@
                 <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
               </svg>
             </div>
-            <p class="text-base font-bold text-gray-900 mb-1">📱 촬영하거나 기존 영상 선택</p>
+            <p class="text-base font-bold text-gray-900 mb-1">촬영하거나 기존 영상 선택</p>
             <p id="video-upload-help" class="text-sm text-gray-500">MP4, MOV, WebM · 최대 2GB</p>
           </label>
         </div>
@@ -300,7 +308,7 @@
         <!-- 촬영 팁 (노란색 박스로 눈에 띄게) -->
         <div class="mt-6 p-4 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl border border-yellow-200 shadow-sm">
           <p class="font-bold mb-2 text-gray-900 flex items-center gap-2">
-            <span class="text-lg">🎬</span>
+            <img src="/images/characters/upload.png" alt="" class="w-6 h-6 object-contain" loading="lazy">
             이렇게 촬영하면 전문가가 더 정확히 진단해요
           </p>
           <ul class="space-y-1.5 text-sm text-gray-700">
@@ -522,7 +530,7 @@
 
       <!-- 힌트 -->
       <p class="text-xs text-gray-400 text-center mt-4">
-        💡 대용량 영상은 시간이 걸릴 수 있어요
+        대용량 영상은 시간이 걸릴 수 있어요
       </p>
     </div>
   </div>
@@ -590,7 +598,7 @@
 
       <!-- 힌트 -->
       <p class="text-xs text-gray-400 text-center mt-4">
-        💡 50MB 이상 영상은 자동으로 압축돼요
+        50MB 이상 영상은 자동으로 압축돼요
       </p>
     </div>
   </div>

@@ -24,9 +24,9 @@ class Expert::InquiriesController < ApplicationController
       ).deliver_later rescue nil
     end
 
-    redirect_to expert_inquiry_path, notice: "문의가 접수되었습니다. 검토 후 개별 연락드리겠습니다 😊"
+    redirect_to expert_inquiry_path, notice: "문의가 접수되었습니다. 검토 후 개별 연락드리겠습니다 "
   rescue => e
     Rails.logger.error "Expert inquiry failed: #{e.message}"
-    redirect_to expert_inquiry_path, notice: "문의가 접수되었습니다. 검토 후 개별 연락드리겠습니다 😊"
+    redirect_to expert_inquiry_path, notice: "문의가 접수되었습니다. 검토 후 개별 연락드리겠습니다 "
   end
 end

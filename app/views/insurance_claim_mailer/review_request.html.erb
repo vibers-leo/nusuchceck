@@ -15,7 +15,7 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1 style="margin: 0;">💼 보험청구서 검토 요청</h1>
+      <h1 style="margin: 0;">보험청구서 검토 요청</h1>
     </div>
 
     <div class="content">
@@ -25,11 +25,11 @@
       내용을 확인하신 후 승인해주시면 자동으로 보험사에 제출됩니다.</p>
 
       <div class="info-box">
-        <p style="margin: 5px 0;"><strong>📋 신청서 번호:</strong> <%= @insurance_claim.claim_number %></p>
-        <p style="margin: 5px 0;"><strong>🏠 사고 장소:</strong> <%= @insurance_claim.incident_address %></p>
+        <p style="margin: 5px 0;"><strong>신청서 번호:</strong> <%= @insurance_claim.claim_number %></p>
+        <p style="margin: 5px 0;"><strong>사고 장소:</strong> <%= @insurance_claim.incident_address %></p>
         <p style="margin: 5px 0;"><strong>📅 사고 발생일:</strong> <%= @insurance_claim.incident_date.strftime("%Y년 %m월 %d일") %></p>
         <% if @insurance_claim.estimated_damage_amount.present? %>
-          <p style="margin: 5px 0;"><strong>💰 공사 금액:</strong> <%= number_to_currency(@insurance_claim.estimated_damage_amount, unit: "₩", precision: 0) %></p>
+          <p style="margin: 5px 0;"><strong>공사 금액:</strong> <%= number_to_currency(@insurance_claim.estimated_damage_amount, unit: "₩", precision: 0) %></p>
         <% end %>
       </div>
 
@@ -41,7 +41,7 @@
 
       <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 12px; margin-top: 20px;">
         <p style="margin: 0; font-size: 14px;">
-          <strong>⚠️ 참고사항:</strong><br/>
+          <strong>참고사항:</strong><br/>
           • 승인하시면 즉시 보험사에 제출됩니다<br/>
           • 수정이 필요하면 전문가에게 요청할 수 있어요<br/>
           • 승인 후에는 수정할 수 없으니 꼼꼼히 확인해주세요

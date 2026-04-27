@@ -201,10 +201,10 @@
       <% @request.escrow_transactions.each do |escrow| %>
         <%
           type_icon = case escrow.escrow_type
-            when "trip"         then "🚗"
-            when "detection"    then "🔍"
-            when "construction" then "🔧"
-            else "💳"
+            when "trip"         then icon_img("clock", size: 5)
+            when "detection"    then icon_img("inspect", size: 5)
+            when "construction" then icon_img("tools", size: 5)
+            else icon_img("payment", size: 5)
           end
           status_dot = case escrow.status
             when "pending"                then "bg-yellow-400"
@@ -372,7 +372,7 @@
         <% end %>
       <% else %>
         <div class="w-full py-3 px-4 bg-gray-100 rounded-xl text-center text-sm text-gray-500">
-          💳 출장비 결제 준비 중 · <%= number_to_currency(@request.trip_fee, unit: "", precision: 0) %>원
+          출장비 결제 준비 중 · <%= number_to_currency(@request.trip_fee, unit: "", precision: 0) %>원
         </div>
       <% end %>
 
@@ -389,7 +389,7 @@
         <% end %>
       <% else %>
         <div class="w-full py-3 px-4 bg-gray-100 rounded-xl text-center text-sm text-gray-500">
-          💳 탐지비 결제 준비 중 · <%= number_to_currency(@request.detection_fee, unit: "", precision: 0) %>원
+          탐지비 결제 준비 중 · <%= number_to_currency(@request.detection_fee, unit: "", precision: 0) %>원
         </div>
       <% end %>
 
@@ -408,7 +408,7 @@
           <% end %>
         <% else %>
           <div class="w-full py-3 px-4 bg-gray-100 rounded-xl text-center text-sm text-gray-500">
-            💳 공사비 결제 준비 중 · <%= number_to_currency(construction_amount, unit: "", precision: 0) %>원
+            공사비 결제 준비 중 · <%= number_to_currency(construction_amount, unit: "", precision: 0) %>원
           </div>
         <% end %>
       <% end %>
@@ -417,7 +417,7 @@
     <% elsif @request.construction_completed? %>
       <% if @request.construction_notes.present? || @request.construction_photos.attached? %>
         <div class="bg-green-50 rounded-2xl p-4 mb-4 border border-green-100">
-          <h4 class="text-sm font-bold text-gray-900 mb-2">📋 전문가 작업 보고서</h4>
+          <h4 class="text-sm font-bold text-gray-900 mb-2">전문가 작업 보고서</h4>
           <% if @request.construction_notes.present? %>
             <p class="text-sm text-gray-700 whitespace-pre-line mb-3"><%= @request.construction_notes %></p>
           <% end %>

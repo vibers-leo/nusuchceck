@@ -39,7 +39,7 @@
       <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
       </svg>
-      <span class="text-sm font-medium text-purple-900">💡 <strong>영상으로 촬영하면</strong> 더 정확하게 분석할 수 있어요!</span>
+      <span class="text-sm font-medium text-purple-900"><strong>영상으로 촬영하면</strong> 더 정확하게 분석할 수 있어요!</span>
     </div>
   </div>
 
@@ -96,7 +96,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
           </div>
-          <p class="text-gray-700 font-bold text-lg">🎬 클릭해서 영상 올리기</p>
+          <p class="text-gray-700 font-bold text-lg">클릭해서 영상 올리기</p>
           <p class="text-sm text-gray-500 mt-1">또는 여기로 드래그하세요</p>
           <div class="flex items-center justify-center gap-2 mt-2 flex-wrap">
             <span class="px-2.5 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full">MP4, MOV, AVI</span>
@@ -124,7 +124,7 @@
       <div>
         <%= f.label :location_description, "어디에서 발견하셨나요?",
               class: "block text-sm font-medium text-gray-900 mb-2" %>
-        <p class="text-xs text-gray-500 mb-2">💡 정확한 위치를 알려주시면 더 도움이 돼요 (선택사항)</p>
+        <p class="text-xs text-gray-500 mb-2">정확한 위치를 알려주시면 더 도움이 돼요 (선택사항)</p>
         <%= f.text_field :location_description,
               placeholder: "예: 거실 천장, 화장실 벽면, 주방 싱크대 아래",
               class: input_classes(:text) %>
@@ -134,18 +134,18 @@
       <div data-controller="button-select">
         <%= f.label :symptom_type, "어떤 증상인가요?",
               class: "block text-sm font-medium text-gray-900 mb-3" %>
-        <p class="text-xs text-gray-500 mb-3">💡 비슷한 증상을 선택해주세요 (선택사항)</p>
+        <p class="text-xs text-gray-500 mb-3">비슷한 증상을 선택해주세요 (선택사항)</p>
 
         <%= f.hidden_field :symptom_type, id: "symptom-type-input" %>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
           <% [
-            ["wall_leak", "💧", "벽면 누수", "벽에서 물이 배어나와요"],
-            ["ceiling_leak", "💧", "천장 누수", "천장에서 물이 떨어져요"],
-            ["floor_leak", "💧", "바닥 누수", "바닥이 축축해요"],
-            ["pipe_leak", "🔧", "배관 누수", "배관에서 새는 것 같아요"],
-            ["toilet_leak", "🚽", "화장실 누수", "화장실에서 물이 새요"],
-            ["outdoor_leak", "🏠", "외부 누수", "외벽, 창틀에서 새요"]
+            ["wall_leak", "leak", "벽면 누수", "벽에서 물이 배어나와요"],
+            ["ceiling_leak", "leak", "천장 누수", "천장에서 물이 떨어져요"],
+            ["floor_leak", "leak", "바닥 누수", "바닥이 축축해요"],
+            ["pipe_leak", "tools", "배관 누수", "배관에서 새는 것 같아요"],
+            ["toilet_leak", "leak", "화장실 누수", "화장실에서 물이 새요"],
+            ["outdoor_leak", "houses", "외부 누수", "외벽, 창틀에서 새요"]
           ].each do |value, emoji, title, desc| %>
             <button type="button"
                     class="select-button relative p-4 rounded-xl border-2 border-gray-200 hover:border-primary-400 hover:bg-primary-50 transition-all text-left group <%= 'border-primary-600 bg-primary-50 selected' if @inspection.symptom_type == value %>"
@@ -169,7 +169,7 @@
 
       <!-- 제출 버튼 -->
       <div>
-        <%= f.submit "🔍 3초만에 확인하기",
+        <%= f.submit "3초만에 확인하기",
               class: "w-full py-4 bg-primary-600 text-white rounded-xl font-bold text-lg hover:bg-primary-700 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed opacity-50 cursor-not-allowed shadow-lg hover:shadow-xl",
               disabled: true,
               data: { photo_upload_target: "submitBtn",
@@ -182,7 +182,7 @@
   <!-- 안내 사항 -->
   <div class="mt-8 bg-gradient-to-br from-primary-50 to-indigo-50 rounded-2xl p-6 border border-primary-100">
     <div class="flex items-center gap-2 mb-4">
-      <span class="text-2xl">💡</span>
+      <img src="/images/icons/tip.png" alt="" class="w-8 h-8 object-contain" loading="lazy">
       <h3 class="font-bold text-gray-900">선명한 사진일수록 정확해요</h3>
     </div>
     <ul class="space-y-3 text-sm text-gray-700">

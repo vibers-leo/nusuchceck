@@ -7,7 +7,7 @@
   <div class="mb-5">
     <label class="block text-sm font-semibold text-gray-700 mb-2">카테고리</label>
     <div class="grid grid-cols-2 gap-2">
-      <% [["tip", "💧 누수 팁"], ["review", "⭐ 해결 후기"], ["question", "❓ 질문"], ["general", "💬 일반"]] .each do |value, label| %>
+      <% [["tip", "💧 누수 팁"], ["review", "⭐ 해결 후기"], ["question", "❓ 질문"], ["general", "일반"]] .each do |value, label| %>
         <label class="cursor-pointer">
           <%= f.radio_button :category, value, class: "sr-only peer", id: "category_#{value}" %>
           <div class="peer-checked:border-primary-500 peer-checked:bg-primary-50 peer-checked:text-primary-700 border-2 border-gray-200 rounded-xl p-3 text-sm font-semibold text-gray-600 text-center hover:border-gray-300 transition select-none">

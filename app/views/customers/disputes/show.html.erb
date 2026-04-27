@@ -48,7 +48,7 @@
   <% if @dispute.opened? && @dispute.expert_response_deadline.present? %>
     <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-3 mb-4">
       <p class="text-xs text-yellow-700">
-        ⏰ 전문가 답변 기한: <strong><%= @dispute.expert_response_deadline.strftime("%m/%d %H:%M") %></strong>
+        전문가 답변 기한: <strong><%= @dispute.expert_response_deadline.strftime("%m/%d %H:%M") %></strong>
         <% if @dispute.overdue? %>
           <span class="text-red-600 font-bold">(기한 초과)</span>
         <% end %>

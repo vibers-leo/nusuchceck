@@ -16,7 +16,7 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1 style="margin: 0;">📝 보험청구서 수정 요청</h1>
+      <h1 style="margin: 0;">보험청구서 수정 요청</h1>
     </div>
 
     <div class="content">
@@ -26,13 +26,13 @@
       고객의 요청사항을 확인하시고 수정해주세요.</p>
 
       <div class="info-box">
-        <p style="margin: 5px 0;"><strong>📋 신청서 번호:</strong> <%= @insurance_claim.claim_number %></p>
+        <p style="margin: 5px 0;"><strong>신청서 번호:</strong> <%= @insurance_claim.claim_number %></p>
         <p style="margin: 5px 0;"><strong>👤 고객명:</strong> <%= @customer.name %></p>
-        <p style="margin: 5px 0;"><strong>🏠 사고 장소:</strong> <%= @insurance_claim.incident_address %></p>
+        <p style="margin: 5px 0;"><strong>사고 장소:</strong> <%= @insurance_claim.incident_address %></p>
       </div>
 
       <div class="request-box">
-        <p style="margin: 0 0 10px 0;"><strong>📝 고객 수정 요청사항:</strong></p>
+        <p style="margin: 0 0 10px 0;"><strong>고객 수정 요청사항:</strong></p>
         <p style="margin: 0; white-space: pre-line; background: white; padding: 12px; border-radius: 6px;"><%=  @insurance_claim.customer_review_notes %></p>
       </div>
 
@@ -44,7 +44,7 @@
 
       <div style="background: #dbeafe; border-left: 4px solid #3b82f6; padding: 12px; margin-top: 20px;">
         <p style="margin: 0; font-size: 14px;">
-          <strong>💡 참고사항:</strong><br/>
+          <strong>참고사항:</strong><br/>
           • 수정 후 다시 고객에게 검토 요청을 보내주세요<br/>
           • 고객이 승인하면 자동으로 보험사에 제출됩니다<br/>
           • 신속한 처리가 고객 만족도를 높여요

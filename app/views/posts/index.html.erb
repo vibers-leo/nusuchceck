@@ -21,7 +21,7 @@
     <%= link_to community_path, class: "flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-semibold transition #{@category.blank? ? 'bg-primary-600 text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:border-primary-400'}" do %>
       전체
     <% end %>
-    <% [["tip", "💧 누수 팁"], ["review", "⭐ 해결 후기"], ["question", "❓ 질문"], ["general", "💬 일반"]] .each do |cat, label| %>
+    <% [["tip", "💧 누수 팁"], ["review", "⭐ 해결 후기"], ["question", "❓ 질문"], ["general", "일반"]] .each do |cat, label| %>
       <%= link_to community_path(category: cat), class: "flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-semibold transition #{@category == cat ? 'bg-primary-600 text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:border-primary-400'}" do %>
         <%= label %>
       <% end %>
@@ -48,7 +48,7 @@
             <div class="flex-shrink-0 w-20 h-20 rounded-xl bg-gradient-to-br from-primary-50 to-teal-50 border border-primary-100 flex items-center justify-center">
               <span class="text-2xl">
                 <% icons = {"tip" => "💧", "review" => "⭐", "question" => "❓", "general" => "💬"} %>
-                <%= icons[post.category] || "📝" %>
+                <%= icons[post.category] || "문서" %>
               </span>
             </div>
           <% end %>
@@ -131,7 +131,7 @@
   <!-- 하단 정보 배너 (글 없거나 로그아웃 상태) -->
   <% unless user_signed_in? %>
     <div class="mt-6 p-4 bg-primary-50 rounded-2xl border border-primary-100">
-      <p class="text-sm font-semibold text-primary-800 mb-1">💬 커뮤니티에 참여하세요</p>
+      <p class="text-sm font-semibold text-primary-800 mb-1">커뮤니티에 참여하세요</p>
       <p class="text-xs text-primary-600 mb-3">로그인하면 글을 쓰고 다른 사람과 소통할 수 있어요</p>
       <div class="flex gap-2">
         <%= link_to "로그인", new_user_session_path, class: "px-4 py-2 bg-white text-primary-700 border border-primary-200 rounded-lg text-sm font-semibold hover:bg-primary-50 transition" %>

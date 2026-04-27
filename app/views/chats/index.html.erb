@@ -74,9 +74,9 @@
               <% if last_message %>
                 <% cat = last_message.message_category %>
                 <% if cat == "estimate" %>[견적서] <%= last_message.content.presence || "" %>
-                <% elsif cat == "payment_request" %>💳 결제 요청
-                <% elsif cat == "insurance_claim" %>📋 보험서류
-                <% elsif cat == "system_notice" %>🔔 <%= truncate(last_message.content, length: 30) %>
+                <% elsif cat == "payment_request" %>결제 요청
+                <% elsif cat == "insurance_claim" %>보험서류
+                <% elsif cat == "system_notice" %><%= truncate(last_message.content, length: 30) %>
                 <% else %><%= truncate(last_message.content, length: 30) %>
                 <% end %>
               <% else %>

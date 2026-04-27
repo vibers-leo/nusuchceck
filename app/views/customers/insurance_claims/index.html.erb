@@ -1,6 +1,6 @@
 <div class="max-w-4xl mx-auto py-8">
   <div class="text-center mb-8">
-    <h1 class="text-3xl font-bold text-gray-900">💼 내 보험청구 내역</h1>
+    <h1 class="text-3xl font-bold text-gray-900">내 보험청구 내역</h1>
     <p class="mt-2 text-gray-600">누수로 피해를 입으셨나요? 일상배상책임보험으로 보상받으세요</p>
   </div>
 
@@ -26,12 +26,12 @@
                 </span>
               </div>
               <h3 class="font-semibold text-gray-900 mt-2">
-                📍 <%= claim.incident_address.truncate(40) %>
+                <%= claim.incident_address.truncate(40) %>
               </h3>
               <div class="flex flex-wrap gap-3 mt-2 text-sm text-gray-600">
                 <span>🗓️ <%= claim.incident_date.strftime("%Y년 %m월 %d일") %></span>
                 <% if claim.estimated_damage_amount.present? %>
-                  <span>💰 <%= number_to_currency(claim.estimated_damage_amount, unit: "", precision: 0) %>원</span>
+                  <span>  <%= number_to_currency(claim.estimated_damage_amount, unit: "", precision: 0) %>원</span>
                 <% end %>
                 <% if claim.damage_type.present? %>
                   <span><%= claim.damage_type_label %></span>
@@ -68,7 +68,7 @@
     <!-- 보험청구 안내 -->
     <div class="mt-8 bg-gradient-to-br from-primary-50 to-indigo-50 rounded-2xl p-6 border border-primary-100">
       <div class="flex items-center gap-2 mb-4">
-        <span class="text-2xl">💡</span>
+        <img src="/images/icons/tip.png" alt="" class="w-8 h-8 object-contain" loading="lazy">
         <h3 class="font-bold text-gray-900">이런 경우 보험청구가 가능해요</h3>
       </div>
       <ul class="space-y-3 text-sm text-gray-700">
@@ -88,7 +88,7 @@
       <div class="mt-6 pt-4 border-t border-primary-200">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
-            <p class="font-semibold text-gray-900 mb-1">📋 필요한 서류</p>
+            <p class="font-semibold text-gray-900 mb-1">필요한 서류</p>
             <p class="text-gray-600">사진, 수리 견적서, 영수증 등</p>
           </div>
           <div>
@@ -102,7 +102,7 @@
     <div class="mt-6 text-center">
       <%= link_to new_customers_insurance_claim_path,
             class: "inline-flex items-center gap-2 px-8 py-4 bg-primary-600 text-white rounded-xl font-bold text-lg hover:bg-primary-700 transition shadow-lg hover:shadow-xl" do %>
-        💼 보험 신청하기
+        보험 신청하기
       <% end %>
       <p class="text-xs text-gray-500 mt-3">신청서 작성은 5분이면 충분해요</p>
     </div>

@@ -9,7 +9,7 @@
     <% end %>
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900">💼 보험 신청서</h1>
+        <h1 class="text-2xl font-bold text-gray-900">보험 신청서</h1>
         <span class="text-sm font-mono text-gray-500"><%= @insurance_claim.claim_number %></span>
       </div>
       <span class="px-4 py-2 rounded-full text-sm font-semibold
@@ -36,7 +36,7 @@
         <div class="flex-1">
           <h3 class="font-bold text-gray-900 text-lg mb-1">작성 중이에요</h3>
           <p class="text-gray-700 text-sm mb-3">내용을 확인하고 고객에게 검토 요청을 보낼 수 있어요</p>
-          <p class="text-xs text-gray-600">💡 필요하면 수정할 수 있어요</p>
+          <p class="text-xs text-gray-600">필요하면 수정할 수 있어요</p>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@
             <p>⏱️ 고객이 승인하면 자동으로 보험사에 제출돼요</p>
             <% if @insurance_claim.customer_review_notes.present? %>
               <div class="mt-3 p-3 bg-white rounded-lg border border-yellow-200">
-                <p class="font-semibold text-gray-900 mb-1">📝 고객 수정 요청사항</p>
+                <p class="font-semibold text-gray-900 mb-1">고객 수정 요청사항</p>
                 <p class="text-gray-700"><%= @insurance_claim.customer_review_notes %></p>
               </div>
             <% end %>
@@ -63,7 +63,7 @@
   <% when 'submitted' %>
     <div class="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 border-l-4 border-green-500">
       <div class="flex items-start gap-3">
-        <span class="text-3xl">✅</span>
+        <img src="/images/icons/verified.png" alt="" class="w-10 h-10 object-contain" loading="lazy">
         <div class="flex-1">
           <h3 class="font-bold text-gray-900 text-lg mb-1">보험사에 제출되었어요</h3>
           <p class="text-gray-700 text-sm mb-3">고객이 승인하여 자동으로 접수되었어요</p>
@@ -79,10 +79,10 @@
       <div class="flex items-start gap-3">
         <span class="text-3xl">
           <%= case @insurance_claim.status
-              when 'under_review' then '🔍'
-              when 'approved' then '✅'
+              when 'under_review' then icon_img("inspect", size: 5)
+              when 'approved' then icon_img("verified", size: 5)
               when 'rejected' then '❌'
-              when 'completed' then '🎉'
+              when 'completed' then icon_img("confetti", size: 5)
               end %>
         </span>
         <div class="flex-1">
@@ -96,7 +96,7 @@
   <!-- 전문가 작성 정보 -->
   <div class="mb-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-4 border border-purple-100">
     <div class="flex items-center gap-2 text-sm">
-      <span class="text-lg">👨‍🔧</span>
+      
       <span class="font-semibold text-gray-900">전문가가 작성한 신청서예요</span>
       <span class="text-gray-600">• 작성자: <%= current_user.name %></span>
     </div>
@@ -133,7 +133,7 @@
     <!-- 사고 정보 -->
     <div class="p-6">
       <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-        <span>🚨</span>
+        <span></span>
         <span>사고 정보</span>
       </h3>
       <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
@@ -170,7 +170,7 @@
     <!-- 보험 정보 -->
     <div class="p-6">
       <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-        <span>🛡️</span>
+        <img src="/images/icons/shield.png" alt="" class="w-5 h-5 inline object-contain" loading="lazy">
         <span>보험 정보</span>
       </h3>
       <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
@@ -273,7 +273,7 @@
           <%= button_to send_to_customer_masters_insurance_claim_path(@insurance_claim),
                 method: :post,
                 class: "inline-flex items-center px-8 py-3 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 transition shadow-lg hover:shadow-xl",
-                data: { turbo_confirm: "✅ 고객에게 검토 요청을 보내시겠어요?\n\n고객이 확인하고 승인하면 자동으로 보험사에 제출됩니다." } do %>
+                data: { turbo_confirm: "고객에게 검토 요청을 보내시겠어요?\n\n고객이 확인하고 승인하면 자동으로 보험사에 제출됩니다." } do %>
             📤 고객에게 검토 요청 보내기
           <% end %>
         </div>
@@ -286,7 +286,7 @@
         </p>
         <% if @insurance_claim.customer_review_notes.present? %>
           <div class="mt-4 pt-4 border-t border-yellow-200">
-            <p class="font-semibold text-gray-900 mb-2">📝 고객 수정 요청사항</p>
+            <p class="font-semibold text-gray-900 mb-2">고객 수정 요청사항</p>
             <p class="text-gray-700 bg-white rounded-lg p-3"><%= @insurance_claim.customer_review_notes %></p>
             <div class="mt-3 flex justify-end">
               <%= link_to edit_masters_insurance_claim_path(@insurance_claim),

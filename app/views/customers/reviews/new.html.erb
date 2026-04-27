@@ -58,11 +58,11 @@
         <div class="space-y-8">
           <%
             rating_fields = [
-              { field: :punctuality_rating, label: "시간 준수", emoji: "⏰", desc: "약속 시간을 잘 지켰나요?" },
-              { field: :skill_rating, label: "기술력", emoji: "🔧", desc: "전문적인 시공 능력은 어땠나요?" },
-              { field: :kindness_rating, label: "친절도", emoji: "😊", desc: "친절하고 설명을 잘 해주었나요?" },
-              { field: :cleanliness_rating, label: "뒷정리", emoji: "✨", desc: "작업 후 정리를 깨끗하게 했나요?" },
-              { field: :price_rating, label: "가격 만족", emoji: "💰", desc: "가격 대비 만족도는 어떤가요?" }
+              { field: :punctuality_rating, label: "시간 준수", icon: "clock", desc: "약속 시간을 잘 지켰나요?" },
+              { field: :skill_rating, label: "기술력", icon: "tools", desc: "전문적인 시공 능력은 어땠나요?" },
+              { field: :kindness_rating, label: "친절도", icon: "star", desc: "친절하고 설명을 잘 해주었나요?" },
+              { field: :cleanliness_rating, label: "뒷정리", icon: "star", desc: "작업 후 정리를 깨끗하게 했나요?" },
+              { field: :price_rating, label: "가격 만족", icon: "payment", desc: "가격 대비 만족도는 어떤가요?" }
             ]
           %>
 
@@ -110,7 +110,7 @@
               rows: 6,
               placeholder: "예시:\n정확한 시간에 도착해주셨고, 누수 원인을 꼼꼼하게 찾아주셨어요.\n수리 후에도 깨끗하게 정리해주셔서 감사했습니다.\n다음에도 이 전문가님께 부탁하고 싶어요!",
               class: "w-full px-4 py-4 text-base border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition resize-none" %>
-        <p class="text-xs text-gray-500 mt-2">💡 구체적일수록 다른 고객들에게 도움이 돼요</p>
+        <p class="text-xs text-gray-500 mt-2">구체적일수록 다른 고객들에게 도움이 돼요</p>
       </div>
 
       <!-- 안내 메시지 -->
@@ -153,7 +153,7 @@
                 data-button-loading-loading-text-value="등록하는 중..."
                 class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl inline-flex items-center justify-center gap-2">
           <span data-button-loading-target="spinner" class="btn-spinner hidden"></span>
-          <span data-button-loading-target="text">⭐ 리뷰 등록하기</span>
+          <span data-button-loading-target="text">리뷰 등록하기</span>
         </button>
       </div>
 

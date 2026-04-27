@@ -22,7 +22,7 @@
     <% end %>
     <%= link_to open_orders_masters_requests_path(params.permit(:q).merge(my_area: "1").to_h),
           class: "flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-colors #{@filter_my_area ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-600'}" do %>
-      📍 내 지역만
+      내 지역만
     <% end %>
     <% @my_areas.first(3).each do |area| %>
       <span class="flex-shrink-0 px-3 py-2 bg-gray-50 text-gray-500 rounded-full text-xs">

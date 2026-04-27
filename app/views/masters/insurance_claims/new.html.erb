@@ -1,6 +1,6 @@
 <div class="max-w-2xl mx-auto py-8">
   <div class="text-center mb-8">
-    <h1 class="text-3xl font-bold text-gray-900">💼 보험청구서 작성</h1>
+    <h1 class="text-3xl font-bold text-gray-900">보험청구서 작성</h1>
     <p class="mt-3 text-lg text-gray-600">고객을 위해 보험청구서를 작성해주세요</p>
     <p class="text-gray-600">전문가가 작성하면 승인률이 높아져요</p>
     <% if @insurance_claim.request.present? %>
@@ -16,7 +16,7 @@
   <!-- 절차 안내 -->
   <div class="mb-8 bg-gradient-to-br from-primary-50 to-indigo-50 rounded-2xl p-6 border border-primary-100">
     <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
-      <span class="text-xl">📋</span>
+      <img src="/images/icons/document.png" alt="" class="w-7 h-7 object-contain" loading="lazy">
       이렇게 진행돼요
     </h3>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="mt-4 pt-4 border-t border-primary-200 text-sm">
-      <p class="font-semibold text-gray-900 mb-2">💡 꼭 첨부해야 할 서류</p>
+      <p class="font-semibold text-gray-900 mb-2">꼭 첨부해야 할 서류</p>
       <ul class="text-gray-700 space-y-1 text-xs">
         <li>• 공사 견적서 또는 영수증 (필수)</li>
         <li>• 누수 현장 사진 (시공 전/후)</li>
@@ -113,7 +113,7 @@
       <!-- 섹션 2: 사고 정보 -->
       <fieldset class="space-y-4">
         <legend class="text-lg font-semibold text-gray-900 border-b pb-2 w-full flex items-center gap-2">
-          <span>🚨</span>
+          <span></span>
           <span>사고 정보</span>
         </legend>
         <p class="text-xs text-gray-600">정확한 정보를 입력해주세요</p>
@@ -143,9 +143,9 @@
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-2">
             <% [
-              ["property_damage", "🏠", "재산 피해", "물건, 집기 등"],
-              ["personal_injury", "🤕", "인적 피해", "사람이 다침"],
-              ["both", "⚠️", "재산 + 인적", "모두 해당"]
+              ["property_damage", "houses", "재산 피해", "물건, 집기 등"],
+              ["personal_injury", "", "인적 피해", "사람이 다침"],
+              ["both", "warning", "재산 + 인적", "모두 해당"]
             ].each do |value, emoji, title, desc| %>
               <button type="button"
                       class="select-button relative p-4 rounded-xl border-2 border-gray-200 hover:border-primary-400 hover:bg-primary-50 transition-all text-center <%= 'border-primary-600 bg-primary-50 selected' if @insurance_claim.damage_type == value %>"
@@ -173,7 +173,7 @@
                 required: true,
                 placeholder: "500000",
                 class: input_classes(:text) %>
-          <p class="text-xs text-gray-500 mt-1">💡 견적서/영수증의 금액과 일치해야 해요</p>
+          <p class="text-xs text-gray-500 mt-1">견적서/영수증의 금액과 일치해야 해요</p>
         </div>
         <div>
           <%= f.label :incident_description, "사고 내용 상세 *", class: "block text-sm font-medium text-gray-900 mb-1" %>
@@ -187,7 +187,7 @@
       <!-- 섹션 3: 보험 정보 -->
       <fieldset class="space-y-4">
         <legend class="text-lg font-semibold text-gray-900 border-b pb-2 w-full flex items-center gap-2">
-          <span>🛡️</span>
+          <img src="/images/icons/shield.png" alt="" class="w-5 h-5 inline object-contain" loading="lazy">
           <span>보험 정보</span>
           <span class="text-xs font-normal text-gray-500">(선택사항)</span>
         </legend>
@@ -261,10 +261,10 @@
         </legend>
         <p class="text-xs text-gray-600">반드시 견적서/영수증을 첨부해주세요</p>
         <div class="px-4 py-3 bg-yellow-50 rounded-lg text-sm text-gray-700">
-          <p class="font-semibold mb-2">📋 반드시 첨부해야 할 서류</p>
+          <p class="font-semibold mb-2">반드시 첨부해야 할 서류</p>
           <ul class="text-xs space-y-1">
-            <li>• ✅ <strong>견적서 또는 영수증</strong> (필수 - 공사 금액 증빙)</li>
-            <li>• ✅ <strong>현장 사진</strong> (필수 - 수리 전/후 사진)</li>
+            <li>• <strong>견적서 또는 영수증</strong> (필수 - 공사 금액 증빙)</li>
+            <li>• <strong>현장 사진</strong> (필수 - 수리 전/후 사진)</li>
             <li>• 수리 완료 확인서 (권장)</li>
             <li>• 피해 확인서 (아래층 피해가 있는 경우)</li>
           </ul>
@@ -275,7 +275,7 @@
                 class: "w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary-600 file:text-white hover:file:bg-primary-700 file:cursor-pointer cursor-pointer" %>
           <p class="mt-2 text-xs text-gray-500">사진, PDF 파일 · 최대 10개 · 각 파일당 10MB 이하</p>
         </div>
-        <p class="text-xs text-red-600 font-medium">⚠️ 견적서/영수증이 없으면 보험사 심사가 거부될 수 있어요</p>
+        <p class="text-xs text-red-600 font-medium">견적서/영수증이 없으면 보험사 심사가 거부될 수 있어요</p>
       </fieldset>
 
       <!-- 제출 -->

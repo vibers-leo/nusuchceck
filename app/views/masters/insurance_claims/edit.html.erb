@@ -13,7 +13,7 @@
   <% if @insurance_claim.customer_review_notes.present? %>
     <div class="mb-6 bg-gradient-to-br from-yellow-50 to-amber-50 rounded-2xl p-5 border border-yellow-100">
       <p class="text-sm text-gray-800 flex items-start gap-2">
-        <span class="text-2xl">📝</span>
+        <img src="/images/icons/document.png" alt="" class="w-8 h-8 object-contain" loading="lazy">
         <div>
           <p class="font-semibold text-gray-900 mb-1">고객 수정 요청사항</p>
           <p class="text-gray-700"><%= @insurance_claim.customer_review_notes %></p>
@@ -68,7 +68,7 @@
       <!-- 사고 정보 -->
       <fieldset class="space-y-4">
         <legend class="text-lg font-semibold text-gray-900 border-b pb-2 w-full flex items-center gap-2">
-          <span>🚨</span>
+          <span></span>
           <span>사고 정보</span>
         </legend>
         <div>
@@ -90,9 +90,9 @@
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <% [
-              ["property_damage", "🏠", "재산 피해", "물건, 집기 등"],
-              ["personal_injury", "🤕", "인적 피해", "사람이 다침"],
-              ["both", "⚠️", "재산 + 인적", "모두 해당"]
+              ["property_damage", "houses", "재산 피해", "물건, 집기 등"],
+              ["personal_injury", "", "인적 피해", "사람이 다침"],
+              ["both", "warning", "재산 + 인적", "모두 해당"]
             ].each do |value, emoji, title, desc| %>
               <button type="button"
                       class="select-button relative p-4 rounded-xl border-2 border-gray-200 hover:border-primary-400 hover:bg-primary-50 transition-all text-center <%= 'border-primary-600 bg-primary-50 selected' if @insurance_claim.damage_type == value %>"
@@ -131,7 +131,7 @@
       <!-- 보험 정보 -->
       <fieldset class="space-y-4">
         <legend class="text-lg font-semibold text-gray-900 border-b pb-2 w-full flex items-center gap-2">
-          <span>🛡️</span>
+          <img src="/images/icons/shield.png" alt="" class="w-5 h-5 inline object-contain" loading="lazy">
           <span>보험 정보</span>
         </legend>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

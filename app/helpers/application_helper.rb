@@ -121,4 +121,25 @@ module ApplicationHelper
   def admin_user_path(user)
     user.is_a?(Master) ? admin_master_path(user) : "#"
   end
+
+  # 3D 아이콘 이미지 태그 (이모지 대체)
+  # 사용법: <%= icon_img("leak", size: 5) %> → <img src="/images/icons/leak.png" class="w-5 h-5 inline">
+  def icon_img(name, size: 5, extra_class: "")
+    tag.img(
+      src: "/images/icons/#{name}.png",
+      alt: "",
+      class: "w-#{size} h-#{size} inline-block object-contain #{extra_class}".strip,
+      loading: "lazy"
+    )
+  end
+
+  # 캐릭터 이미지 태그
+  def char_img(name, size: 16, extra_class: "")
+    tag.img(
+      src: "/images/characters/#{name}.png",
+      alt: "",
+      class: "w-#{size} h-#{size} inline-block object-contain #{extra_class}".strip,
+      loading: "lazy"
+    )
+  end
 end

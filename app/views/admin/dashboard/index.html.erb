@@ -1,6 +1,6 @@
 <div class="space-y-6 fade-in">
   <div class="flex items-center justify-between">
-    <h1 class="text-2xl font-bold text-gray-900">📊 관리자 대시보드</h1>
+    <h1 class="text-2xl font-bold text-gray-900">관리자 대시보드</h1>
     <p class="text-sm text-gray-500"><%= Time.current.strftime("%Y년 %m월 %d일 %H:%M") %></p>
   </div>
 
@@ -132,7 +132,7 @@
       </div>
     </div>
     <div class="bg-white rounded-2xl border border-gray-100 p-6">
-      <h2 class="text-base font-semibold text-gray-900 mb-4">🔍 증상 유형 분포</h2>
+      <h2 class="text-base font-semibold text-gray-900 mb-4">증상 유형 분포</h2>
       <div class="h-56 flex items-center justify-center">
         <canvas id="symptomChart"></canvas>
       </div>
@@ -141,13 +141,13 @@
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 p-6">
-      <h2 class="text-base font-semibold text-gray-900 mb-4">💰 6개월 수수료 수익</h2>
+      <h2 class="text-base font-semibold text-gray-900 mb-4">  6개월 수수료 수익</h2>
       <div class="h-48">
         <canvas id="revenueChart"></canvas>
       </div>
     </div>
     <div class="bg-white rounded-2xl border border-gray-100 p-6 flex flex-col justify-center">
-      <h2 class="text-base font-semibold text-gray-900 mb-4">✅ 처리 현황</h2>
+      <h2 class="text-base font-semibold text-gray-900 mb-4">처리 현황</h2>
       <div class="space-y-4">
         <div>
           <div class="flex justify-between text-sm mb-1">
@@ -371,7 +371,7 @@
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <div class="bg-white rounded-2xl border border-gray-100">
       <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-        <h2 class="text-lg font-semibold text-gray-900">📋 최근 체크</h2>
+        <h2 class="text-lg font-semibold text-gray-900">최근 체크</h2>
         <%= link_to "전체 보기", admin_requests_path, class: "text-sm text-primary-600 hover:text-primary-800 transition-smooth" %>
       </div>
       <div class="overflow-x-auto">
@@ -402,7 +402,7 @@
 
     <div class="bg-white rounded-2xl border border-gray-100">
       <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-        <h2 class="text-lg font-semibold text-gray-900">💼 최근 보험청구</h2>
+        <h2 class="text-lg font-semibold text-gray-900">최근 보험청구</h2>
         <%= link_to "전체 보기", admin_insurance_claims_path, class: "text-sm text-primary-600 hover:text-primary-800 transition-smooth" %>
       </div>
       <div class="p-6">

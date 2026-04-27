@@ -20,7 +20,7 @@
       <div class="max-w-[85%]">
         <div class="bg-gray-100 rounded-2xl px-4 py-3 border border-gray-200/50">
           <div class="text-xs text-gray-500 text-center mb-1.5 font-medium">
-            🔔 <%= message.sender_name %>
+            <%= message.sender_name %>
           </div>
           <div class="text-sm text-gray-700 text-center break-words whitespace-pre-wrap leading-relaxed">
             <%= message.content %>
@@ -115,9 +115,9 @@
                     <% ext = File.extname(doc.filename.to_s).downcase %>
                     <% icon = case ext
                                when '.pdf' then '📄'
-                               when '.doc', '.docx' then '📝'
-                               when '.xls', '.xlsx' then '📊'
-                               when '.hwp' then '📋'
+                               when '.doc', '.docx' then '문서'
+                               when '.xls', '.xlsx' then '표'
+                               when '.hwp' then '문서'
                                else '📎'
                                end %>
                     <span class="text-base"><%= icon %></span>

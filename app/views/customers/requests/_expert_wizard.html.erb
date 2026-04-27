@@ -69,7 +69,7 @@
                 <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
               </svg>
             </div>
-            <p class="text-lg font-bold text-gray-900 mb-1">📱 촬영하거나 영상 선택</p>
+            <p class="text-lg font-bold text-gray-900 mb-1">촬영하거나 영상 선택</p>
             <p class="text-sm text-primary-700 font-semibold">10초 이상 권장</p>
             <p class="text-xs text-gray-400 mt-1">최대 2GB · MP4, MOV, WebM</p>
           </label>
@@ -81,7 +81,7 @@
         </div>
 
         <div class="mt-5 p-4 bg-amber-50 rounded-xl border border-amber-200">
-          <p class="font-bold text-gray-900 flex items-center gap-2 mb-2 text-sm">🎬 이렇게 촬영하면 정확해요</p>
+          <p class="font-bold text-gray-900 flex items-center gap-2 mb-2 text-sm">이렇게 촬영하면 정확해요</p>
           <ul class="space-y-1 text-xs text-gray-600">
             <li>• <strong>10초 이상</strong> 연속 촬영 (중간에 멈추지 마세요)</li>
             <li>• 누수 부위를 <strong>천천히 클로즈업</strong></li>
@@ -100,12 +100,12 @@
         </div>
         <div class="space-y-3" data-check-wizard-target="buttonGroup" data-field="symptom_type">
           <% [
-            ["wall_leak", "💧", "벽면 누수", "벽에서 물이 배어나와요"],
-            ["ceiling_leak", "💧", "천장 누수", "천장에서 물이 떨어져요"],
-            ["floor_leak", "💧", "바닥 누수", "바닥이 축축해요"],
-            ["pipe_leak", "🔧", "배관 누수", "배관에서 새는 것 같아요"],
-            ["toilet_leak", "🚽", "화장실 누수", "화장실에서 물이 새요"],
-            ["outdoor_leak", "🏠", "외부 누수", "외벽, 창틀에서 새요"]
+            ["wall_leak", "leak", "벽면 누수", "벽에서 물이 배어나와요"],
+            ["ceiling_leak", "leak", "천장 누수", "천장에서 물이 떨어져요"],
+            ["floor_leak", "leak", "바닥 누수", "바닥이 축축해요"],
+            ["pipe_leak", "tools", "배관 누수", "배관에서 새는 것 같아요"],
+            ["toilet_leak", "leak", "화장실 누수", "화장실에서 물이 새요"],
+            ["outdoor_leak", "houses", "외부 누수", "외벽, 창틀에서 새요"]
           ].each do |value, icon, title, desc| %>
             <button type="button"
                     class="option-btn w-full flex items-center gap-4 p-4 rounded-2xl border-2 border-primary-200 bg-gradient-to-br from-primary-50 to-blue-50 hover:shadow-lg transition-all duration-200 text-left group select-button focus:outline-none shadow-sm"
@@ -142,7 +142,7 @@
           <% [
             ["apartment", "🏢", "아파트"],
             ["villa", "🏘️", "빌라"],
-            ["house", "🏠", "단독주택"],
+            ["house", "houses", "단독주택"],
             ["office", "🏬", "사무실"],
             ["retail_store", "🏪", "상가"],
             ["other_building", "🏗️", "기타"]
@@ -175,7 +175,7 @@
         <div class="space-y-3" data-controller="address-search">
           <div class="relative cursor-pointer" data-action="click->address-search#open">
             <%= f.text_field :address,
-                  placeholder: "🔍 도로명 주소를 검색하세요",
+                  placeholder: "도로명 주소를 검색하세요",
                   class: "w-full px-4 py-4 bg-gray-50 rounded-2xl border-2 border-gray-200 focus:border-primary-500 focus:bg-white focus:outline-none text-base font-medium transition-all cursor-pointer",
                   data: {
                     address_search_target: "address",
@@ -342,7 +342,7 @@
               data-button-loading-loading-text-value="업로드 중... 잠시만 기다려주세요"
               class="hidden w-full py-5 rounded-2xl font-bold text-lg bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 transition-all shadow-xl text-center">
         <span data-button-loading-target="spinner" class="btn-spinner hidden"></span>
-        <span data-button-loading-target="text">전문가에게 요청하기 🚀</span>
+        <span data-button-loading-target="text">전문가에게 요청하기</span>
       </button>
     </div>
   </div>

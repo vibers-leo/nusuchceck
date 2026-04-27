@@ -91,12 +91,12 @@
     <div class="flex gap-2 flex-wrap">
       <% [
         ["전체", ""],
-        ["벽면 💧", "wall_leak"],
-        ["천장 💧", "ceiling_leak"],
-        ["바닥 💧", "floor_leak"],
-        ["배관 🔧", "pipe_leak"],
-        ["화장실 🚽", "toilet_leak"],
-        ["외부 🏠", "outdoor_leak"]
+        ["벽면", "wall_leak"],
+        ["천장", "ceiling_leak"],
+        ["바닥", "floor_leak"],
+        ["배관", "pipe_leak"],
+        ["화장실 leak", "toilet_leak"],
+        ["외부", "outdoor_leak"]
       ].each do |label, value| %>
         <%
           is_active = current_symptom == value || (value.empty? && current_symptom.empty?)

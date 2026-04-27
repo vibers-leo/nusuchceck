@@ -76,7 +76,7 @@
               <%= link_to post_path(post), class: "flex items-start gap-3 p-4 hover:bg-gray-50 transition-colors" do %>
                 <div class="w-8 h-8 rounded-lg bg-primary-50 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <% icons = {"tip" => "💧", "review" => "⭐", "question" => "❓", "general" => "💬"} %>
-                  <span class="text-sm"><%= icons[post.category] || "📝" %></span>
+                  <span class="text-sm"><%= icons[post.category] || "문서" %></span>
                 </div>
                 <div class="flex-1 min-w-0">
                   <p class="font-semibold text-gray-900 text-sm truncate"><%= post.title %></p>

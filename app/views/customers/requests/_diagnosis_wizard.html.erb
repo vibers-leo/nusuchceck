@@ -56,11 +56,11 @@
         <div class="grid grid-cols-2 gap-2" data-check-wizard-target="buttonGroup" data-field="symptom_type">
           <% [
             ["wall_leak",    "🧱", "벽면 누수"],
-            ["ceiling_leak", "💧", "천장 누수"],
+            ["ceiling_leak", "leak", "천장 누수"],
             ["floor_leak",   "🌊", "바닥 누수"],
-            ["pipe_leak",    "🔧", "배관 누수"],
-            ["toilet_leak",  "🚽", "화장실 누수"],
-            ["outdoor_leak", "🏠", "외부 누수"]
+            ["pipe_leak",    "tools", "배관 누수"],
+            ["toilet_leak",  "leak", "화장실 누수"],
+            ["outdoor_leak", "houses", "외부 누수"]
           ].each do |value, icon, title| %>
             <button type="button"
                     class="option-btn flex items-center gap-2.5 p-3 rounded-xl border-2 border-gray-100 bg-white hover:border-primary-300 hover:bg-primary-50 transition-all duration-200 select-button focus:outline-none shadow-sm text-left"
@@ -97,7 +97,7 @@
           <% [
             ["apartment",      "🏢", "아파트"],
             ["villa",          "🏘️", "빌라/연립"],
-            ["house",          "🏠", "단독주택"],
+            ["house",          "houses", "단독주택"],
             ["office",         "🏬", "사무실"],
             ["retail_store",   "🏪", "상가"],
             ["other_building", "🏗️", "기타"]
@@ -181,7 +181,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
               </svg>
             </div>
-            <p class="text-gray-800 font-bold text-base mb-1">📱 촬영하거나 파일 선택</p>
+            <p class="text-gray-800 font-bold text-base mb-1">촬영하거나 파일 선택</p>
             <div class="flex items-center justify-center gap-2 mt-2 flex-wrap">
               <span class="px-2.5 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full">MP4, MOV, AVI</span>
               <span class="px-2.5 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">JPG, PNG</span>
@@ -196,7 +196,7 @@
 
         <!-- 촬영 팁 (leak_inspections/new 스타일) -->
         <div class="mt-4 bg-gradient-to-br from-primary-50 to-indigo-50 rounded-2xl p-4 border border-primary-100">
-          <p class="font-bold text-gray-900 text-sm mb-2.5 flex items-center gap-1.5">💡 이렇게 촬영하면 정확해요</p>
+          <p class="font-bold text-gray-900 text-sm mb-2.5 flex items-center gap-1.5">이렇게 촬영하면 정확해요</p>
           <ul class="space-y-1.5 text-xs text-gray-600">
             <li class="flex items-start gap-2">
               <span class="w-5 h-5 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">★</span>
@@ -226,7 +226,7 @@
         <div class="space-y-3" data-controller="address-search">
           <div class="relative cursor-pointer" data-action="click->address-search#open">
             <%= f.text_field :address,
-                  placeholder: "🔍 도로명 주소를 검색하세요",
+                  placeholder: "도로명 주소를 검색하세요",
                   class: "w-full px-4 py-4 bg-gray-50 rounded-2xl border-2 border-gray-200 focus:border-primary-500 focus:bg-white focus:outline-none text-base font-medium transition-all cursor-pointer",
                   data: {
                     address_search_target: "address",
@@ -289,13 +289,13 @@
             </div>
             <div class="flex items-center justify-between py-3.5">
               <span class="text-xs text-gray-400 font-medium">전문가 점검 필요도</span>
-              <span class="text-xs font-bold text-red-600 bg-red-50 px-2.5 py-1 rounded-full">높음 ⚠️</span>
+              <span class="text-xs font-bold text-red-600 bg-red-50 px-2.5 py-1 rounded-full">높음</span>
             </div>
           </div>
 
           <!-- 진단 코멘트 -->
           <div class="mx-5 mb-5 mt-1 p-4 bg-amber-50 rounded-xl border border-amber-100">
-            <p class="text-xs font-bold text-amber-800 mb-1">🤖 AI 분석 코멘트</p>
+            <p class="text-xs font-bold text-amber-800 mb-1">AI 분석 코멘트</p>
             <p class="text-xs text-amber-700 leading-relaxed">업로드하신 자료를 바탕으로 누수가 의심되는 증상이 확인됩니다. 방치할 경우 구조적 손상으로 이어질 수 있어 전문가 현장 점검을 권장드립니다.</p>
           </div>
         </div>

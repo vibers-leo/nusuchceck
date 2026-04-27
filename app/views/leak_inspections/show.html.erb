@@ -1,6 +1,6 @@
 <div class="max-w-2xl mx-auto py-8">
   <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-bold text-gray-900">📋 분석 결과가 나왔어요</h1>
+    <h1 class="text-2xl font-bold text-gray-900">분석 결과가 나왔어요</h1>
     <%= link_to new_leak_inspection_path, class: "text-sm text-primary-600 hover:text-primary-800 font-medium" do %>
       다시 검사하기 →
     <% end %>
@@ -99,7 +99,7 @@
         <!-- 분석 요약 -->
         <div class="bg-gray-50 rounded-xl p-5">
           <div class="flex items-center gap-2 mb-3">
-            <span class="text-lg">🔍</span>
+            <img src="/images/icons/inspect.png" alt="" class="w-6 h-6 object-contain" loading="lazy">
             <h3 class="font-bold text-gray-900">AI가 발견한 내용</h3>
           </div>
           <p class="text-gray-700 leading-relaxed"><%= @inspection.analysis_summary %></p>
@@ -159,7 +159,7 @@
         <% if @inspection.recommended_action.present? %>
           <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-5 border-2 border-indigo-200">
             <div class="flex items-center gap-2 mb-3">
-              <span class="text-xl">💡</span>
+              <img src="/images/icons/tip.png" alt="" class="w-7 h-7 object-contain" loading="lazy">
               <h3 class="font-bold text-indigo-900">다음 단계</h3>
             </div>
             <p class="text-indigo-900 leading-relaxed font-medium"><%= @inspection.recommended_action %></p>
@@ -237,14 +237,14 @@
       <!-- 예상 비용 정보 -->
       <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <div class="flex items-center gap-2 mb-4">
-          <span class="text-2xl">💰</span>
+          <img src="/images/icons/payment.png" alt="" class="w-8 h-8 object-contain" loading="lazy">
           <h3 class="text-xl font-bold text-gray-900">예상 비용이 궁금하신가요?</h3>
         </div>
         <p class="text-sm text-gray-600 mb-4">일반적인 누수 처리 비용 범위예요 (실제 비용은 상황에 따라 달라질 수 있어요)</p>
         <div class="grid sm:grid-cols-2 gap-4">
           <div class="bg-primary-50 rounded-xl p-4">
             <div class="flex items-center gap-2 mb-2">
-              <span class="text-lg">🔍</span>
+              <img src="/images/icons/inspect.png" alt="" class="w-6 h-6 object-contain" loading="lazy">
               <h4 class="font-bold text-gray-900">정밀 탐지</h4>
             </div>
             <p class="text-2xl font-bold text-primary-600">10~15만원</p>
@@ -252,7 +252,7 @@
           </div>
           <div class="bg-green-50 rounded-xl p-4">
             <div class="flex items-center gap-2 mb-2">
-              <span class="text-lg">🔧</span>
+              <img src="/images/icons/tools.png" alt="" class="w-6 h-6 object-contain" loading="lazy">
               <h4 class="font-bold text-gray-900">간단한 보수</h4>
             </div>
             <p class="text-2xl font-bold text-green-600">30~80만원</p>
@@ -268,7 +268,7 @@
           </div>
           <div class="bg-red-50 rounded-xl p-4">
             <div class="flex items-center gap-2 mb-2">
-              <span class="text-lg">🚨</span>
+              <img src="/images/icons/warning.png" alt="" class="w-6 h-6 object-contain" loading="lazy">
               <h4 class="font-bold text-gray-900">대규모 공사</h4>
             </div>
             <p class="text-2xl font-bold text-red-600">300만원 이상</p>
@@ -276,19 +276,19 @@
           </div>
         </div>
         <p class="text-xs text-gray-500 mt-4 p-3 bg-gray-50 rounded-lg">
-          💡 <strong>Tip:</strong> 조기에 발견할수록 비용이 적게 들어요. 의심되면 바로 점검받으세요!
+          <strong>Tip:</strong> 조기에 발견할수록 비용이 적게 들어요. 의심되면 바로 점검받으세요!
         </p>
       </div>
 
       <!-- 누수 잘 생기는 곳 -->
       <div class="bg-white rounded-2xl border border-gray-100 p-6">
         <div class="flex items-center gap-2 mb-4">
-          <span class="text-2xl">📍</span>
+          <img src="/images/icons/houses.png" alt="" class="w-8 h-8 object-contain" loading="lazy">
           <h3 class="text-xl font-bold text-gray-900">이런 곳을 주의 깊게 봐주세요</h3>
         </div>
         <div class="grid sm:grid-cols-3 gap-4">
           <div class="p-4 bg-gray-50 rounded-xl">
-            <div class="text-3xl mb-2">🚽</div>
+            <div class="text-3xl mb-2">leak</div>
             <h4 class="font-bold text-gray-900 mb-1">화장실</h4>
             <p class="text-sm text-gray-600">변기 주변, 타일 사이, 샤워부스</p>
           </div>
@@ -298,7 +298,7 @@
             <p class="text-sm text-gray-600">싱크대 아래, 수도꼭지 연결부</p>
           </div>
           <div class="p-4 bg-gray-50 rounded-xl">
-            <div class="text-3xl mb-2">🏠</div>
+            <img src="/images/icons/houses.png" alt="" class="w-10 h-10 object-contain mb-2" loading="lazy">
             <h4 class="font-bold text-gray-900 mb-1">거실/방</h4>
             <p class="text-sm text-gray-600">천장, 벽면 모서리, 창문 주변</p>
           </div>
@@ -313,7 +313,7 @@
             <p class="text-sm text-gray-600">배수구, 방수층, 이음새</p>
           </div>
           <div class="p-4 bg-gray-50 rounded-xl">
-            <div class="text-3xl mb-2">🔧</div>
+            <img src="/images/icons/repair.png" alt="" class="w-10 h-10 object-contain mb-2" loading="lazy">
             <h4 class="font-bold text-gray-900 mb-1">배관 주변</h4>
             <p class="text-sm text-gray-600">연결부, 밸브, 계량기 근처</p>
           </div>
@@ -323,12 +323,12 @@
       <!-- 셀프 체크 가이드 -->
       <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl border-2 border-purple-200 p-6">
         <div class="flex items-center gap-2 mb-4">
-          <span class="text-2xl">✅</span>
+          <img src="/images/icons/verified.png" alt="" class="w-8 h-8 object-contain" loading="lazy">
           <h3 class="text-xl font-bold text-gray-900">이런 증상이 있다면 누수를 의심하세요</h3>
         </div>
         <div class="grid sm:grid-cols-2 gap-3">
           <div class="flex items-start gap-3 bg-white/70 rounded-lg p-3">
-            <span class="text-xl">💧</span>
+            <img src="/images/icons/leak.png" alt="" class="w-7 h-7 object-contain" loading="lazy">
             <div>
               <h4 class="font-semibold text-gray-900">물방울, 물 자국</h4>
               <p class="text-sm text-gray-600">벽이나 천장에 물이 맺혀있어요</p>
@@ -363,7 +363,7 @@
             </div>
           </div>
           <div class="flex items-start gap-3 bg-white/70 rounded-lg p-3">
-            <span class="text-xl">💸</span>
+            <img src="/images/icons/payment2.png" alt="" class="w-7 h-7 object-contain" loading="lazy">
             <div>
               <h4 class="font-semibold text-gray-900">수도 요금 증가</h4>
               <p class="text-sm text-gray-600">사용량은 같은데 요금이 올랐어요</p>
@@ -375,7 +375,7 @@
       <!-- 방치 시 위험성 -->
       <div class="bg-red-50 rounded-2xl border-2 border-red-200 p-6">
         <div class="flex items-center gap-2 mb-4">
-          <span class="text-2xl">⚠️</span>
+          <img src="/images/icons/warning.png" alt="" class="w-8 h-8 object-contain" loading="lazy">
           <h3 class="text-xl font-bold text-red-900">누수를 방치하면 이런 일이 생겨요</h3>
         </div>
         <div class="space-y-3">
@@ -401,7 +401,7 @@
           </div>
         </div>
         <div class="mt-4 p-4 bg-white rounded-xl">
-          <p class="text-sm text-gray-900 font-semibold">💡 <strong>빠를수록 좋아요!</strong></p>
+          <p class="text-sm text-gray-900 font-semibold"><strong>빠를수록 좋아요!</strong></p>
           <p class="text-sm text-gray-600 mt-1">조기 발견하면 간단한 보수로 해결할 수 있어요. 망설이지 마세요!</p>
         </div>
       </div>

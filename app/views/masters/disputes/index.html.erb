@@ -8,7 +8,7 @@
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-medium px-2 py-0.5 rounded-full
               <%= dispute.overdue? ? 'bg-red-100 text-red-600' : 'bg-yellow-100 text-yellow-700' %>">
-              <%= dispute.overdue? ? '⚠️ 답변 기한 초과' : '답변 필요' %>
+              <%= dispute.overdue? ? '답변 기한 초과' : '답변 필요' %>
             </span>
             <span class="text-xs text-gray-400"><%= dispute.created_at.strftime("%m/%d") %></span>
           </div>

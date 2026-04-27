@@ -15,21 +15,21 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1 style="margin: 0;">✅ 보험청구서 승인 완료</h1>
+      <h1 style="margin: 0;">보험청구서 승인 완료</h1>
     </div>
 
     <div class="content">
       <p><strong><%= @master.name %></strong>님, 안녕하세요!</p>
 
       <p><strong><%= @customer.name %></strong>님이 보험청구서를 승인했어요.<br/>
-      보험사에 자동으로 제출되었습니다. 🎉</p>
+      보험사에 자동으로 제출되었습니다. </p>
 
       <div class="info-box">
-        <p style="margin: 5px 0;"><strong>📋 신청서 번호:</strong> <%= @insurance_claim.claim_number %></p>
+        <p style="margin: 5px 0;"><strong>신청서 번호:</strong> <%= @insurance_claim.claim_number %></p>
         <p style="margin: 5px 0;"><strong>👤 고객명:</strong> <%= @customer.name %></p>
-        <p style="margin: 5px 0;"><strong>🏠 사고 장소:</strong> <%= @insurance_claim.incident_address %></p>
+        <p style="margin: 5px 0;"><strong>사고 장소:</strong> <%= @insurance_claim.incident_address %></p>
         <% if @insurance_claim.estimated_damage_amount.present? %>
-          <p style="margin: 5px 0;"><strong>💰 공사 금액:</strong> <%= number_to_currency(@insurance_claim.estimated_damage_amount, unit: "₩", precision: 0) %></p>
+          <p style="margin: 5px 0;"><strong>공사 금액:</strong> <%= number_to_currency(@insurance_claim.estimated_damage_amount, unit: "₩", precision: 0) %></p>
         <% end %>
         <p style="margin: 5px 0;"><strong>📤 제출 시간:</strong> <%= @insurance_claim.submitted_at&.strftime("%Y년 %m월 %d일 %H:%M") %></p>
       </div>
@@ -42,7 +42,7 @@
 
       <div style="background: #dbeafe; border-left: 4px solid #3b82f6; padding: 12px; margin-top: 20px;">
         <p style="margin: 0; font-size: 14px;">
-          <strong>📌 다음 단계:</strong><br/>
+          <strong>다음 단계:</strong><br/>
           • 보험사에서 심사를 진행해요 (평균 7~14일)<br/>
           • 추가 서류가 필요하면 고객에게 연락이 갈 수 있어요<br/>
           • 심사 결과는 고객에게 직접 안내됩니다

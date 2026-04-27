@@ -10,7 +10,7 @@
       <div class="flex items-center justify-between">
         <div>
           <h1 class="text-[26px] font-bold mb-1 leading-tight">
-            안녕하세요, <%= current_user.name || current_user.email.split('@').first %>님! 👋
+            안녕하세요, <%= current_user.name || current_user.email.split('@').first %>님! 
           </h1>
           <p class="text-primary-100 text-[15px]">오늘도 안전한 하루 되세요</p>
         </div>
@@ -175,7 +175,7 @@
     <!-- 도움말 카드 -->
     <div class="bg-primary-50 rounded-2xl p-5 border-2 border-primary-100">
       <h3 class="text-sm font-bold text-primary-900 mb-3 flex items-center gap-2">
-        <span>💡</span>
+        <img src="/images/icons/tip.png" alt="" class="w-5 h-5 inline object-contain" loading="lazy">
         <span>이용 가이드</span>
       </h3>
       <ul class="space-y-2 text-xs text-primary-800">
