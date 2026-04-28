@@ -144,5 +144,25 @@ class Admin::DashboardController < ApplicationController
         ins_cum:     ins_cum,
       }
     end.reverse  # 최신 날짜가 위로
+
+    # === 전체 마스터 현황 ===
+    @master_list = Master.includes(:master_profile, :reviews, :assigned_requests)
+                         .order(:name)
+                         .map do |m|
+      profile = m.master_profile
+      {
+        id: m.id,
+        name: m.name,
+        verified: profile&.verified?,
+        insurance: profile&.insurance_active?,
+        experience: profile&.experience_years.to_i,
+        areas: profile&.service_areas_list&.first(2)&.join(", ") || "-",
+        total_jobs: m.assigned_requests.count,
+        completed: m.assigned_requests.where(status: :closed).count,
+        avg_rating: m.reviews.any? ? m.reviews.average(:overall_rating).to_f.round(1) : 0,
+        review_count: m.reviews.count,
+        joined: m.created_at.strftime("%y.%m.%d")
+      }
+    end
   end
 end
