@@ -103,8 +103,22 @@ module ApplicationHelper
     when Request
       if current_user&.master?
         masters_request_path(notifiable)
+      elsif current_user&.admin?
+        admin_request_path(notifiable)
       else
         customers_request_path(notifiable)
+      end
+    when InsuranceClaim
+      customers_insurance_claim_path(notifiable)
+    when Estimate
+      customers_request_path(notifiable.request)
+    when EscrowTransaction
+      customers_request_path(notifiable.request)
+    when MasterProfile
+      if current_user&.master?
+        masters_profile_path
+      else
+        master_path(notifiable.user)
       end
     when Master
       masters_profile_path
