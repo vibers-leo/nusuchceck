@@ -2,6 +2,7 @@ ko:
   activerecord:
     errors:
       messages:
+        record_invalid: "저장에 실패했어요: %{errors}"
         taken: "이미 사용중입니다"
         blank: "을(를) 입력해주세요"
         invalid: "이(가) 올바르지 않습니다"

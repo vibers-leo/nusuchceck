@@ -65,7 +65,7 @@ class Message < ApplicationRecord
   end
 
   def structured_message?
-    !text? && !system_notice?
+    !text? && !system_notice? && !sticker?
   end
 
   # 견적서 메시지 생성 헬퍼
