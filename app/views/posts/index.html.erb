@@ -21,7 +21,7 @@
     <%= link_to community_path, class: "flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-semibold transition #{@category.blank? ? 'bg-primary-600 text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:border-primary-400'}" do %>
       전체
     <% end %>
-    <% [["tip", "💧 누수 팁"], ["review", "⭐ 해결 후기"], ["question", "❓ 질문"], ["general", "일반"]] .each do |cat, label| %>
+    <% [["tip", "누수 팁"], ["review", "해결 후기"], ["question", "질문"], ["general", "일반"]] .each do |cat, label| %>
       <%= link_to community_path(category: cat), class: "flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-semibold transition #{@category == cat ? 'bg-primary-600 text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:border-primary-400'}" do %>
         <%= label %>
       <% end %>
@@ -46,10 +46,8 @@
           <% else %>
             <!-- 기본 이미지 플레이스홀더 -->
             <div class="flex-shrink-0 w-20 h-20 rounded-xl bg-gradient-to-br from-primary-50 to-teal-50 border border-primary-100 flex items-center justify-center">
-              <span class="text-2xl">
-                <% icons = {"tip" => "💧", "review" => "⭐", "question" => "❓", "general" => "💬"} %>
-                <%= icons[post.category] || "문서" %>
-              </span>
+              <% post_icons = {"tip" => "tip", "review" => "star", "question" => "inspect", "general" => "document"} %>
+              <img src="/images/icons/<%= post_icons[post.category] || "document" %>.png" alt="" class="w-10 h-10 object-contain">
             </div>
           <% end %>
 
